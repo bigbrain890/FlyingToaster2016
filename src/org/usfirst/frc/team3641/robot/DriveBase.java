@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
 
-public class DriveBase {
+public class DriveBase
+{
 	private static DriveBase instance;
 	public static CANTalon leftMotor1, leftMotor2, rightMotor1, rightMotor2;
 	//public static CANTalon leftMotor3, rightMotor3;
@@ -55,7 +56,5 @@ public class DriveBase {
 	{
 		return gyro.getAngle();
 	}
-	
-	
-	
+
 }
