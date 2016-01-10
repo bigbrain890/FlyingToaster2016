@@ -56,6 +56,20 @@ public class DriveBase {
 		return gyro.getAngle();
 	}
 	
+	public static void resetGyro()
+	{
+		gyro.reset();
+	}
 	
+	public static void resetEncoders()
+	{
+		driveEncoder.reset();
+	}
+	
+	public static void resetDriveSensors()
+	{
+		driveEncoder.reset();
+		gyro.reset();
+	}
 	
 }
