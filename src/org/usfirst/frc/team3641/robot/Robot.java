@@ -11,12 +11,18 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+<<<<<<< HEAD
 public class Robot extends IterativeRobot {
 	private SendableChooser sc;
+=======
+public class Robot extends IterativeRobot
+{
+>>>>>>> origin/master
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+<<<<<<< HEAD
     public void robotInit() {
     	TrajectoryTracking.getInstance();
     	DriveBase.getInstance();
@@ -40,12 +46,34 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
+=======
+    public void robotInit()
+    {
+
+    }
+
+    /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic()
+    {
+
+    }
+
+    /**
+     * This function is called periodically during operator control
+     */
+    public void teleopPeriodic()
+    {
+        
+>>>>>>> origin/master
     }
     
     /**
      * This function is called periodically during test mode
      */
-    public void testPeriodic() {
+    public void testPeriodic()
+    {
     
     }
     

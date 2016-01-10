@@ -1,7 +1,8 @@
 package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
-public class PS4Controller extends Joystick {
+public class PS4Controller extends Joystick
+{
 	
 	public PS4Controller(int port)
 	{

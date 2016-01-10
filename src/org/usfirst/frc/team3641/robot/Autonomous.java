@@ -2,7 +2,8 @@ package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class Autonomous {
+public class Autonomous
+{
 	private static Autonomous instance;
 	private static int mode = 0;
 	private static Timer autoTimer;

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
-public class TeleOperated {
+public class TeleOperated
+{
 	private static TeleOperated instance;
 	public static PS4Controller dualShock;
 	public static Attack3 operator;

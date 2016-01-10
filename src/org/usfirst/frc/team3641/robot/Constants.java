@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
-public class Constants {
+public class Constants
+{
 	// Drive Controllers
 	public static final int PS4_CONTROLLER = 0;
 	public static final int ATTACK3 = 1;
