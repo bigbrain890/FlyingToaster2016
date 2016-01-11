@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot
     	sc = new SendableChooser();
     	sc.addObject("Do Nothing", 1);
     	sc.addObject("The Answer to Life", 42);
-    	
     }
 
     public void autonomousInit()
