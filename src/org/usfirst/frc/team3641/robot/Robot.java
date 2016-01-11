@@ -4,6 +4,10 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
+/*
+ * This is a comment to test if Eclipse and Github work together nicely
+ */
+
 public class Robot extends IterativeRobot 
 {
 	private SendableChooser sc;
