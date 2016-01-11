@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
-public class TrajectoryTracking {
+public class TrajectoryTracking 
+{
 	private static TrajectoryTracking instance;
 	
 	public static TrajectoryTracking getInstance()

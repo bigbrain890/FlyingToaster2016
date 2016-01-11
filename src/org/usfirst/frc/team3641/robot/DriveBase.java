@@ -56,8 +56,7 @@ public class DriveBase
 	{
 		return gyro.getAngle();
 	}
-<<<<<<< HEAD
-	
+
 	public static void resetGyro()
 	{
 		gyro.reset();
@@ -74,7 +73,4 @@ public class DriveBase
 		gyro.reset();
 	}
 	
-=======
-
->>>>>>> origin/master
 }

@@ -12,6 +12,7 @@ public class Autonomous
 	{
 		autoTimer = new Timer();
 	}
+	
 	public static Autonomous getInstance()
 	{
 		if(instance == null)
@@ -20,6 +21,7 @@ public class Autonomous
 		}
 		return instance;
 	}
+	
 	public static void run()
 	{
 		switch (Autonomous.getAutoMode()) 
@@ -33,6 +35,7 @@ public class Autonomous
 				
 		}
 	}
+	
 	public static void setAutoMode(int mode)
 	{
 		Autonomous.mode = mode;
