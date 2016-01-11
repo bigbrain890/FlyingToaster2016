@@ -5,7 +5,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
 
 public class DriveBase
@@ -28,8 +28,8 @@ public class DriveBase
 		gyro = new AHRS(SPI.Port.kMXP);
 		driveEncoder = new Encoder(Constants.DRIVE_ENC_PORT_1, Constants.DRIVE_ENC_PORT_2);
 		chassis = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
-		slaveRight.changeControlMode(ControlMode.Follower);
-		slaveLeft.changeControlMode(ControlMode.Follower);
+		slaveRight.changeControlMode(TalonControlMode.Follower);
+		slaveLeft.changeControlMode(TalonControlMode.Follower);
 		slaveRight.set(Constants.RIGHT_MOTOR_1);
 		slaveLeft.set(Constants.LEFT_MOTOR_1);
 	}
