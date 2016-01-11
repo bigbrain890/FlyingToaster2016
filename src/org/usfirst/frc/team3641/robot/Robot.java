@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /*
- * This is a comment to test if Eclipse and Github work together nicely
+ * This is a comment to test if Eclipse and Github work together nicely. HFS it works.
  */
 
 public class Robot extends IterativeRobot 
