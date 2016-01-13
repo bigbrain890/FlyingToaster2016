@@ -58,4 +58,14 @@ public class Attack3 extends Joystick
 	{
 		return getRawButton(1);
 	}
+	
+	public double getXAxis()
+	{
+		return getRawAxis(0);
+	}
+	
+	public double getYAxis()
+	{
+		return getRawAxis(1);
+	}
 }

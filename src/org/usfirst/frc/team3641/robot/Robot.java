@@ -38,7 +38,7 @@ public class Robot extends IterativeRobot
 
     public void teleopPeriodic()
     {
-        
+        TeleOperated.runDriver();
     }
     
     public void testPeriodic()

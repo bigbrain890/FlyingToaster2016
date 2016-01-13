@@ -21,4 +21,9 @@ public class TeleOperated
 		return instance;
 	}
 	
+	public static void runDriver()
+	{
+		DriveBase.driveNormal(operator.getYAxis(), 0.0);
+	}
+	
 }
