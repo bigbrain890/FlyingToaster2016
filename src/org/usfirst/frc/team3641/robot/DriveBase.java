@@ -5,8 +5,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-
 
 public class DriveBase
 {
