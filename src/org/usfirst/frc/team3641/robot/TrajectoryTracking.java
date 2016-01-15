@@ -1,15 +1,20 @@
 package org.usfirst.frc.team3641.robot;
 
-import edu.wpi.first.wpilibj.I2C;
-
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 public class TrajectoryTracking 
 {
+	private static SerialPort input;
 	private static TrajectoryTracking instance;
-	public static I2C dataPipe;
 	
 	private TrajectoryTracking()
 	{
-		dataPipe = new I2C(I2C.Port.kMXP, 4);
+		input = new SerialPort(9600, SerialPort.Port.kUSB);
+	}
+
+	private static int getX()
+	{
+		return Integer.parseInt(input.readString().substring(1));
 	}
 	
 	public static TrajectoryTracking getInstance()
