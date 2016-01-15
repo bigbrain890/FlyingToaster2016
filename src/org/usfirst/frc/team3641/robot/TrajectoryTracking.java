@@ -9,7 +9,7 @@ public class TrajectoryTracking
 	
 	private TrajectoryTracking()
 	{
-		dataPipe = new I2C(I2C.Port.kOnboard, 0x1E);
+		dataPipe = new I2C(I2C.Port.kMXP, 4);
 	}
 	
 	public static TrajectoryTracking getInstance()
