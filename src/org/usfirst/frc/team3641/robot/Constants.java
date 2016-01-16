@@ -18,6 +18,9 @@ public class Constants
 	public static final int DRIVE_ENC_PORT_1 = 0;
 	public static final int DRIVE_ENC_PORT_2 = 1;
 	
+	//Pi Port
+	public static final int PI_COM_PIN = 2;
+	
 	// Various Sensors 
 	public static final int ULTRA_SONIC = 0;
 	
