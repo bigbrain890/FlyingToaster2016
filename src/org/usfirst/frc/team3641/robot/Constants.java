@@ -17,6 +17,7 @@ public class Constants
 	// Encoders
 	public static final int DRIVE_ENC_PORT_1 = 0;
 	public static final int DRIVE_ENC_PORT_2 = 1;
+	public static final int ANALOG_ENC_PORT_0 = 0;
 	
 	//Pi Port
 	public static final int PI_COM_PIN = 2;

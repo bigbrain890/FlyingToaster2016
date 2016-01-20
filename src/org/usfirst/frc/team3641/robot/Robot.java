@@ -39,8 +39,8 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic()
     {
         TeleOperated.runDriver();
+        SmartDashboard.putNumber("Encoder 0:", Encoder.getEncoderPos(0));
     }
-    
     public void testPeriodic()
     {
     
