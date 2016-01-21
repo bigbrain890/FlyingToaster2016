@@ -18,7 +18,6 @@ public class Robot extends IterativeRobot
     	DriveBase.getInstance();
     	Autonomous.getInstance();
     	TeleOperated.getInstance();
-    	Encoder.getInstance();
     	sc = new SendableChooser();
     	sc.addObject("Do Nothing", 1);
     	sc.addObject("The Answer to Life", 42);
@@ -40,7 +39,6 @@ public class Robot extends IterativeRobot
     public void teleopPeriodic()
     {
         TeleOperated.runDriver();
-        SmartDashboard.putNumber("Encoder 0:", Encoder.getEncoderPos(0));
     }
     public void testPeriodic()
     {

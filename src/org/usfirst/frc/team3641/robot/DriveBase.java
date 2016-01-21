@@ -1,37 +1,38 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Encoder;
 
 public class DriveBase
 {
 	private static DriveBase instance;
 	public static CANTalon leftMotor1, leftMotor2, rightMotor1, rightMotor2;
-	//public static CANTalon slaveLeft, slaveRight;
+	public static CANTalon slaveLeft, slaveRight;
 	public static RobotDrive chassis;
 	public static AHRS gyro;
-	public static Encoder driveEncoder;
+	public static FeedbackDevice dankEncoder;
 	
 	public DriveBase()
 	{
 		leftMotor1 = new CANTalon(Constants.LEFT_MOTOR_1);
 		leftMotor2 = new CANTalon(Constants.LEFT_MOTOR_2);
-		//slaveLeft = new CANTalon(Constants.LEFT_MOTOR_3);
+		slaveLeft = new CANTalon(Constants.LEFT_MOTOR_3);
 		rightMotor1 = new CANTalon(Constants.RIGHT_MOTOR_1);
 		rightMotor2 = new CANTalon(Constants.RIGHT_MOTOR_2);
-		//slaveRight = new CANTalon(Constants.RIGHT_MOTOR_3);
+		slaveRight = new CANTalon(Constants.RIGHT_MOTOR_3);
 		gyro = new AHRS(SPI.Port.kMXP);
-		driveEncoder = new Encoder(Constants.DRIVE_ENC_PORT_1, Constants.DRIVE_ENC_PORT_2);
 		chassis = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
-		/*
+		
 		slaveRight.changeControlMode(TalonControlMode.Follower);
 		slaveLeft.changeControlMode(TalonControlMode.Follower);
 		slaveRight.set(Constants.RIGHT_MOTOR_1);
 		slaveLeft.set(Constants.LEFT_MOTOR_1);
-		*/
+		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
+		
 	}
 	
 	public static DriveBase getInstance()
@@ -55,7 +56,7 @@ public class DriveBase
 	
 	public static double getDriveDis()
 	{
-		return driveEncoder.getDistance();
+		return rightMotor1.getAnalogInPosition();
 	}
 	
 	public static double getDriveDirection()
@@ -70,13 +71,13 @@ public class DriveBase
 	
 	public static void resetEncoders()
 	{
-		driveEncoder.reset();
+		rightMotor1.setAnalogPosition(0);
 	}
 	
 	public static void resetDriveSensors()
 	{
-		driveEncoder.reset();
 		gyro.reset();
+		rightMotor1.setAnalogPosition(0);
 	}
 	
 }
