@@ -23,7 +23,7 @@ public class Constants
 	public static final int PI_COM_PIN = 2;
 	
 	// Various Sensors 
-	public static final int ULTRA_SONIC = 0;
+	public static final int ULTRASONIC = 0;
 	
 	// Auton References
 	public static final int REALLY_COOL_AUTON = 42;
