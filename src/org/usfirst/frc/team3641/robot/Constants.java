@@ -25,4 +25,8 @@ public class Constants
 	// Various Sensors 
 	public static final int ULTRA_SONIC = 0;
 	
+	// Auton References
+	public static final int REALLY_COOL_AUTON = 42;
+	public static final int NOT_SO_COOL_AUTON = 1;
+	
 }

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 public class Autonomous
 {
 	private static Autonomous instance;
-	private static int mode = 0;
 	private static Timer autoTimer;
 	
 	private Autonomous()
@@ -22,28 +21,19 @@ public class Autonomous
 		return instance;
 	}
 	
-	public static void run()
+	public static void run(int mode)
 	{
-		switch (Autonomous.getAutoMode()) 
+		switch (mode) 
 		{
-			case 0:
+			case Constants.NOT_SO_COOL_AUTON:
+				notSoCoolAuton();
 				break;
 			
-			case 42:
+			case Constants.REALLY_COOL_AUTON:
 				reallyCoolAuton();
 				break;
 				
 		}
-	}
-	
-	public static void setAutoMode(int mode)
-	{
-		Autonomous.mode = mode;
-	}
-	
-	public static int getAutoMode()
-	{
-		return Autonomous.mode;
 	}
 	
 	public static void startTimer()
@@ -54,9 +44,11 @@ public class Autonomous
 	
 	public static void reallyCoolAuton()
 	{
-		if (autoTimer.get() < 2)
-		{
-			DriveBase.driveNormal(.3, 0.0);
-		}
+		DriveBase.driveNormal(1, 0.0);
+	}
+	
+	public static void notSoCoolAuton()
+	{
+		DriveBase.driveNormal(-1, 0.0);
 	}
 }
