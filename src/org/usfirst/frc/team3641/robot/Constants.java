@@ -29,4 +29,7 @@ public class Constants
 	public static final int REALLY_COOL_AUTON = 42;
 	public static final int NOT_SO_COOL_AUTON = 1;
 	
+	// PI serial transfer rate
+	public static final int TRANSFER_RATE = 9600;
+	
 }
