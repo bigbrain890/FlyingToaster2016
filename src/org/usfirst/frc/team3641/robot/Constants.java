@@ -29,4 +29,9 @@ public class Constants
 	public static final int REALLY_COOL_AUTON = 42;
 	public static final int NOT_SO_COOL_AUTON = 1;
 	
+	// PID Contants
+	public static final double DRIVE_KP = .005;
+	public static final double DRIVE_KI = .01;
+	public static final double DRIVE_KD = 0;
+	
 }
