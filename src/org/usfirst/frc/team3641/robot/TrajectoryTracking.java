@@ -1,23 +1,32 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SerialPort;
+import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class TrajectoryTracking 
 {
-	private static SerialPort piPipe;
 	private static AnalogInput ultrasonic;
 	private static TrajectoryTracking instance;
+	private static Socket socket;
+	private static BufferedReader pipe;
 	
 	private TrajectoryTracking()
 	{
-		piPipe = new SerialPort(Constants.TRANSFER_RATE, SerialPort.Port.kOnboard);
+		try
+		{
+			socket = new Socket("10.36.41.41", 3641);
+		}
+		catch(Exception error)
+		{
+			error.printStackTrace();
+		}
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
 	public static int heading()
 	{
-		byte incoming[] = piPipe.read(4);
 		return 4;
 	}
 	
