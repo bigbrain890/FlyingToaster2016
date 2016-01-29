@@ -32,7 +32,6 @@ public class DriveBase
 		slaveRight.set(Constants.RIGHT_MOTOR_1);
 		slaveLeft.set(Constants.LEFT_MOTOR_1);
 		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
-		
 	}
 	
 	public static DriveBase getInstance()

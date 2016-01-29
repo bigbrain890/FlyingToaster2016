@@ -13,7 +13,7 @@ public class Robot extends IterativeRobot
 
     public void robotInit()
     {
-    	TrajectoryTracking.getInstance();
+    	Tracking.getInstance();
     	DriveBase.getInstance();
     	Autonomous.getInstance();
     	TeleOperated.getInstance();
@@ -48,8 +48,8 @@ public class Robot extends IterativeRobot
 		
         TeleOperated.runDriver();
         SmartDashboard.putNumber("Direction", DriveBase.getDriveDirection());
-        SmartDashboard.putNumber("Ultrasonic", TrajectoryTracking.getRawUltrasonic());
-        SmartDashboard.putNumber("Trajectory", TrajectoryTracking.heading());
+        SmartDashboard.putNumber("Ultrasonic", Tracking.getRawUltrasonic());
+        SmartDashboard.putNumber("Trajectory", Tracking.heading());
     }
 	
     public void testPeriodic()

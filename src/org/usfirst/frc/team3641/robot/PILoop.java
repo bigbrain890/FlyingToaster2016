@@ -9,6 +9,7 @@ public class PILoop
 	
 	public PILoop()
 	{
+		
 	}
 	
 	public static PILoop getInstance()
@@ -22,7 +23,6 @@ public class PILoop
 	
 	public double smoothDrive(double current, double target, boolean useIntegral)
 	{
-		
 		double error = target - current;
 		if(useIntegral == true)
 		{

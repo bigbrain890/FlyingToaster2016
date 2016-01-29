@@ -6,17 +6,16 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.lang.String;
 
-public class TrajectoryTracking 
+public class Tracking 
 {
 	private static AnalogInput ultrasonic;
-	private static TrajectoryTracking instance;
+	private static Tracking instance;
 	private static Socket socket;
 	private static BufferedReader pipe;
 	private static String read;
 	private static int castedRead;
 	
-	
-	private TrajectoryTracking()
+	private Tracking()
 	{
 		try
 		{
@@ -49,11 +48,11 @@ public class TrajectoryTracking
 		return ultrasonic.getValue();
 	}
 	
-	public static TrajectoryTracking getInstance()
+	public static Tracking getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new TrajectoryTracking();
+			instance = new Tracking();
 		}
 		return instance;
 	}

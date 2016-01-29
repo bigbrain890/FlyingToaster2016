@@ -26,7 +26,7 @@ public class TeleOperated
 		DriveBase.driveNormal(operator.getYAxis(), 0.0);
 		if(dualShock.getRightBumper())
 		{
-			if(TrajectoryTracking.heading() == 4)
+			if(Tracking.heading() == 4)
 			{
 				DriveBase.driveNormal(dualShock.getLeftStickXAxis(),0.35);
 			}
