@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.lang.String;
 
 public class TrajectoryTracking 
 {
@@ -11,23 +12,36 @@ public class TrajectoryTracking
 	private static TrajectoryTracking instance;
 	private static Socket socket;
 	private static BufferedReader pipe;
+	private static String read;
+	private static int castedRead;
+	
 	
 	private TrajectoryTracking()
 	{
 		try
 		{
 			socket = new Socket("10.36.41.41", 3641);
+			pipe = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		}
-		catch(Exception error)
+		catch(IOException error)
 		{
 			error.printStackTrace();
 		}
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
-	public static int heading()
+	public static double heading()
 	{
-		return 4;
+		try
+		{
+			read = pipe.readLine();
+			castedRead = Integer.parseInt(read);
+		}
+		catch(IOException io)
+		{
+			io.printStackTrace();
+		}
+		return castedRead;
 	}
 	
 	public static float getRawUltrasonic()
