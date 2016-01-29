@@ -4,8 +4,8 @@ package org.usfirst.frc.team3641.robot;
 public class PILoop 
 {
 	private static PILoop instance;
-	public double errorRefresh = 0;
-	double motorOutput;
+	public static double errorRefresh = 0;
+	public static double motorOutput;
 	
 	public PILoop()
 	{
@@ -21,7 +21,7 @@ public class PILoop
 		return instance;
 	}
 	
-	public double smoothDrive(double current, double target, boolean useIntegral)
+	public static double smoothDrive(double current, double target, boolean useIntegral)
 	{
 		double error = target - current;
 		if(useIntegral == true)

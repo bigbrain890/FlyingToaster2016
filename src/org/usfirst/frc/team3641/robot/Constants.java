@@ -37,4 +37,7 @@ public class Constants
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
 	
+	// Camera center
+	public static final int CAMERA_LINE_UP = 160;
+	
 }

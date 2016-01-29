@@ -29,7 +29,7 @@ public class Tracking
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
-	public static double heading()
+	public static int heading()
 	{
 		try
 		{
@@ -55,5 +55,11 @@ public class Tracking
 			instance = new Tracking();
 		}
 		return instance;
+	}
+	
+	public void autoTarget()
+	{
+		DriveBase.driveNormal(0.0, PILoop.smoothDrive(heading(), Constants.CAMERA_LINE_UP, true));
+		
 	}
 }
