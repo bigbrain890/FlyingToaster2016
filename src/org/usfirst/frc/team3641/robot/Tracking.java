@@ -3,7 +3,6 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.lang.String;
 
 public class Tracking 
@@ -57,9 +56,10 @@ public class Tracking
 		return instance;
 	}
 	
-	public void autoTarget()
+	public static void autoTarget()
 	{
 		DriveBase.driveNormal(0.0, PILoop.smoothDrive(heading(), Constants.CAMERA_LINE_UP, true));
 		
 	}
+	
 }
