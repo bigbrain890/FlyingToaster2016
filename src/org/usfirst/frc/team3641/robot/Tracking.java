@@ -28,7 +28,7 @@ public class Tracking
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
-	public static int heading()
+/*	public static int heading()
 	{
 		try
 		{
@@ -41,7 +41,7 @@ public class Tracking
 		}
 		return castedRead;
 	}
-	
+*/	
 	public static float getRawUltrasonic()
 	{
 		return ultrasonic.getValue();
@@ -58,7 +58,7 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-		DriveBase.driveNormal(0.0, PILoop.smoothDrive(heading(), Constants.CAMERA_LINE_UP, true));
+	//	DriveBase.driveNormal(0.0, PILoop.smoothDrive(heading(), Constants.CAMERA_LINE_UP, true));
 		
 	}
 	
