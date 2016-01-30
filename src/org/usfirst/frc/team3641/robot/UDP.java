@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class UDP
 {
@@ -17,11 +15,11 @@ public class UDP
 	static DatagramPacket packet;
 	static byte[] buf;
 
-	public UDP()
+	public UDP()	//Sets the vars and opens a connection to the pi
 	{
-		port = Constants.PI_UDP_PORT;
 		try 
 		{
+			port = Constants.PI_UDP_PORT;
 			address = InetAddress.getByName(Constants.PI_IP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
@@ -41,19 +39,34 @@ public class UDP
 		return instance;
 	}
 	
-	public static int getData()
+	public static void sendData(String data) //Sends the request to the pi
 	{
-		packet = new DatagramPacket(buf, buf.length);
+		buf = data.getBytes();	//Converts the String to a byte array
+		packet = new DatagramPacket(buf, buf.length, address, port); //Makes a packet from the byte array, address, and port
 		try
 		{
-			socket.receive(packet);
-			String received = new String(packet.getData(), 0, packet.getLength());
-			return Integer.parseInt(received);
+			socket.send(packet);	//Send the packet :D
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public static String getData()
+	{
+		try
+		{
+			byte[] buf = new byte[256];	//Creates the byte array for the response
+			packet = new DatagramPacket(buf, buf.length); //Prepares to receive the packet
+			socket.receive(packet);	//Receives the packet from the pi
+			String response = new String(buf, 0, packet.getLength()); //Converts the byte array to a string
+			return response;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
-			return -1; //Negative value will indicate an error
+			return null;
 		}	
 	}
+
 }
