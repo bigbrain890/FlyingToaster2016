@@ -18,6 +18,7 @@ public class Robot extends IterativeRobot
     	Autonomous.getInstance();
     	TeleOperated.getInstance();
     	PILoop.getInstance();
+    	UDP.getInstance();
     	server = CameraServer.getInstance();
     	server.startAutomaticCapture();
     }

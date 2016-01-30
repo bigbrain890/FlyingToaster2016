@@ -23,6 +23,14 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		Tracking.autoTarget();
+		int UDPData = UDP.getData();
+		if(UDPData == 1)
+		{
+			DriveBase.driveNormal(0.3, 0.0);
+		}
+		else if(UDPData == 0)
+		{
+			DriveBase.driveReverse(0.3, 0.0);
+		}
 	}
 }
