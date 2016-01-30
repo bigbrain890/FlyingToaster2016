@@ -31,7 +31,7 @@ public class DriveBase
 		slaveLeft.changeControlMode(TalonControlMode.Follower);
 		slaveRight.set(Constants.RIGHT_MOTOR_1);
 		slaveLeft.set(Constants.LEFT_MOTOR_1);
-		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
+		leftMotor2.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
 	}
 	
 	public static DriveBase getInstance()
@@ -55,7 +55,7 @@ public class DriveBase
 	
 	public static double getDriveDis()
 	{
-		return rightMotor1.getAnalogInPosition();
+		return leftMotor2.getAnalogInPosition();
 	}
 	
 	public static double getDriveDirection()

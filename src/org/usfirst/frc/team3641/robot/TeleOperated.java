@@ -23,7 +23,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		int UDPData = UDP.getData();
+	/*	int UDPData = UDP.getData();
 		if(UDPData == 1)
 		{
 			DriveBase.driveNormal(0.3, 0.0);
@@ -32,5 +32,6 @@ public class TeleOperated
 		{
 			DriveBase.driveReverse(0.3, 0.0);
 		}
+		*/
 	}
 }
