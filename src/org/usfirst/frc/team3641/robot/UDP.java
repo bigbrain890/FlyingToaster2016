@@ -23,6 +23,7 @@ public class UDP
 			address = InetAddress.getByName(Constants.PI_IP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
+			socket.setSoTimeout(5); //Arbitrary timeout value is arbitrary
 		}
 		catch(Exception e)
 		{
@@ -64,7 +65,7 @@ public class UDP
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			//System.out.println(e.getMessage());
 			return null;
 		}	
 	}

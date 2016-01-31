@@ -1,22 +1,22 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import java.io.*;
-import java.net.Socket;
+/*import java.io.*;
+import java.net.Socket;*/
 import java.lang.String;
 
 public class Tracking 
 {
 	private static AnalogInput ultrasonic;
 	private static Tracking instance;
-	private static Socket socket;
+	/*private static Socket socket;
 	private static BufferedReader pipe;
 	private static String read;
-	private static int castedRead;
+	private static int castedRead;*/
 	
 	private Tracking()
 	{
-		try
+		/*try
 		{
 			socket = new Socket("10.36.41.41", 3641);
 			pipe = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -24,7 +24,7 @@ public class Tracking
 		catch(IOException error)
 		{
 			error.printStackTrace();
-		}
+		}*/
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
@@ -58,8 +58,11 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-	//	DriveBase.driveNormal(0.0, PILoop.smoothDrive(heading(), Constants.CAMERA_LINE_UP, true));
-		
+		UDP.sendData("Request: Target");
+		String response = UDP.getData();
+		if(response != null)
+		{
+			DriveBase.driveNormal(0.0, PILoop.smoothDrive(Integer.parseInt(UDP.getData()), Constants.CAMERA_LINE_UP, true));		
+		}
 	}
-	
 }
