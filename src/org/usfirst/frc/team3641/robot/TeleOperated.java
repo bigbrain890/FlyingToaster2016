@@ -23,12 +23,19 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
+<<<<<<< HEAD
 		int UDPData = UDP.getData();
 		if(UDPData == 1)
+=======
+		UDP.sendData("Request: Binary");
+		String response = UDP.getData();
+		//int UDPData = Integer.parseInt(UDP.getData());
+		if(response.equals("1"))
+>>>>>>> origin/master
 		{
 			DriveBase.driveNormal(0.3, 0.0);
 		}
-		else if(UDPData == 0)
+		else if(response.equals("0"))
 		{
 			DriveBase.driveReverse(0.3, 0.0);
 		}
