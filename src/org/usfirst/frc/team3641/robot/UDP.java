@@ -19,9 +19,9 @@ public class UDP
 
 	public UDP()
 	{
-		port = Constants.PI_UDP_PORT;
 		try 
 		{
+			port = Constants.PI_UDP_PORT;
 			address = InetAddress.getByName(Constants.PI_IP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
@@ -43,9 +43,10 @@ public class UDP
 	
 	public static int getData()
 	{
-		packet = new DatagramPacket(buf, buf.length);
 		try
 		{
+			byte[] buf = new byte[256];
+			packet = new DatagramPacket(buf, buf.length);
 			socket.receive(packet);
 			String received = new String(packet.getData(), 0, packet.getLength());
 			return Integer.parseInt(received);
