@@ -1,5 +1,4 @@
 package org.usfirst.frc.team3641.robot;
-import java.lang.String;
 
 public class Constants
 {
