@@ -42,21 +42,12 @@ public class UDP
 	
 	public static void sendData(String data) //Sends the request to the pi
 	{
-<<<<<<< HEAD
 		try
 		{
-			byte[] buf = new byte[256];
-			packet = new DatagramPacket(buf, buf.length);
-			socket.receive(packet);
-			String received = new String(packet.getData(), 0, packet.getLength());
-			return Integer.parseInt(received);
-=======
-		buf = data.getBytes();	//Converts the String to a byte array
-		packet = new DatagramPacket(buf, buf.length, address, port); //Makes a packet from the byte array, address, and port
-		try
-		{
+			
+			buf = data.getBytes();	//Converts the String to a byte array
+			packet = new DatagramPacket(buf, buf.length, address, port); //Makes a packet from the byte array, address, and port
 			socket.send(packet);	//Send the packet :D
->>>>>>> origin/master
 		}
 		catch (IOException e)
 		{
