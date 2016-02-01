@@ -22,7 +22,7 @@ public class Constants
 	//Pi Port
 	public static final int PI_COM_PIN = 2;
 	public static final int PI_UDP_PORT = 3641;
-	public static final String PI_IP_ADDR = "10.36.41.108";//"10.36.41.41";
+	public static final String PI_IP_ADDR = "10.36.41.41";
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -32,8 +32,8 @@ public class Constants
 	public static final int NOT_SO_COOL_AUTON = 1;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .005;
-	public static final double DRIVE_KI = .01;
+	public static final double DRIVE_KP = .01;
+	public static final double DRIVE_KI = .001;
 	public static final double DRIVE_KD = 0;
 
 	// PI serial transfer rate

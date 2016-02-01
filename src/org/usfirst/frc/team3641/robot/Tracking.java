@@ -60,9 +60,13 @@ public class Tracking
 	{
 		UDP.sendData("Request");
 		String response = UDP.getData();
-		if(response != null)
+		if(response != null && !response.equals("0"))
 		{
-			DriveBase.driveNormal(0.0, PILoop.smoothDrive(Integer.parseInt(UDP.getData()), Constants.CAMERA_LINE_UP, true));		
+			DriveBase.driveNormal(0.0, PILoop.smoothDrive(Integer.parseInt(response), Constants.CAMERA_LINE_UP, true));		
+		}
+		else
+		{
+			DriveBase.driveNormal(0.0, 0.0);
 		}
 	}
 }

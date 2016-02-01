@@ -23,20 +23,6 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		UDP.sendData("Request: Binary");
-		String response = "";
-		response = UDP.getData();
-		UDP.sendData("Recieved: " + response);
-		if(response != null)
-		{
-			if (response.contains("1"))
-			{
-				DriveBase.driveNormal(0.3, 0);
-			}	
-			else if (response.contains("0"))
-			{
-				DriveBase.driveNormal(-0.3, 0);
-			}
-		} 
+		Tracking.autoTarget();
 	}
 }
