@@ -49,9 +49,9 @@ public class UDP
 			packet = new DatagramPacket(buf, buf.length, address, port); //Makes a packet from the byte array, address, and port
 			socket.send(packet);	//Send the packet :D
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	public static String getData()

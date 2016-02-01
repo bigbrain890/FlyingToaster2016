@@ -58,7 +58,7 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-		UDP.sendData("Request: Target");
+		UDP.sendData("Request");
 		String response = UDP.getData();
 		if(response != null)
 		{
