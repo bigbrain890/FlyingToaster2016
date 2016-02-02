@@ -42,9 +42,14 @@ public class Tracking
 		return castedRead;
 	}
 */	
-	public static float getRawUltrasonic()
+	public static double getRawUltrasonic()
 	{
-		return ultrasonic.getValue();
+		return ultrasonic.getVoltage();
+	}
+	
+	public static double getDistance()
+	{
+		return getRawUltrasonic() / Constants.ULTRASONIC_CONVERSION_FACTOR;
 	}
 	
 	public static Tracking getInstance()
@@ -64,7 +69,7 @@ public class Tracking
 		{
 			DriveBase.driveNormal(0.0, PILoop.smoothDrive(Integer.parseInt(response), Constants.CAMERA_LINE_UP, true));		
 		}
-		else
+		else 
 		{
 			DriveBase.driveNormal(0.0, 0.0);
 		}

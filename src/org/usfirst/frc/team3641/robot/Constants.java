@@ -26,6 +26,7 @@ public class Constants
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
+	public static double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
 	
 	// Auton References
 	public static final int REALLY_COOL_AUTON = 42;

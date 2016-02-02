@@ -48,8 +48,9 @@ public class Robot extends IterativeRobot
     {
 		
         TeleOperated.runDriver();
-        SmartDashboard.putNumber("Direction", DriveBase.getDriveDirection());
-        SmartDashboard.putNumber("Ultrasonic", Tracking.getRawUltrasonic());
+        //SmartDashboard.putNumber("Direction", DriveBase.getDriveDirection());
+        SmartDashboard.putNumber("Ultrasonic Distance", Tracking.getDistance());
+        //SmartDashboard.putNumber("Ultrasonic", Tracking.getRawUltrasonic());
     }
 	
     public void testPeriodic()

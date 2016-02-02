@@ -23,6 +23,6 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		Tracking.autoTarget();
+		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), 0.0);
 	}
 }
