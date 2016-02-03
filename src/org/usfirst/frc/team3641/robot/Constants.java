@@ -26,7 +26,8 @@ public class Constants
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
-	public static double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
+	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
+	public static final int SHOOTER_POT = 0;
 	
 	// Auton References
 	public static final int REALLY_COOL_AUTON = 42;
@@ -45,4 +46,10 @@ public class Constants
 	
 	// Shooter Motors
 	public static final int INTAKE_MOTOR = 7;
+	public static final int FLY_WHEEL_1 = 8;
+	public static final int FLY_WHEEL_2 = 9;
+	
+	// Punmatic Ports
+	public static final int PUNCHER_FORWARD = 0;
+	public static final int PUNCHER_REVERSE = 1;
 }
