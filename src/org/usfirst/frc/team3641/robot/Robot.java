@@ -17,6 +17,7 @@ public class Robot extends IterativeRobot
     	DriveBase.getInstance();
     	Autonomous.getInstance();
     	TeleOperated.getInstance();
+    	Shooter.getInstance();
     	PILoop.getInstance();
     	UDP.getInstance();
     	server = CameraServer.getInstance();

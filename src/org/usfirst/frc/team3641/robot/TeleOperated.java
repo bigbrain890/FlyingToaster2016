@@ -24,5 +24,6 @@ public class TeleOperated
 	public static void runDriver()
 	{
 		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), 0.0);
+		Shooter.feedToShooter(dualShock.getRightStickYAxis());
 	}
 }

@@ -43,4 +43,6 @@ public class Constants
 	// Camera center
 	public static final int CAMERA_LINE_UP = 160;
 	
+	// Shooter Motors
+	public static final int INTAKE_MOTOR = 7;
 }
