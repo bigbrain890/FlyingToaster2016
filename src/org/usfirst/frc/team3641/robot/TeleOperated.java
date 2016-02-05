@@ -5,7 +5,7 @@ public class TeleOperated
 	private static TeleOperated instance;
 	public static PS4Controller dualShock;
 	public static Attack3 operator;
-	static boolean driveMode;
+	static public boolean driveMode = Constants.DRIVE_NORMAL;
 	
 	private TeleOperated()
 	{
@@ -24,11 +24,27 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
+		// State Switching inputs
 		if (dualShock.getRightBumper() == true)
 		{
-			
+			driveMode = Constants.DRIVE_NORMAL;
 		}
-		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), 0.0);
+		else if (dualShock.getLeftBumper() == true)
+		{
+			driveMode = Constants.DRIVE_REVERSE;
+		}
+		
+		// Actually driving and stuff
+		if (driveMode == Constants.DRIVE_NORMAL)
+		{
+			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
+		}
+		else if (driveMode == Constants.DRIVE_REVERSE)
+		{
+			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
+		}
 		Shooter.feedToShooter(dualShock.getRightStickYAxis());
+		
+
 	}
 }

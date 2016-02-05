@@ -26,7 +26,7 @@ public class Constants
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
-	public static final int SHOOTER_POT = 0;
+	public static final int SHOOTER_POT = 1;
 	
 	// Auton References
 	public static final int REALLY_COOL_AUTON = 42;
@@ -56,6 +56,6 @@ public class Constants
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
 	
 	//Teleop State Variables
-	public static final int DRIVE_NORMAL = 1;
-	public static final int DRIVE_REVERSE = 0;
+	public static final boolean DRIVE_NORMAL = true;
+	public static final boolean DRIVE_REVERSE = false;
 }

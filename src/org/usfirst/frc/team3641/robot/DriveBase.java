@@ -43,12 +43,12 @@ public class DriveBase
 	
 	public static void driveReverse(double throttle, double rotate)
 	{
-		chassis.arcadeDrive(-throttle, -rotate);
+		chassis.arcadeDrive(throttle * -1, rotate * -1);
 	}
 	
 	public static double getDriveDis()
 	{
-		return rightMotor1.getAnalogInPosition() * Constants.DRIVE_ENCODER_MULTIPLIER;
+		return rightMotor1.getAnalogInPosition();
 	}
 	
 	public static double getDriveDirection()
