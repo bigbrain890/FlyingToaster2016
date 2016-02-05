@@ -23,7 +23,7 @@ public class DriveBase
 		rightMotor2 = new CANTalon(Constants.RIGHT_MOTOR_2);
 		gyro = new AHRS(SPI.Port.kMXP);
 		chassis = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
-		
+
 		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
 	}
 	

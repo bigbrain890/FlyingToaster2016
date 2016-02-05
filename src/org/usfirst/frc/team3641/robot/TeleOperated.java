@@ -33,6 +33,7 @@ public class TeleOperated
 		{
 			driveMode = Constants.DRIVE_REVERSE;
 		}
+
 		
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
@@ -44,7 +45,5 @@ public class TeleOperated
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
 		Shooter.feedToShooter(dualShock.getRightStickYAxis());
-		
-
 	}
 }
