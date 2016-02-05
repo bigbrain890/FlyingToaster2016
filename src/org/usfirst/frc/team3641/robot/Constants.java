@@ -21,7 +21,7 @@ public class Constants
 	//Pi Port
 	public static final int PI_COM_PIN = 2;
 	public static final int PI_UDP_PORT = 3641;
-	public static final String PI_IP_ADDR = "10.36.41.41";
+	public static final String PI_IP_ADDR = "Vision-Toaster.lan";
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;

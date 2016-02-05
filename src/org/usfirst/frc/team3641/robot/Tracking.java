@@ -9,39 +9,12 @@ public class Tracking
 {
 	private static AnalogInput ultrasonic;
 	private static Tracking instance;
-	/*private static Socket socket;
-	private static BufferedReader pipe;
-	private static String read;
-	private static int castedRead;*/
-	
+
 	private Tracking()
 	{
-		/*try
-		{
-			socket = new Socket("10.36.41.41", 3641);
-			pipe = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		}
-		catch(IOException error)
-		{
-			error.printStackTrace();
-		}*/
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 	}
 
-/*	public static int heading()
-	{
-		try
-		{
-			read = pipe.readLine();
-			castedRead = Integer.parseInt(read);
-		}
-		catch(IOException io)
-		{
-			io.printStackTrace();
-		}
-		return castedRead;
-	}
-*/	
 	public static double getRawUltrasonic()
 	{
 		return ultrasonic.getVoltage();
