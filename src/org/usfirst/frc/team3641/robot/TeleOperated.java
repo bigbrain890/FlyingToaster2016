@@ -5,6 +5,7 @@ public class TeleOperated
 	private static TeleOperated instance;
 	public static PS4Controller dualShock;
 	public static Attack3 operator;
+	static boolean driveMode;
 	
 	private TeleOperated()
 	{
@@ -23,6 +24,10 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
+		if (dualShock.getRightBumper() == true)
+		{
+			
+		}
 		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), 0.0);
 		Shooter.feedToShooter(dualShock.getRightStickYAxis());
 	}

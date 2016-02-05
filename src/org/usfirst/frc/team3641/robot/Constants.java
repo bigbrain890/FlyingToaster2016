@@ -9,10 +9,9 @@ public class Constants
 	// Drive Motors
 	public static final int LEFT_MOTOR_1 = 1;
 	public static final int LEFT_MOTOR_2 = 2;
-	public static final int LEFT_MOTOR_3 = 3;
-	public static final int RIGHT_MOTOR_1 = 4;
-	public static final int RIGHT_MOTOR_2 = 5;
-	public static final int RIGHT_MOTOR_3 = 6;
+	public static final int RIGHT_MOTOR_1 = 3;
+	public static final int RIGHT_MOTOR_2 = 4;
+
 	
 	// Encoders
 	public static final int DRIVE_ENC_PORT_1 = 0;
@@ -52,4 +51,11 @@ public class Constants
 	// Punmatic Ports
 	public static final int PUNCHER_FORWARD = 0;
 	public static final int PUNCHER_REVERSE = 1;
+	
+	//Misc
+	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
+	
+	//Teleop State Variables
+	public static final int DRIVE_NORMAL = 1;
+	public static final int DRIVE_REVERSE = 0;
 }

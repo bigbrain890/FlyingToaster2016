@@ -11,7 +11,6 @@ public class DriveBase
 {
 	private static DriveBase instance;
 	public static CANTalon leftMotor1, leftMotor2, rightMotor1, rightMotor2;
-	public static CANTalon slaveLeft, slaveRight;
 	public static RobotDrive chassis;
 	public static AHRS gyro;
 	public static FeedbackDevice dankEncoder;
@@ -20,17 +19,11 @@ public class DriveBase
 	{
 		leftMotor1 = new CANTalon(Constants.LEFT_MOTOR_1);
 		leftMotor2 = new CANTalon(Constants.LEFT_MOTOR_2);
-		slaveLeft = new CANTalon(Constants.LEFT_MOTOR_3);
 		rightMotor1 = new CANTalon(Constants.RIGHT_MOTOR_1);
 		rightMotor2 = new CANTalon(Constants.RIGHT_MOTOR_2);
-		slaveRight = new CANTalon(Constants.RIGHT_MOTOR_3);
 		gyro = new AHRS(SPI.Port.kMXP);
 		chassis = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
 		
-		slaveRight.changeControlMode(TalonControlMode.Follower);
-		slaveLeft.changeControlMode(TalonControlMode.Follower);
-		slaveRight.set(Constants.RIGHT_MOTOR_1);
-		slaveLeft.set(Constants.LEFT_MOTOR_1);
 		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
 	}
 	
@@ -55,7 +48,7 @@ public class DriveBase
 	
 	public static double getDriveDis()
 	{
-		return rightMotor1.getAnalogInPosition();
+		return rightMotor1.getAnalogInPosition() * Constants.DRIVE_ENCODER_MULTIPLIER;
 	}
 	
 	public static double getDriveDirection()
