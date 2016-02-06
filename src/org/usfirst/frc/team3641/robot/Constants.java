@@ -29,8 +29,15 @@ public class Constants
 	public static final int SHOOTER_POT = 1;
 	
 	// Auton References
-	public static final int REALLY_COOL_AUTON = 42;
-	public static final int NOT_SO_COOL_AUTON = 1;
+	public static final int LOW_BAR = 1;
+	public static final int ROCK_WALL = 2;
+	public static final int SHOVE_IN_FREEZER = 3;
+	public static final int SALLY_PORT = 4;
+	public static final int DRAW_BRIDGE = 5;
+	public static final int MOAT = 6;
+	public static final int ROUGH_TERRAIN = 7;
+	public static final int PORTCULLIS = 8;
+	public static final int RAMPARTS = 9;
 	
 	// PID Contants
 	public static final double DRIVE_KP = .01;

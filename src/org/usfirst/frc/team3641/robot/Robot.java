@@ -29,15 +29,51 @@ public class Robot extends IterativeRobot
     	Autonomous.startTimer();
     	DriveBase.resetEncoders();
     	DriveBase.resetGyro();
-    	if (Preferences.getInstance().getBoolean("DankAuton", false))
+    	if (Preferences.getInstance().getBoolean("Low Bar", false))
     	{
-    		mode = Constants.REALLY_COOL_AUTON; 
+    		mode = Constants.LOW_BAR; 
     	}
     	
-    	else
+    	else if (Preferences.getInstance().getBoolean("Rock Wall", false))
     	{
-    		mode = Constants.NOT_SO_COOL_AUTON;
+    		mode = Constants.ROCK_WALL;
     	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Shove in Freezer", false))
+    	{
+    		mode = Constants.SHOVE_IN_FREEZER;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Sally Port", false))
+    	{
+    		mode = Constants.SALLY_PORT;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Draw Bridge", false))
+    	{
+    		mode = Constants.DRAW_BRIDGE;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Moat", false))
+    	{
+    		mode = Constants.MOAT;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Rough Terrain", false))
+    	{
+    		mode = Constants.ROUGH_TERRAIN;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Portcullis", false))
+    	{
+    		mode = Constants.PORTCULLIS;
+    	}
+    	
+    	else if (Preferences.getInstance().getBoolean("Ramparts", false))
+    	{
+    		mode = Constants.RAMPARTS;
+    	}
+   
     }
     
     public void autonomousPeriodic() 

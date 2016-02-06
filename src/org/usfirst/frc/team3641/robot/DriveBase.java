@@ -72,4 +72,10 @@ public class DriveBase
 		rightMotor1.setAnalogPosition(0);
 	}
 	
+	public static void driveStraight(double target_angle, double drive_speed)
+	{
+		double error = target_angle - getDriveDirection();
+		driveNormal(drive_speed, error * Constants.DRIVE_KP);
+	}
+	
 }
