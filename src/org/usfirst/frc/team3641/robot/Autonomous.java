@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.Timer;
 public class Autonomous
 {
 	private static Autonomous instance;
-	private static Timer autoTimer;
+	private static Timer autoTimer, aimTimer;
+	public static int autonState = 1;
 	
 	private Autonomous()
 	{
 		autoTimer = new Timer();
+		aimTimer = new Timer();
 	}
 	
 	public static Autonomous getInstance()
@@ -63,15 +65,46 @@ public class Autonomous
 		}
 	}
 	
-	public static void startTimer()
+	public static void startTimers()
 	{
 		autoTimer.reset();
+		aimTimer.reset();
 		autoTimer.start();
+		aimTimer.start();
 	}
 	
 	public static void lowBar()
 	{
-		DriveBase.driveNormal(1, 0.0);
+		if (autonState == 1)
+		{
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			{
+				DriveBase.driveStraight(Constants.STRAIGHT, .4);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+				autonState++;
+			}
+		}
+		
+		else if (autonState == 2)
+		{
+			if (DriveBase.getDriveDirection() < 45)
+			{
+				DriveBase.driveNormal(0.0, .4);
+			}
+			else
+			{
+				startTimers();
+				autonState++;
+			}
+		}
+		
+		else if (autonState == 3)
+		{
+			
+		}
 	}
 	
 	public static void rockWall()

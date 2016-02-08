@@ -38,6 +38,8 @@ public class Constants
 	public static final int ROUGH_TERRAIN = 7;
 	public static final int PORTCULLIS = 8;
 	public static final int RAMPARTS = 9;
+	public static final int TARGET_DEFENSE_DRIVE_DIS = 130;
+	public static final int STRAIGHT = 0;
 	
 	// PID Contants
 	public static final double DRIVE_KP = .01;

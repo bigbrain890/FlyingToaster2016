@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot
 
     public void autonomousInit()
     {
-    	Autonomous.startTimer();
+    	Autonomous.startTimers();
     	DriveBase.resetEncoders();
     	DriveBase.resetGyro();
     	if (Preferences.getInstance().getBoolean("Low Bar", false))
