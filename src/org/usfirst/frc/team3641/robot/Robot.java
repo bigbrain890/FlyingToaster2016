@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot
     	Shooter.getInstance();
     	PILoop.getInstance();
     	UDP.getInstance();
+    	Intake.getInstance();
     	server = CameraServer.getInstance();
     	server.startAutomaticCapture();
     }

@@ -53,13 +53,21 @@ public class Constants
 	public static final int CAMERA_LINE_UP = 160;
 	
 	// Shooter Motors
-	public static final int INTAKE_MOTOR = 7;
-	public static final int FLY_WHEEL_1 = 8;
-	public static final int FLY_WHEEL_2 = 9;
+	public static final int FLY_WHEEL_1 = 5;
+	public static final int FLY_WHEEL_2 = 6;
+	public static final int SHOOTER = 7;
+	public static final int CAM = 8;
+	public static final double CAM_FIRE = 0.0; //Position for shoving ball into shooting wheels.
+	public static final double CAM_HOLD = 0.0; //Position for holding ball in shooter.
+	public static final double CAM_INTAKE = 0.0; // Position for anticipating intaked ball.
+	
+	// Intake Motors
+	public static final int ROLLERS = 9;
+	public static final int INTAKE = 10;
 	
 	// Punmatic Ports
-	public static final int PUNCHER_FORWARD = 0;
-	public static final int PUNCHER_REVERSE = 1;
+	public static final int DRIVE_TRAIN = 0;
+	public static final int PTO = 1;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.

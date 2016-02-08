@@ -103,6 +103,17 @@ public class Autonomous
 		
 		else if (autonState == 3)
 		{
+			if (aimTimer.get() < 3)
+			{
+				Tracking.autoTarget();
+			}
+			else
+			{
+				autonState++;
+			}
+		}
+		else if (autonState == 4)
+		{
 			
 		}
 	}

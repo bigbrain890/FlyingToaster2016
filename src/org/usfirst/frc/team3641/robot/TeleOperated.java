@@ -44,6 +44,5 @@ public class TeleOperated
 		{
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
-		Shooter.feedToShooter(dualShock.getRightStickYAxis());
 	}
 }
