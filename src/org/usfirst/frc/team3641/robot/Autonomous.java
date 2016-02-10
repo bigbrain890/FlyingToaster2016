@@ -114,7 +114,15 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			if( aimTimer.get() < 5)
+			{
+				Shooter.spinUpWheels();
+			}
 			
+			else
+			{
+				Shooter.fire();
+			}
 		}
 	}
 	

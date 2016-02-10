@@ -32,4 +32,19 @@ public class Shooter
 		flyWheel1.set(1);
 		flyWheel2.set(1);
 	}
+	
+	public static void hold()
+	{
+		
+	}
+	
+	public static void fire()
+	{
+		
+	}
+	
+	public static void anticipateBall()
+	{
+		
+	}
 }
