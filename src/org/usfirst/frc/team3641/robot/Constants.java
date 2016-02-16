@@ -49,8 +49,12 @@ public class Constants
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
 	
-	// Camera center
+	// Camera stuff
 	public static final int CAMERA_LINE_UP = 160;
+	public static final double DEGREES_PER_PIXEL = 0.2140625;
+	public static final int FIND_TARGET = 0;
+	public static final int DO_MATH = 1;
+	public static final int TURN_TO_TARGET = 2;
 	
 	// Shooter Motors
 	public static final int FLY_WHEEL_1 = 5;

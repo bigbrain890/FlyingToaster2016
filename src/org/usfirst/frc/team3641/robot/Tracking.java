@@ -9,6 +9,7 @@ public class Tracking
 {
 	private static AnalogInput ultrasonic;
 	private static Tracking instance;
+	private static int visionState = 0;
 
 	private Tracking()
 	{
@@ -36,23 +37,49 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-		UDP.sendData("Request");
-		//String[] response = UDP.getData().split(",");
-		String response = UDP.getData();
-		if(response/*[0]*/ != null && !response.equals("0"))
+		int xcord = 0;
+		double angleOff = 0;
+		double target = 0;
+		double heading = 0;
+		if (visionState == Constants.FIND_TARGET)
 		{
-			double xcord = Integer.parseInt(response);
-			DriveBase.driveNormal(0.0, -1* PILoop.smoothDrive(xcord, Constants.CAMERA_LINE_UP, false));		
-		}/*
-		if(response[1] != null && !response[1].equals("0"))
+			heading = DriveBase.getDriveDirection();
+			UDP.sendData("Request");
+			String response = UDP.getData();
+			if (response != null)
+			{
+				xcord = Integer.parseInt(response);
+				visionState++;
+			}
+			
+		}
+		
+		else if (visionState == Constants.DO_MATH)
 		{
-			double ycord = Integer.parseInt(response[1]);
-			//Move shooter arm according to the y var
-		}*/
-
+			if (xcord != 0)
+			{
+				angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
+				target = heading + angleOff;
+				visionState++;
+			}
+			else
+			{
+				visionState--;
+			}
+		}
+		
+		else if (visionState == Constants.TURN_TO_TARGET)
+		{
+			DriveBase.driveNormal(0.0, PILoop.smoothDrive(DriveBase.getDriveDirection(), target, false));
+		}
 		else 
 		{
 			DriveBase.driveNormal(0.0, 0.0);
 		}
+	}
+	
+	public static void resetVision()
+	{
+		visionState = 0;
 	}
 }
