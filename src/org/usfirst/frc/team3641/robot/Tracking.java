@@ -49,23 +49,19 @@ public class Tracking
 			if (response != null)
 			{
 				xcord = Integer.parseInt(response);
-				visionState++;
+				if(xcord != 0)
+				{
+					visionState++;
+				}
 			}
 			
 		}
 		
 		else if (visionState == Constants.DO_MATH)
 		{
-			if (xcord != 0)
-			{
-				angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
-				target = heading + angleOff;
-				visionState++;
-			}
-			else
-			{
-				visionState--;
-			}
+			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
+			target = heading + angleOff;
+			visionState++;
 		}
 		
 		else if (visionState == Constants.TURN_TO_TARGET)
