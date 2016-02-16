@@ -10,6 +10,11 @@ public class Tracking
 	private static AnalogInput ultrasonic;
 	private static Tracking instance;
 	private static int visionState = 0;
+	private static int xcord = 0;
+	private static double angleOff = 0;
+	private static double target = 0;
+	private static double heading = 0;
+
 
 	private Tracking()
 	{
@@ -37,10 +42,6 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-		int xcord = 0;
-		double angleOff = 0;
-		double target = 0;
-		double heading = 0;
 		if (visionState == Constants.FIND_TARGET)
 		{
 			heading = DriveBase.getDriveDirection();
@@ -77,5 +78,10 @@ public class Tracking
 	public static void resetVision()
 	{
 		visionState = 0;
+		xcord = 0;
+		angleOff = 0;
+		target = 0;
+		heading = 0;
+
 	}
 }
