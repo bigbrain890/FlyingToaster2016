@@ -44,5 +44,14 @@ public class TeleOperated
 		{
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
+		if (dualShock.getRandomButton() == true)
+		{
+			DriveBase.driveNormal(.3, 0.0);
+		}
+		
+		if (dualShock.getXButton() == true)
+		{
+			Tracking.autoTarget();
+		}
 	}
 }

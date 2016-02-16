@@ -37,18 +37,18 @@ public class Tracking
 	public static void autoTarget()
 	{
 		UDP.sendData("Request");
-		String[] response = UDP.getData().split(",");
-
-		if(response[0] != null && !response[0].equals("0"))
+		//String[] response = UDP.getData().split(",");
+		String response = UDP.getData();
+		if(response/*[0]*/ != null && !response.equals("0"))
 		{
-			double xcord = Integer.parseInt(response[0]);
-			DriveBase.driveNormal(0.0, PILoop.smoothDrive(xcord, Constants.CAMERA_LINE_UP, true));		
-		}
+			double xcord = Integer.parseInt(response);
+			DriveBase.driveNormal(0.0, -1* PILoop.smoothDrive(xcord, Constants.CAMERA_LINE_UP, false));		
+		}/*
 		if(response[1] != null && !response[1].equals("0"))
 		{
 			double ycord = Integer.parseInt(response[1]);
 			//Move shooter arm according to the y var
-		}
+		}*/
 
 		else 
 		{
