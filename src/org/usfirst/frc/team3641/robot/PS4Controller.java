@@ -70,24 +70,39 @@ public class PS4Controller extends Joystick
 		return getRawButton(6);
 	}
 	
-	public boolean getRandomButton()
+	public boolean getLeftThrottleButton()
 	{
 		return getRawButton(7);
 	}
 	
-	public boolean getRandomButton2()
+	public boolean getRightThrottleButton()
 	{
 		return getRawButton(8);
 	}
 	
-	public boolean getRandomButton3()
+	public boolean getShareButton()
 	{
 		return getRawButton(9);
 	}
 	
-	public boolean getRandomButton4()
+	public boolean getOptionsButton()
 	{
 		return getRawButton(10);
+	}
+	
+	public boolean getLeftAnalogStickButton()
+	{
+		return getRawButton(11);
+	}
+	
+	public boolean getRightAnalogStickButton()
+	{
+		return getRawButton(12);
+	}
+	
+	public boolean getPlayStationButton()
+	{
+		return getRawButton(13);
 	}
 
 	

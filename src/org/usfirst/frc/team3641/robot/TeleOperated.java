@@ -44,33 +44,25 @@ public class TeleOperated
 		{
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
-		if (dualShock.getRandomButton() == true)
-		{
-			DriveBase.driveNormal(.3, 0.0);
-		}
-		
-		if (dualShock.getXButton() == true)
-		{
-			Tracking.autoTarget();
-		}
-		else 
-		{
-			Tracking.resetVision();
-		}
-		
-		if (dualShock.getCircleButton())
+		if (dualShock.getRightThrottleButton() == true)
 		{
 			Shooter.intake();
-		}
-		else if (dualShock.getSquareButton() == true)
-		{
-			Shooter.spinUpWheels();
 		}
 		
 		else
 		{
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
+		}
+		
+		if (dualShock.getCircleButton() == true)
+		{
+			Tracking.autoTarget();
+		}
+		
+		else
+		{
+			Tracking.resetVision();
 		}
 	}
 }
