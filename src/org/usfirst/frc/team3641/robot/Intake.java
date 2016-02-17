@@ -20,4 +20,9 @@ public class Intake {
 		}
 		return instance;
 	}
+	
+	public static void pullBall()
+	{
+		Shooter.intake();
+	}
 }
