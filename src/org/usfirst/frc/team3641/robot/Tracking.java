@@ -62,6 +62,7 @@ public class Tracking
 		{
 			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
+			if(target<0) target = 360 + target;
 			visionState++;
 		}
 		
