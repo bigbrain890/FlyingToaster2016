@@ -52,7 +52,7 @@ public class Tracking
 		
 		else if (visionState == Constants.RESPONSE_CAPTURE)
 		{
-			String response = UDP.getData();
+			String response = UDP.flush(null);
 			if (response != null)
 			{
 				xcord = Integer.parseInt(response);

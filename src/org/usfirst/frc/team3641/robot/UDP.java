@@ -30,7 +30,15 @@ public class UDP
 			e.printStackTrace();
 		}
 	}
-	
+	public static String flush(String oldResponse)
+	{
+		String response = getData();
+		if(response!=null)
+		{
+			return flush(response);
+		}
+		else return oldResponse;
+	}
 	public static UDP getInstance() 
 	{
 		if(instance == null)
