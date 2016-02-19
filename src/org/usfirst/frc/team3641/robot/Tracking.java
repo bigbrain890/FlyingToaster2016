@@ -1,9 +1,8 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-/*import java.io.*;
-import java.net.Socket;*/
 import java.lang.String;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Tracking 
 {
@@ -14,6 +13,8 @@ public class Tracking
 	private static double angleOff = 0;
 	private static double target = 0;
 	private static double heading = 0;
+	private static boolean edge = false;
+	private static double driveOutput = 0;
 
 
 	private Tracking()
@@ -62,13 +63,48 @@ public class Tracking
 		{
 			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
-			if(target<0) target = 360 + target;
+			if(target<0) 
+			{
+				target = 360 + target;
+				edge = true;
+			}
+			else if(target>=360)
+			{
+				target = target - 360;
+				edge = true;
+			}
 			visionState++;
 		}
 		
 		else if (visionState == Constants.TURN_TO_TARGET)
 		{
-			DriveBase.driveNormal(0.0, PILoop.smoothDrive(DriveBase.getDriveDirection(), target, false));
+			/*
+			double driveOutput = -1* PILoop.smoothDrive(DriveBase.getDriveDirection(), target, false);
+			}
+			*/
+			double error = target - DriveBase.getDriveDirection();
+			if (edge == true)
+			{
+				driveOutput = error * Constants.DRIVE_KP;
+			}
+			else
+			{
+				driveOutput = -1 * error * Constants.DRIVE_KP;
+			}
+			if (Math.abs(driveOutput) > .75)
+			{
+				if (driveOutput < 0)
+				{
+					driveOutput = -.75;
+				}
+				
+				else
+				{
+					driveOutput = .75;
+				}
+			}
+			
+			DriveBase.driveNormal(0.0, driveOutput);
 		}
 		else 
 		{
@@ -83,6 +119,17 @@ public class Tracking
 		angleOff = 0;
 		target = 0;
 		heading = 0;
+		edge = false;
 
+	}
+	
+	public static void printOut()
+	{
+		SmartDashboard.putNumber("Target", target);
+		SmartDashboard.putNumber("Heading", heading);
+		SmartDashboard.putNumber("Angle Off", angleOff);
+		SmartDashboard.putNumber("Vision State", visionState);
+		SmartDashboard.putNumber("X Cordinate", xcord);
+		SmartDashboard.putBoolean("Edge", edge);
 	}
 }

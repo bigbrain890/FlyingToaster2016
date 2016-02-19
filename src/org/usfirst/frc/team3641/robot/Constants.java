@@ -42,7 +42,7 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .01;
+	public static final double DRIVE_KP = .08;
 	public static final double DRIVE_KI = .001;
 	public static final double DRIVE_KD = 0;
 
@@ -55,6 +55,7 @@ public class Constants
 	public static final int FIND_TARGET = 0;
 	public static final int DO_MATH = 1;
 	public static final int TURN_TO_TARGET = 2;
+
 	
 	// Shooter Motors
 	public static final int FLY_WHEEL_1 = 5;

@@ -58,7 +58,8 @@ public class UDP
 	{
 		try
 		{
-			byte[] buf = new byte[256];	//Creates the byte array for the response
+			byte[] buf = null;
+			buf = new byte[256];	//Creates the byte array for the response
 			packet = new DatagramPacket(buf, buf.length); //Prepares to receive the packet
 			socket.receive(packet);	//Receives the packet from the pi
 			String response = new String(buf, 0, packet.getLength()); //Converts the byte array to a string

@@ -24,7 +24,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		// State Switching inputs
+		// State Switching inputsv
 		if (dualShock.getRightBumper() == true)
 		{
 			driveMode = Constants.DRIVE_NORMAL;
@@ -44,16 +44,6 @@ public class TeleOperated
 		{
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
-		if (dualShock.getRightThrottleButton() == true)
-		{
-			Shooter.intake();
-		}
-		
-		else
-		{
-			Shooter.flyWheel1.set(0.0);
-			Shooter.flyWheel2.set(0.0);
-		}
 		
 		if (dualShock.getCircleButton() == true)
 		{
@@ -64,5 +54,6 @@ public class TeleOperated
 		{
 			Tracking.resetVision();
 		}
+		Tracking.printOut();
 	}
 }
