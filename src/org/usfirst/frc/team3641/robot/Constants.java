@@ -52,9 +52,10 @@ public class Constants
 	// Camera stuff
 	public static final int CAMERA_LINE_UP = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625;
-	public static final int FIND_TARGET = 0;
-	public static final int DO_MATH = 1;
-	public static final int TURN_TO_TARGET = 2;
+	public static final int SEND_REQUEST = 0;
+	public static final int RESPONSE_CAPTURE = 1;
+	public static final int DO_MATH = 2;
+	public static final int TURN_TO_TARGET = 3;
 
 	
 	// Shooter Motors

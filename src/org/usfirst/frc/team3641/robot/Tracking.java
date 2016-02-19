@@ -43,20 +43,24 @@ public class Tracking
 	
 	public static void autoTarget()
 	{
-		if (visionState == Constants.FIND_TARGET)
+		if (visionState == Constants.SEND_REQUEST)
 		{
 			heading = DriveBase.getDriveDirection();
 			UDP.sendData("Request");
+			visionState = Constants.RESPONSE_CAPTURE;
+		}
+		
+		else if (visionState == Constants.RESPONSE_CAPTURE)
+		{
 			String response = UDP.getData();
 			if (response != null)
 			{
 				xcord = Integer.parseInt(response);
 				if(xcord != 0)
 				{
-					visionState++;
+					visionState = Constants.DO_MATH;
 				}
 			}
-			
 		}
 		
 		else if (visionState == Constants.DO_MATH)
@@ -73,7 +77,7 @@ public class Tracking
 				target = target - 360;
 				edge = true;
 			}
-			visionState++;
+			visionState = Constants.TURN_TO_TARGET;
 		}
 		
 		else if (visionState == Constants.TURN_TO_TARGET)
