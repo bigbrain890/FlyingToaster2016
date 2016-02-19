@@ -15,6 +15,7 @@ public class Tracking
 	private static double heading = 0;
 	private static boolean edge = false;
 	private static double driveOutput = 0;
+	public static double errorRefresh = 0;
 
 
 	private Tracking()
@@ -89,11 +90,13 @@ public class Tracking
 			double error = target - DriveBase.getDriveDirection();
 			if (edge == true)
 			{
-				driveOutput = error * Constants.DRIVE_KP;
+				errorRefresh = error + errorRefresh;
+				driveOutput = ((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI));
 			}
 			else
 			{
-				driveOutput = -1 * error * Constants.DRIVE_KP;
+				errorRefresh = error + errorRefresh;
+				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 			}
 			if (Math.abs(driveOutput) > .75)
 			{
@@ -123,6 +126,7 @@ public class Tracking
 		angleOff = 0;
 		target = 0;
 		heading = 0;
+		errorRefresh = 0;
 		edge = false;
 
 	}
