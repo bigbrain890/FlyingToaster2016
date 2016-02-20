@@ -5,6 +5,7 @@ public class Constants
 	// Drive Controllers
 	public static final int PS4_CONTROLLER = 0;
 	public static final int ATTACK3 = 1;
+	public static final int CONTROL_BOARD = 2;
 	
 	// Drive Motors
 	public static final int LEFT_MOTOR_1 = 1;
@@ -27,6 +28,8 @@ public class Constants
 	public static final int ULTRASONIC = 0;
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
 	public static final int SHOOTER_POT = 1;
+	public static final int CAM_POT = 2;
+	public static final int INTAKE_POT = 3;
 	
 	// Auton References
 	public static final int LOW_BAR = 1;
@@ -44,7 +47,12 @@ public class Constants
 	// PID Contants
 	public static final double DRIVE_KP = .08;
 	public static final double DRIVE_KI = .001;
-	public static final double DRIVE_KD = 0;
+	public static final double SHOOTER_KP = 0.0;
+	public static final double SHOOTER_KI = 0.0;
+	public static final double INTAKE_KP = 0.0;
+	public static final double INTAKE_KI = 0.0;
+	public static final double CAM_KP = 0.0;
+	public static final double CAM_KI = 0.0;
 
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
@@ -63,9 +71,12 @@ public class Constants
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 7;
 	public static final int CAM = 8;
-	public static final double CAM_FIRE = 0.0; //Position for shoving ball into shooting wheels.
-	public static final double CAM_HOLD = 0.0; //Position for holding ball in shooter.
-	public static final double CAM_INTAKE = 0.0; // Position for anticipating intaked ball.
+	public static final double CAM_FIRE = 0.0; 		//Position for shoving ball into shooting wheels.
+	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
+	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.
+	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
+	public static final double INTAKE_DOWN = 0.0;
+	
 	
 	// Intake Motors
 	public static final int ROLLERS = 9;

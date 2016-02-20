@@ -36,6 +36,51 @@ public class PILoop
 		return motorOutput;
 	}
 	
+	public static double shooter(double current, double target, boolean useIntegral)
+	{
+		double error = target - current;
+		if (useIntegral == true)
+		{
+			errorRefresh = error + errorRefresh;
+			motorOutput = (((error * Constants.SHOOTER_KP) *-1) + (errorRefresh * Constants.SHOOTER_KI) * -1);
+		}
+		else
+		{
+			motorOutput = ((error * Constants.SHOOTER_KP) * -1);
+		}
+		return motorOutput;
+	}
+	
+	public static double intake(double current, double target, boolean useIntegral)
+	{
+		double error = target - current;
+		if (useIntegral == true)
+		{
+			errorRefresh = error + errorRefresh;
+			motorOutput = (((error * Constants.INTAKE_KP) * -1) + (errorRefresh * Constants.INTAKE_KI));
+		}
+		else
+		{
+			motorOutput = ((error * Constants.INTAKE_KP) * -1);
+		}
+		return motorOutput;
+	}
+	
+	public static double cam(double current, double target, boolean useIntegral)
+	{
+		double error = target - current;
+		if (useIntegral == true)
+		{
+			errorRefresh = error + errorRefresh;
+			motorOutput = (((error * Constants.CAM_KP) * -1) + (errorRefresh * Constants.CAM_KI));
+		}
+		else
+		{
+			motorOutput = ((error * Constants.INTAKE_KP) * -1);
+		}
+		return motorOutput;
+	}
+	
 	public void reset()
 	{
 		errorRefresh = 0;

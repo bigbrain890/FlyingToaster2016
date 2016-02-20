@@ -1,15 +1,18 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Intake {
 	private static CANTalon intake, rollers;
 	private static Intake instance;
+	private static AnalogInput intakePot;
 	
 	private Intake()
 	{
 		rollers = new CANTalon(Constants.ROLLERS);
 		intake = new CANTalon(Constants.INTAKE);
+		intakePot = new AnalogInput(Constants.INTAKE_POT);
 	}
 	
 	public static Intake getInstance()
@@ -23,6 +26,8 @@ public class Intake {
 	
 	public static void pullBall()
 	{
-		Shooter.intake();
+		intake.set(PILoop.intake(intakePot.getVoltage(), Constants.INTAKE_DOWN, false));
+		rollers.set(1.0);
+		
 	}
 }

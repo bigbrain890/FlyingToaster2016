@@ -24,7 +24,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		// State Switching inputsv
+		// State Switching inputs.
 		if (dualShock.getRightBumper() == true)
 		{
 			driveMode = Constants.DRIVE_NORMAL;
@@ -58,6 +58,7 @@ public class TeleOperated
 		if (dualShock.getRightThrottleButton() == true)
 		{
 			Shooter.intake();
+			Intake.pullBall();
 		}
 		
 		else if (dualShock.getLeftThrottleButton() == true)

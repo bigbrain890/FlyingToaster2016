@@ -6,7 +6,7 @@ public class Shooter
 {
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, cam;
-	public static AnalogInput shooterPot;
+	public static AnalogInput shooterPot, camPot;
 	
 	public Shooter()
 	{
@@ -15,6 +15,7 @@ public class Shooter
 		shooter = new CANTalon(Constants.SHOOTER);
 		cam = new CANTalon(Constants.CAM);
 		shooterPot = new AnalogInput(Constants.SHOOTER_POT);
+		camPot = new AnalogInput(Constants.CAM_POT);
 		
 	}
 	
@@ -35,22 +36,23 @@ public class Shooter
 	
 	public static void intake()
 	{
+		shooter.set(PILoop.shooter(shooterPot.getVoltage(), Constants.SHOOTER_INTAKE, false));
 		flyWheel1.set(.3);
 		flyWheel2.set(-.3);
 	}
 	
 	public static void hold()
 	{
-		cam.set(PILoop.smoothDrive(shooterPot.getVoltage(), Constants.CAM_HOLD, false));
+		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_HOLD, false));
 	}
 	
 	public static void fire()
 	{
-		cam.set(PILoop.smoothDrive(shooterPot.getVoltage(), Constants.CAM_FIRE, false));
+		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_FIRE, false));
 	}
 	
 	public static void anticipateBall()
 	{
-		cam.set(PILoop.smoothDrive(shooterPot.getAverageVoltage(), Constants.CAM_INTAKE, false));
+		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_INTAKE, false));
 	}
 }
