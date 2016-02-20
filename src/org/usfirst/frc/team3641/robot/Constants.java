@@ -79,6 +79,6 @@ public class Constants
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
 	
 	//Teleop State Variables
-	public static final boolean DRIVE_NORMAL = true;
-	public static final boolean DRIVE_REVERSE = false;
+	public static final boolean DRIVE_NORMAL = false;
+	public static final boolean DRIVE_REVERSE = true;
 }

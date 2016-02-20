@@ -41,16 +41,16 @@ public class Shooter
 	
 	public static void hold()
 	{
-		
+		cam.set(PILoop.smoothDrive(shooterPot.getVoltage(), Constants.CAM_HOLD, false));
 	}
 	
 	public static void fire()
 	{
-		
+		cam.set(PILoop.smoothDrive(shooterPot.getVoltage(), Constants.CAM_FIRE, false));
 	}
 	
 	public static void anticipateBall()
 	{
-		
+		cam.set(PILoop.smoothDrive(shooterPot.getAverageVoltage(), Constants.CAM_INTAKE, false));
 	}
 }
