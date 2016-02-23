@@ -48,7 +48,7 @@ public class Constants
 	
 	// PID Contants
 	public static final double DRIVE_KP = .1;
-	public static final double DRIVE_KI = .001;
+	public static final double DRIVE_KI = 0;//.003;
 	public static final double SHOOTER_KP = 0.0;
 	public static final double SHOOTER_KI = 0.0;
 	public static final double INTAKE_KP = 0.0;
@@ -61,12 +61,15 @@ public class Constants
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP = 160;
-	//public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
-	public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
+	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
+	
+	public static final double MIN_ANGLE_ERROR = 2.5;
+	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final int SEND_REQUEST = 0;
 	public static final int RESPONSE_CAPTURE = 1;
 	public static final int DO_MATH = 2;
 	public static final int TURN_TO_TARGET = 3;
+	public static final int TRACKED = 4;
 
 	
 	// Shooter Motors
@@ -95,4 +98,5 @@ public class Constants
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = false;
 	public static final boolean DRIVE_REVERSE = true;
+	
 }
