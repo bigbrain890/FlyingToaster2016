@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class Shooter 
 {
 	private static Shooter instance;
-	public static CANTalon flyWheel1, flyWheel2, shooter, cam;
+	public static CANTalon flyWheel1, flyWheel2, shooter, triggerWheel;
 	public static AnalogInput shooterPot, camPot;
 	
 	public Shooter()
@@ -13,9 +13,8 @@ public class Shooter
 		flyWheel1 = new CANTalon(Constants.FLY_WHEEL_1);
 		flyWheel2 = new CANTalon(Constants.FLY_WHEEL_2);
 		shooter = new CANTalon(Constants.SHOOTER);
-		cam = new CANTalon(Constants.CAM);
 		shooterPot = new AnalogInput(Constants.SHOOTER_POT);
-		camPot = new AnalogInput(Constants.CAM_POT);
+		triggerWheel = new CANTalon(Constants.TRIGGER_WHEEL);
 		
 	}
 	
@@ -43,16 +42,16 @@ public class Shooter
 	
 	public static void hold()
 	{
-		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_HOLD, false));
+		triggerWheel.set(0);
 	}
-	
+		
 	public static void fire()
 	{
-		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_FIRE, false));
+		triggerWheel.set(1);
 	}
 	
 	public static void anticipateBall()
 	{
-		cam.set(PILoop.cam(camPot.getVoltage(), Constants.CAM_INTAKE, false));
+		triggerWheel.set(-0.35);
 	}
 }

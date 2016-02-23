@@ -30,7 +30,6 @@ public class Constants
 	public static final int ULTRASONIC = 0;
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
 	public static final int SHOOTER_POT = 1;
-	public static final int CAM_POT = 2;
 	public static final int INTAKE_POT = 3;
 	
 	// Auton References
@@ -48,7 +47,7 @@ public class Constants
 	
 	// PID Contants
 	public static final double DRIVE_KP = .1;
-	public static final double DRIVE_KI = 0;//.003;
+	public static final double DRIVE_KI = .003;
 	public static final double SHOOTER_KP = 0.0;
 	public static final double SHOOTER_KI = 0.0;
 	public static final double INTAKE_KP = 0.0;
@@ -63,7 +62,7 @@ public class Constants
 	public static final int CAMERA_LINE_UP = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	
-	public static final double MIN_ANGLE_ERROR = 2.5;
+	public static final double MIN_ANGLE_ERROR = 2;
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final int SEND_REQUEST = 0;
 	public static final int RESPONSE_CAPTURE = 1;
@@ -76,7 +75,7 @@ public class Constants
 	public static final int FLY_WHEEL_1 = 5;
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 7;
-	public static final int CAM = 8;
+	public static final int TRIGGER_WHEEL = 8;
 	public static final double CAM_FIRE = 0.0; 		//Position for shoving ball into shooting wheels.
 	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
 	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.

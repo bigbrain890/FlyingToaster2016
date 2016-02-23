@@ -47,16 +47,18 @@ public class Tracking
 		if (visionState == Constants.SEND_REQUEST)
 		{
 			heading = DriveBase.getDriveDirection();
-			if(TCP.connect()) visionState = Constants.RESPONSE_CAPTURE;
+			UDP.sendData("Request");
+			visionState = Constants.RESPONSE_CAPTURE;
 			SmartDashboard.putBoolean("TRACKED", false);
 		}
 		
 		else if (visionState == Constants.RESPONSE_CAPTURE)
 		{
 			
-			String response = TCP.doStuff("Request");
+			String response = UDP.getData();
 			if (response != null)
 			{
+				SmartDashboard.putString("Response", response);
 				xcord = Integer.parseInt(response);
 				if(xcord != 0)
 				{

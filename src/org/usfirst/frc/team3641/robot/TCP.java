@@ -1,4 +1,5 @@
 package org.usfirst.frc.team3641.robot;
+
 import java.io.*;
 import java.net.*;
 
@@ -26,6 +27,7 @@ public class TCP
 		try
 		{
 			socket = new Socket(host, port);
+			socket.setSoTimeout(4);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			return true;
@@ -36,12 +38,14 @@ public class TCP
 		}
 	}
 	
-	public static String doStuff(String request)
+	public static void sendData(String request)
 	{
-		
+		out.println(request);
+	}
+	public static String getData()
+	{
 		try
 		{
-			out.println(request);
 			return in.readLine();
 		}
 		catch (IOException e)
