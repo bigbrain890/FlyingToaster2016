@@ -45,7 +45,7 @@ public class TeleOperated
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
 		
-		if (dualShock.getCircleButton() == true)
+		if (dualShock.getSquareButton() == true)
 		{
 			Tracking.autoTarget();
 		}
@@ -55,13 +55,13 @@ public class TeleOperated
 			Tracking.resetVision();
 		}
 		
-		if (dualShock.getRightThrottleButton() == true)
+		if (dualShock.getCircleButton() == true)
 		{
 			Shooter.intake();
 			Intake.pullBall();
 		}
 		
-		else if (dualShock.getLeftThrottleButton() == true)
+		else if (dualShock.getTriangleButton() == true)
 		{
 			Shooter.spinUpWheels();
 		}

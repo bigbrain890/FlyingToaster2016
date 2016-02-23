@@ -37,8 +37,8 @@ public class Shooter
 	public static void intake()
 	{
 		shooter.set(PILoop.shooter(shooterPot.getVoltage(), Constants.SHOOTER_INTAKE, false));
-		flyWheel1.set(.3);
-		flyWheel2.set(-.3);
+		flyWheel1.set(.35);
+		flyWheel2.set(-.35);
 	}
 	
 	public static void hold()

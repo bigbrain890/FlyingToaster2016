@@ -91,7 +91,7 @@ public class Tracking
 			if (edge == true)
 			{
 				errorRefresh = error + errorRefresh;
-				driveOutput = ((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI));
+				driveOutput = ((error * Constants.DRIVE_KP) /*+ (errorRefresh * Constants.DRIVE_KI)*/);
 			}
 			else
 			{
