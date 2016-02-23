@@ -21,7 +21,7 @@ public class Constants
 	
 	//Pi Port
 	public static final int PI_COM_PIN = 2;
-	public static final int PI_UDP_PORT = 3641;
+	public static final int PI_PORT = 3641;
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
 	public static final String PI_IP_ADDR = "10.36.41.121";//"10.36.41.41"; Ethan's Pi

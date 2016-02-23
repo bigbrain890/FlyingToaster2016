@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3641.robot;
 
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -19,7 +18,7 @@ public class UDP
 	{
 		try 
 		{
-			port = Constants.PI_UDP_PORT;
+			port = Constants.PI_PORT;
 			address = InetAddress.getByName(Constants.PI_IP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
