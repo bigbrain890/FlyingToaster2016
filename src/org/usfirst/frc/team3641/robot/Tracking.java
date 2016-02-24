@@ -13,7 +13,6 @@ public class Tracking
 	private static double angleOff = 0;
 	private static double target = 0;
 	private static double heading = 0;
-	private static boolean edge = false;
 	private static double driveOutput = 0;
 	public static double errorRefresh = 0;
 
@@ -73,13 +72,11 @@ public class Tracking
 			target = heading + angleOff;
 			if(target<0) 
 			{
-				target = 360 + target;
-				edge = true;
+				target += 360;
 			}
 			else if(target>=360)
 			{
-				target = target - 360;
-				edge = true;
+				target -= 360;
 			}
 			visionState = Constants.TURN_TO_TARGET;
 			if(Math.abs(angleOff)<Constants.MIN_ANGLE_ERROR)
@@ -94,23 +91,43 @@ public class Tracking
 			double driveOutput = -1* PILoop.smoothDrive(DriveBase.getDriveDirection(), target, false);
 			}
 			*/
-			double error = target - DriveBase.getDriveDirection();
-			if (Math.abs(error) < 3)
+			double ActualCurrentHeading = DriveBase.getDriveDirection();
+			double error = target - ActualCurrentHeading;
+			SmartDashboard.putNumber("Adjusted Heading", ActualCurrentHeading);
+			if(error>=180)
+			{
+				error -= 360;
+			}
+			else if(error<=-180)
+			{
+				error += 360;
+			}
+			
+			if (Math.abs(error) < 1.5)
 			{
 				visionState = Constants.SEND_REQUEST;
 			}
 			else if(Math.abs(error) >= 3)
 			{
-				if (edge == true)
+				if (errorRefresh > Constants.KI_UPPER_LIMIT)
+				{
+					errorRefresh = Constants.KI_UPPER_LIMIT;
+				}
+				else if (errorRefresh < Constants.KI_LOWER_LIMIT)
+				{
+					errorRefresh = Constants.KI_LOWER_LIMIT;
+				}
+				
+				/*if (edge == true)
 				{
 					errorRefresh = error + errorRefresh;
 					driveOutput = ((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI));
 				}
 				else
-				{
-					errorRefresh = error + errorRefresh;
+				{*/
+					errorRefresh += error;
 					driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
-				}
+				//}
 				if (Math.abs(driveOutput) > .75)
 				{
 					if (driveOutput < 0)
@@ -140,7 +157,6 @@ public class Tracking
 			DriveBase.driveNormal(0.0, 0.0);
 		}
 		
-		
 	}
 	
 	public static void resetVision()
@@ -151,7 +167,6 @@ public class Tracking
 		target = 0;
 		heading = 0;
 		errorRefresh = 0;
-		edge = false;
 		SmartDashboard.putBoolean("TRACKED", false);
 
 	}
@@ -163,6 +178,7 @@ public class Tracking
 		SmartDashboard.putNumber("Angle Off", angleOff);
 		SmartDashboard.putNumber("Vision State", visionState);
 		SmartDashboard.putNumber("X Cordinate", xcord);
-		SmartDashboard.putBoolean("Edge", edge);
+		SmartDashboard.putNumber("ErrRefresh", errorRefresh);
+
 	}
 }

@@ -65,6 +65,15 @@ public class TeleOperated
 		{
 			Shooter.spinUpWheels();
 		}
+		else
+		{
+			Shooter.flyWheel1.set(0.0);
+			Shooter.flyWheel2.set(0.0);
+		}
+		if(dualShock.getOptionsButton())
+		{
+			DriveBase.resetGyro();
+		}
 		Tracking.printOut();
 	}
 }

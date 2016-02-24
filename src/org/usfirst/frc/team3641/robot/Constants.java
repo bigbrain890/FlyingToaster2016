@@ -54,6 +54,8 @@ public class Constants
 	public static final double INTAKE_KI = 0.0;
 	public static final double CAM_KP = 0.0;
 	public static final double CAM_KI = 0.0;
+	public static final double KI_UPPER_LIMIT = 233;
+	public static final double KI_LOWER_LIMIT = -233;
 
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
@@ -62,7 +64,7 @@ public class Constants
 	public static final int CAMERA_LINE_UP = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	
-	public static final double MIN_ANGLE_ERROR = 2;
+	public static final double MIN_ANGLE_ERROR = 1;
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final int SEND_REQUEST = 0;
 	public static final int RESPONSE_CAPTURE = 1;
