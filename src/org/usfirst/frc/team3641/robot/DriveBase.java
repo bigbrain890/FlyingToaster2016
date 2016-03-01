@@ -46,6 +46,16 @@ public class DriveBase
 		chassis.arcadeDrive(throttle * -1, rotate * -1);
 	}
 	
+	public static void driveTank(double left, double right)
+	{
+		chassis.tankDrive(left * -1, right * -1);
+	}
+	
+	public static void driveReverseTank(double left, double right)
+	{
+		chassis.tankDrive(left, right);
+	}
+	
 	public static double getDriveDis()
 	{
 		return leftMotor1.getAnalogInPosition() * Constants.DRIVE_ENCODER_MULTIPLIER;

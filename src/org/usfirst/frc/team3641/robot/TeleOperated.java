@@ -38,11 +38,11 @@ public class TeleOperated
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
-			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1 * dualShock.getRightStickXAxis());
+			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
 		else if (driveMode == Constants.DRIVE_REVERSE)
 		{
-			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
+			DriveBase.driveReverseTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
 		
 		if (dualShock.getSquareButton() == true)
