@@ -32,12 +32,14 @@ public class PS4Controller extends Joystick
 	
 	public double getLeftTriggerAxis()
 	{
-		return getRawAxis(3);
+		double output = (getRawAxis(3) + .5) / 2;
+		return output;
 	}
 	
 	public double getRightTriggerAxis()
 	{
-		return getRawAxis(4);
+		double output = (getRawAxis(4) + .5) / 2;
+		return output;
 	}
 	
 	public boolean getSquareButton()

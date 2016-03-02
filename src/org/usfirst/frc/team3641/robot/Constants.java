@@ -77,7 +77,7 @@ public class Constants
 	public static final int FLY_WHEEL_1 = 5;
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 7;
-	public static final int TRIGGER_WHEEL = 8;
+	public static final int SHOOTER_LEVER = 8;
 	public static final double CAM_FIRE = 0.0; 		//Position for shoving ball into shooting wheels.
 	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
 	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.

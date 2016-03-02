@@ -121,7 +121,7 @@ public class Autonomous
 			
 			else
 			{
-				Shooter.fire();
+				Shooter.fire(.3);
 			}
 		}
 	}
