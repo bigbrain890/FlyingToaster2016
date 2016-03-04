@@ -2,6 +2,7 @@ package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter 
 {
 	private static Shooter instance;
@@ -29,15 +30,15 @@ public class Shooter
 		
 	public static void spinUpWheels()
 	{
-		flyWheel1.set(-1);
-		flyWheel2.set(1);
+		flyWheel1.set(1);
+		flyWheel2.set(-1);
 	}
 	
 	public static void intake()
 	{
 		shooter.set(PILoop.shooter(shooterPot.getVoltage(), Constants.SHOOTER_INTAKE, false));
-		flyWheel1.set(.35);
-		flyWheel2.set(-.35);
+		flyWheel1.set(-.5);
+		flyWheel2.set(.5);
 	}
 	
 	public static void manualControl(double joystick)
@@ -47,12 +48,17 @@ public class Shooter
 	
 	public static void fire (double joystick)
 	{
-		shooterLever.set(joystick);
+		shooterLever.set(-joystick);
 	}
 	
 	public static void resetShooterArm (double joystick)
 	{
-		shooterLever.set(-joystick);
+		shooterLever.set(joystick);
+	}
+	
+	public static void getShooterAngle()
+	{
+		SmartDashboard.putNumber("Shooter Angle", shooterPot.getVoltage());
 	}
 	
 	

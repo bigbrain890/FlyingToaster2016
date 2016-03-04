@@ -95,9 +95,14 @@ public class Constants
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
+	public static final int LIGHTING_CONTROLLER = 0;
+	public static final double LIGHTING_FADE = 1.0;
+	public static final double LIGHTING_THEATER_CHASE = 2.0;
+	public static final double LIGHTING_RAINBOW = 3.0;
+	public static final double LIGHTING_BLINK = 4.0;
 	
 	//Teleop State Variables
-	public static final boolean DRIVE_NORMAL = false;
-	public static final boolean DRIVE_REVERSE = true;
+	public static final boolean DRIVE_NORMAL = true;
+	public static final boolean DRIVE_REVERSE = false;
 	
 }
