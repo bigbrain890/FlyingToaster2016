@@ -73,7 +73,7 @@ public class Constants
 	public static final int TRACKED = 4;
 
 	
-	// Shooter Motors
+	// Shooter stuff
 	public static final int FLY_WHEEL_1 = 5;
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 7;
@@ -83,6 +83,10 @@ public class Constants
 	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double INTAKE_DOWN = 0.0;
+	public static final double FAR_SHOT = 0.0;
+	public static final double MEDIUM_SHOT = 0.0;
+	public static final double CLOSE_SHOT = 0.0;
+	public static final int SHOOTER_SERVO_PORT = 9;
 	
 	
 	// Intake Motors
