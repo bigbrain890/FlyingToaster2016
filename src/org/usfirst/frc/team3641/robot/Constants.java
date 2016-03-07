@@ -63,9 +63,8 @@ public class Constants
 	// Camera stuff
 	public static final int CAMERA_LINE_UP = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
-	
-	public static final double MIN_ANGLE_ERROR = 1;
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
+	public static final double MIN_ANGLE_ERROR = 1;
 	public static final int SEND_REQUEST = 0;
 	public static final int RESPONSE_CAPTURE = 1;
 	public static final int DO_MATH = 2;
@@ -82,6 +81,7 @@ public class Constants
 	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
 	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
+	public static final double SHOOTER_REVERSE = 0.0; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final double INTAKE_DOWN = 0.0;
 	public static final double FAR_SHOT = 0.0;
 	public static final double MEDIUM_SHOT = 0.0;
