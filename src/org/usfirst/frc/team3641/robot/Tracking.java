@@ -15,6 +15,8 @@ public class Tracking
 	private static double heading = 0;
 	private static double driveOutput = 0;
 	public static double errorRefresh = 0;
+	private static int packetCount = 0;
+	private static int checksum = packetCount;
 
 
 	private Tracking()
@@ -46,19 +48,33 @@ public class Tracking
 		if (visionState == Constants.SEND_REQUEST)
 		{
 			heading = DriveBase.getDriveDirection();
-			UDP.sendData("Request");
+			UDP.sendData("Request " + packetCount);
 			visionState = Constants.RESPONSE_CAPTURE;
 			SmartDashboard.putBoolean("TRACKED", false);
 		}
 		
 		else if (visionState == Constants.RESPONSE_CAPTURE)
 		{
-			
-			String response = UDP.getData();
+			String response = UDP.flush(null);	//For some reason we wern't using flush, just getData(). That probably the checksum unneeded. 
 			if (response != null)
 			{
 				SmartDashboard.putString("Response", response);
-				xcord = Integer.parseInt(response);
+				if(response.contains(";"))
+				{
+					String data[] = response.split(";");
+					xcord = Integer.parseInt(data[0]);
+					checksum = Integer.parseInt(data[data.length-1]);
+					if(checksum != packetCount)
+					{
+						//robot.die("I have failed to keep UDP Data in sync.");
+						visionState=Constants.RESPONSE_CAPTURE;
+						xcord = 0;
+					}
+				}
+				else
+				{
+					xcord = Integer.parseInt(response); //Compatibility in case we decide not to send multiple values.
+				}
 				if(xcord != 0)
 				{
 					visionState = Constants.DO_MATH;
