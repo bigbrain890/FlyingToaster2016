@@ -33,16 +33,20 @@ public class TeleOperated
 		{
 			driveMode = Constants.DRIVE_REVERSE;
 		}
+		else if (dualShock.getPlayStationButton() == true)
+		{
+			driveMode = 
+		}
 
 		
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
-			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
+			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
 		else if (driveMode == Constants.DRIVE_REVERSE)
 		{
-			DriveBase.driveReverseTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
+			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
 		
 		if (dualShock.getSquareButton() == true)
@@ -60,9 +64,16 @@ public class TeleOperated
 			DriveBase.resetGyro();
 		}
 		
-		if(dualShock.getRightThrottleButton() == true)
+		if(dualShock.getRightTriggerAxis() > 0)
 		{
 			Shooter.intake();
+			Intake.pullBall();
+		}
+		
+		else if(dualShock.getLeftTriggerAxis() > 0)
+		{
+			Shooter.lowGoal();
+			Intake.spitBall();
 		}
 		
 		else if (operator.getBaseFrontLeft() == true)
@@ -85,13 +96,14 @@ public class TeleOperated
 		{
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
+			Intake.stopIntake();
 		}
 		
 		if(operator.getTrigger() == true)
 		{
 			Shooter.fire(.3);
 		}
-		else if (operator.getBaseCenterLeft() == true)
+		else if (operator.getThumbTop() == true)
 		{
 			Shooter.resetShooterArm(.3);
 		}

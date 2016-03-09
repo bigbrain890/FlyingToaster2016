@@ -80,4 +80,10 @@ public class Shooter
 		shooter.set(PILoop.shooter(shooterPot.getVoltage(), Constants.CLOSE_SHOT, false));
 	}
 	
+	public static void lowGoal()
+	{
+		flyWheel1.set(.6);
+		flyWheel2.set(-.6);
+	}
+	
 }

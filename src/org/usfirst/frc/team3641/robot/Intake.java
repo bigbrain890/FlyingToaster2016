@@ -30,4 +30,14 @@ public class Intake {
 		rollers.set(1.0);
 		
 	}
+	
+	public static void stopIntake()
+	{
+		rollers.set(0.0);
+	}
+	
+	public static void spitBall()
+	{
+		rollers.set(-.5);
+	}
 }
