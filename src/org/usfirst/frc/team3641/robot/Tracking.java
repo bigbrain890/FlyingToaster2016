@@ -148,6 +148,14 @@ public class Tracking
 					errorRefresh += error;
 					driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				//}
+				if (driveOutput > 0)
+				{
+					driveOutput = driveOutput + Constants.ROTATION_STALL_INPUT;
+				}
+				else if (driveOutput < 0)
+				{
+					driveOutput = driveOutput - Constants.ROTATION_STALL_INPUT;
+				}
 				if (Math.abs(driveOutput) > .75)
 				{
 					if (driveOutput < 0)

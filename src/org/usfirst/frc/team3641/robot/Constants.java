@@ -104,6 +104,7 @@ public class Constants
 	public static final double LIGHTING_THEATER_CHASE = 2.0;
 	public static final double LIGHTING_RAINBOW = 3.0;
 	public static final double LIGHTING_BLINK = 4.0;
+	public static final double ROTATION_STALL_INPUT = .25;
 	
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = true;

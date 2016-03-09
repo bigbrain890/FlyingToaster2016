@@ -33,10 +33,6 @@ public class TeleOperated
 		{
 			driveMode = Constants.DRIVE_REVERSE;
 		}
-		else if (dualShock.getPlayStationButton() == true)
-		{
-			driveMode = 
-		}
 
 		
 		// Actually driving and stuff
