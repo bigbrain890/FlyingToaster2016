@@ -3,12 +3,14 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter 
 {
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
 	public static AnalogInput shooterPot, camPot;
+	public static DigitalInput leverLimSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
 	
 	public Shooter()
@@ -18,6 +20,7 @@ public class Shooter
 		shooter = new CANTalon(Constants.SHOOTER);
 		shooterPot = new AnalogInput(Constants.SHOOTER_POT);
 		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
+		leverLimSwitch = new DigitalInput(Constants.LEVER_LIM_SWITCH);
 		
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
@@ -52,14 +55,19 @@ public class Shooter
 		shooter.set(joystick);
 	}
 	
-	public static void fire (double joystick)
+	public static void fire ()
 	{
-		shooterLever.set(-joystick);
+		shooterLever.set(-.3);
 	}
 	
-	public static void resetShooterArm (double joystick)
+	public static void resetShooterArm ()
 	{
-		shooterLever.set(joystick);
+		shooterLever.set(.3);
+	}
+	
+	public static void restShooterArm()
+	{
+		shooterLever.set(0.0);
 	}
 	
 	public static void getShooterAngle()
@@ -86,6 +94,12 @@ public class Shooter
 	{
 		flyWheel1.set(.6);
 		flyWheel2.set(-.6);
+	}
+	
+	public static void sensorReadout()
+	{
+	SmartDashboard.putNumber("Shooter Lever", shooterLever.getAnalogInPosition());
+	SmartDashboard.putNumber("Shooter Angle", shooter.getAnalogInPosition());
 	}
 	
 }

@@ -87,6 +87,8 @@ public class Constants
 	public static final double MEDIUM_SHOT = 0.0;
 	public static final double CLOSE_SHOT = 0.0;
 	public static final int SHOOTER_SERVO_PORT = 9;
+	public static final int LEVER_LIM_SWITCH = 8;
+	public static final int SHOOTER_LIM_SWITCH = 9;
 	
 	
 	// Intake Motors
@@ -105,9 +107,13 @@ public class Constants
 	public static final double LIGHTING_RAINBOW = 3.0;
 	public static final double LIGHTING_BLINK = 4.0;
 	public static final double ROTATION_STALL_INPUT = .25;
+	public static final int LEVER_MAX_SWING = 256;
 	
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = true;
 	public static final boolean DRIVE_REVERSE = false;
+	public static final int RESTING_POSITION = 0;
+	public static final int FIRE = 1;
+	public static final int RESET = 2;
 	
 }

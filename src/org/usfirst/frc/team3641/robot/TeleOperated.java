@@ -6,6 +6,7 @@ public class TeleOperated
 	public static PS4Controller dualShock;
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
+	public static int shooterLeverState = Constants.RESTING_POSITION;
 	
 	private TeleOperated()
 	{
@@ -32,6 +33,10 @@ public class TeleOperated
 		else if (dualShock.getLeftBumper() == true)
 		{
 			driveMode = Constants.DRIVE_REVERSE;
+		}
+		if (operator.getIndexTrigger() == true)
+		{
+			shooterLeverState = Constants.FIRE;
 		}
 
 		
@@ -72,6 +77,7 @@ public class TeleOperated
 			Intake.spitBall();
 		}
 		
+		
 		else if (operator.getBaseFrontLeft() == true)
 		{
 			Shooter.closeShot();
@@ -94,19 +100,33 @@ public class TeleOperated
 			Shooter.flyWheel2.set(0.0);
 			Intake.stopIntake();
 		}
+		if (shooterLeverState == Constants.RESTING_POSITION)
+		{
+			Shooter.restShooterArm();
+		}
+		else if (shooterLeverState == Constants.FIRE)
+		{
+			if (Shooter.shooterLever.getAnalogInPosition() < Constants.LEVER_MAX_SWING)
+			{
+				Shooter.fire();
+			}
+			else
+			{
+				shooterLeverState = Constants.RESET;
+			}
+		}
+		else if (shooterLeverState == Constants.RESET)
+		{
+			if ((Shooter.shooterLever.getAnalogInPosition() > 0) || (Shooter.leverLimSwitch.get() == false))
+			{
+				Shooter.resetShooterArm();
+			}
+			else
+			{
+				shooterLeverState = Constants.RESTING_POSITION;
+			}
+		}
 		
-		if(operator.getTrigger() == true)
-		{
-			Shooter.fire(.3);
-		}
-		else if (operator.getThumbTop() == true)
-		{
-			Shooter.resetShooterArm(.3);
-		}
-		else
-		{
-			Shooter.shooterLever.set(0.0);
-		}
 		Shooter.manualControl(operator.getYAxis());
 		Shooter.getShooterAngle();
 		Tracking.printOut();
