@@ -48,7 +48,7 @@ public class Constants
 	// PID Contants
 	public static final double DRIVE_KP = .1;
 	public static final double DRIVE_KI = .003;
-	public static final double SHOOTER_KP = 0.0;
+	public static final double SHOOTER_KP = 0.0003;
 	public static final double SHOOTER_KI = 0.0;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
@@ -81,10 +81,10 @@ public class Constants
 	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
 	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
-	public static final double SHOOTER_REVERSE = 0.0; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
+	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final double INTAKE_DOWN = 0.0;
 	public static final double FAR_SHOT = 0.0;
-	public static final double MEDIUM_SHOT = 0.0;
+	public static final int MEDIUM_SHOT = 2400;
 	public static final double CLOSE_SHOT = 0.0;
 	public static final int SHOOTER_SERVO_PORT = 9;
 	public static final int LEVER_LIM_SWITCH = 8;
@@ -107,7 +107,7 @@ public class Constants
 	public static final double LIGHTING_RAINBOW = 3.0;
 	public static final double LIGHTING_BLINK = 4.0;
 	public static final double ROTATION_STALL_INPUT = .25;
-	public static final int LEVER_MAX_SWING = 256;
+	public static final int LEVER_MAX_SWING = -1000;
 	
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = true;

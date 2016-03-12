@@ -79,7 +79,7 @@ public class Tracking
 				{
 					visionState = Constants.DO_MATH;
 				}
-				if(Shooter.shooterPot.getVoltage() > Constants.SHOOTER_REVERSE)
+				if(Shooter.shooter.getAnalogInPosition() > Constants.SHOOTER_REVERSE)
 				{
 					xcord = (Constants.CAMERA_LINE_UP*2)-xcord;
 				}

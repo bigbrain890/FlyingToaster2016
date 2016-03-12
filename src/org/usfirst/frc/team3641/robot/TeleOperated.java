@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class TeleOperated
 {
 	private static TeleOperated instance;
@@ -71,10 +73,9 @@ public class TeleOperated
 			Intake.pullBall();
 		}
 		
-		else if(dualShock.getLeftTriggerAxis() > 0)
+		else if(dualShock.getXButton() == true)
 		{
-			Shooter.lowGoal();
-			Intake.spitBall();
+			//Intake.spitBall();
 		}
 		
 		
@@ -84,40 +85,48 @@ public class TeleOperated
 			Shooter.spinUpWheels();
 		}
 		
-		else if (operator.getBaseBackLeft() == true)
-		{
-			Shooter.mediumShot();
-			Shooter.spinUpWheels();
-		}
 		else if (operator.getBaseCenterLeft() == true)
 		{
 			Shooter.farShot();
 			Shooter.spinUpWheels();
+		}
+		
+		else if (operator.getBaseBackLeft() == true)
+		{
+			double pidOut=PILoop.shooter(Shooter.shooter.getEncPosition(), Constants.MEDIUM_SHOT, false);
+			Shooter.shooter.set(pidOut);
+			SmartDashboard.putNumber("PID Out", pidOut);
 		}
 		else
 		{
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
 			Intake.stopIntake();
+			Shooter.manualControl(operator.getYAxis());
 		}
+		
 		if (shooterLeverState == Constants.RESTING_POSITION)
 		{
 			Shooter.restShooterArm();
 		}
 		else if (shooterLeverState == Constants.FIRE)
 		{
-			if (Shooter.shooterLever.getAnalogInPosition() < Constants.LEVER_MAX_SWING)
+			
+			if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
 			{
+				SmartDashboard.putBoolean("Level Test", true);
 				Shooter.fire();
 			}
 			else
 			{
+				SmartDashboard.putBoolean("Level Test", false);
+				Shooter.resetShooterArm();
 				shooterLeverState = Constants.RESET;
 			}
 		}
 		else if (shooterLeverState == Constants.RESET)
 		{
-			if ((Shooter.shooterLever.getAnalogInPosition() > 0) || (Shooter.leverLimSwitch.get() == false))
+			if ((Shooter.shooterLever.getEncPosition() <= 0) || (Shooter.leverLimSwitch.get() == false))
 			{
 				Shooter.resetShooterArm();
 			}
@@ -126,9 +135,15 @@ public class TeleOperated
 				shooterLeverState = Constants.RESTING_POSITION;
 			}
 		}
+		if(!Shooter.leverLimSwitch.get())
+		{
+			Shooter.zeroShooterLeverEnc();
+		}
 		
 		Shooter.manualControl(operator.getYAxis());
-		Shooter.getShooterAngle();
+		Shooter.sensorReadout();
 		Tracking.printOut();
 	}
+	
+	
 }

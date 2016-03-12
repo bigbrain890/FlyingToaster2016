@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3641.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PILoop 
 {
@@ -48,7 +49,8 @@ public class PILoop
 		{
 			motorOutput = ((error * Constants.SHOOTER_KP) * -1);
 		}
-		return motorOutput;
+		SmartDashboard.putBoolean("MediumShot", true);
+		return -motorOutput;
 	}
 	
 	public static double intake(double current, double target, boolean useIntegral)
