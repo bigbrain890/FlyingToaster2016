@@ -93,7 +93,7 @@ public class TeleOperated
 		
 		else if (operator.getBaseBackLeft() == true)
 		{
-			double pidOut=PILoop.shooter(Shooter.shooter.getEncPosition(), Constants.MEDIUM_SHOT, false);
+			double pidOut=PILoop.loop(Shooter.shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI);
 			Shooter.shooter.set(pidOut);
 			SmartDashboard.putNumber("PID Out", pidOut);
 		}

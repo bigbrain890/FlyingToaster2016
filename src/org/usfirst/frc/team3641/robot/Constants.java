@@ -46,8 +46,8 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .1;
-	public static final double DRIVE_KI = .003;
+	public static final double DRIVE_KP = -.1;
+	public static final double DRIVE_KI = -.003;
 	public static final double SHOOTER_KP = 0.0003;
 	public static final double SHOOTER_KI = 0.0;
 	public static final double INTAKE_KP = 0.0;

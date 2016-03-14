@@ -68,19 +68,19 @@ public class Shooter
 		
 	public static void farShot()
 	{
-		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.FAR_SHOT, false));
+		shooter.set(PILoop.loop(shooter.getEncPosition(), Constants.FAR_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
 	}
 	
 	public static void mediumShot()
 	{
-		double pidOut=PILoop.shooter(shooter.getEncPosition(), Constants.MEDIUM_SHOT, false);
+		double pidOut=PILoop.loop(shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI);
 		shooter.set(pidOut);
 		SmartDashboard.putNumber("PID Out", pidOut);
 	}
 	
 	public static void closeShot()
 	{
-		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.CLOSE_SHOT, false));
+		shooter.set(PILoop.loop(shooter.getEncPosition(), Constants.CLOSE_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
 	}
 	
 	public static void lowGoal()

@@ -26,7 +26,7 @@ public class Intake {
 	
 	public static void pullBall()
 	{
-		intake.set(PILoop.intake(intakePot.getVoltage(), Constants.INTAKE_DOWN, false));
+		intake.set(PILoop.loop(intakePot.getVoltage(), Constants.INTAKE_DOWN, Constants.INTAKE_KP, Constants.INTAKE_KI));
 		rollers.set(.75);
 		
 	}
