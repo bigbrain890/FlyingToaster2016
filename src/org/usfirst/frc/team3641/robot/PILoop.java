@@ -22,8 +22,10 @@ public class PILoop
 		double output = (error * KP) + (errorRefresh * KI);
 		return output;
 	}
+	
 	public void reset()
 	{
 		errorRefresh = 0;
 	}
+
 }
