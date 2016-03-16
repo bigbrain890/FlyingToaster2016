@@ -22,7 +22,7 @@ public class UDP
 			address = InetAddress.getByName(Constants.PI_IP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
-			socket.setSoTimeout(3);
+			socket.setSoTimeout(1);
 		}
 		catch(Exception e)
 		{

@@ -48,14 +48,14 @@ public class Tracking
 		if (visionState == Constants.SEND_REQUEST)
 		{
 			heading = DriveBase.getDriveDirection();
-			UDP.sendData("Request " + packetCount);
+			UDP.sendData("Request");
 			visionState = Constants.RESPONSE_CAPTURE;
 			SmartDashboard.putBoolean("TRACKED", false);
 		}
 		
 		else if (visionState == Constants.RESPONSE_CAPTURE)
 		{
-			String response = UDP.flush(null);	//For some reason we wern't using flush, just getData(). That probably the checksum unneeded. 
+			String response = UDP.flush(null); 
 			if (response != null)
 			{
 				SmartDashboard.putString("Response", response);
@@ -88,7 +88,7 @@ public class Tracking
 		
 		else if (visionState == Constants.DO_MATH)
 		{
-			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
+			angleOff = (xcord - Constants.CAMERA_LINE_UP+Constants.CAMERA_OFFSET) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
 			if(target<0) 
 			{
@@ -122,12 +122,7 @@ public class Tracking
 			{
 				error += 360;
 			}
-			
-			if (Math.abs(error) < 1.5)
-			{
-				visionState = Constants.SEND_REQUEST;
-			}
-			else if(Math.abs(error) >= 3)
+			if(error>=2 || error <=1 || true)
 			{
 				if (errorRefresh > Constants.KI_UPPER_LIMIT)
 				{
@@ -137,48 +132,31 @@ public class Tracking
 				{
 					errorRefresh = Constants.KI_LOWER_LIMIT;
 				}
-				
-				/*if (edge == true)
-				{
-					errorRefresh = error + errorRefresh;
-					driveOutput = ((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI));
-				}
-				else
-				{*/
-					errorRefresh += error;
-					driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
-				//}
-				if (driveOutput > 0)
-				{
-					driveOutput = driveOutput + Constants.ROTATION_STALL_INPUT;
-				}
-				else if (driveOutput < 0)
-				{
-					driveOutput = driveOutput - Constants.ROTATION_STALL_INPUT;
-				}
-				if (Math.abs(driveOutput) > .75)
+				errorRefresh += error;
+				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
+				if (Math.abs(driveOutput) > .55)
 				{
 					if (driveOutput < 0)
 					{
-						driveOutput = -.75;
+						driveOutput = -.55;
 					}
 					
 					else
 					{
-						driveOutput = .75;
+						driveOutput = .55;
 					}
 				}
 				
 				DriveBase.driveNormal(0.0, driveOutput);
 			}
-		}
-		else if(visionState == Constants.TRACKED)
-		{
-			if(Math.abs(target - DriveBase.getDriveDirection()) > Constants.MIN_ANGLE_ERROR)
+			else
 			{
 				visionState = Constants.SEND_REQUEST;
 			}
-			else SmartDashboard.putBoolean("TRACKED", true);
+			
+			if(Math.abs(error) < 1) SmartDashboard.putBoolean("TRACKED", true);
+			else SmartDashboard.putBoolean("TRACKED", false);
+
 		}
 		else 
 		{

@@ -24,7 +24,7 @@ public class Constants
 	public static final int PI_PORT = 3641;
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
-	public static final String PI_IP_ADDR = "10.36.41.121";//"10.36.41.41"; Ethan's Pi
+	public static final String PI_IP_ADDR = "10.36.41.41";//"10.36.41.41"; Ethan's Pi
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -46,10 +46,10 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .1;
-	public static final double DRIVE_KI = .003;
-	public static final double SHOOTER_KP = 0.00047;
-	public static final double SHOOTER_KI = 0.0000023;
+	public static final double DRIVE_KP = .13;
+	public static final double DRIVE_KI = .0000;
+	public static final double SHOOTER_KP = 0.00050;
+	public static final double SHOOTER_KI = 0.0000026;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
 	public static final double CAM_KP = 0.0;
@@ -62,6 +62,7 @@ public class Constants
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP = 160;
+	public static final int CAMERA_OFFSET = 5;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final double MIN_ANGLE_ERROR = 1;

@@ -57,9 +57,12 @@ public class TeleOperated
 		
 		if (dualShock.getSquareButton() == true)
 		{
-			
+			Tracking.autoTarget();
 		}
-		
+		else
+		{
+			Tracking.resetVision();
+		}
 		
 		if(dualShock.getOptionsButton())
 		{
@@ -108,7 +111,14 @@ public class TeleOperated
 		else if (operator.getBaseCenterLeft() == true)
 		{
 			Shooter.farShot();
-			Shooter.spinUpWheels(1);
+			//Shooter.spinUpWheels(1);
+		}
+		else if (operator.getThumbTop())
+		{
+			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
 		}
 		
 		else if (operator.getBaseBackLeft() == true)
