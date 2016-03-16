@@ -23,7 +23,7 @@ public class DriveBase
 		gyro = new AHRS(SPI.Port.kMXP);
 		chassis = new RobotDrive(leftMotor1, leftMotor2, rightMotor1, rightMotor2);
 
-		leftMotor2.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
+		rightMotor1.setFeedbackDevice(FeedbackDevice.AnalogEncoder);
 	}
 	
 	public static DriveBase getInstance()
@@ -57,7 +57,7 @@ public class DriveBase
 	
 	public static double getDriveDis()
 	{
-		return leftMotor1.getAnalogInPosition() * Constants.DRIVE_ENCODER_MULTIPLIER;
+		return rightMotor1.getAnalogInPosition() * Constants.DRIVE_ENCODER_MULTIPLIER;
 	}
 	
 	public static double getDriveDirection()

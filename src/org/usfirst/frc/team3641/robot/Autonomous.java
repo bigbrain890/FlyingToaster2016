@@ -116,7 +116,7 @@ public class Autonomous
 		{
 			if( aimTimer.get() < 5)
 			{
-				Shooter.spinUpWheels();
+				Shooter.spinUpWheels(1);
 			}
 			
 			else

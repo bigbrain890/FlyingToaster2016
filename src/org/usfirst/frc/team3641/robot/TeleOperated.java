@@ -8,6 +8,10 @@ public class TeleOperated
 	public static PS4Controller dualShock;
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
+	public static int shooterLeverState = Constants.RESTING_POSITION;
+	static double errorRefresh = 0;
+	static double error = 0;
+	static double output = 0;
 	
 	private TeleOperated()
 	{
@@ -27,70 +31,35 @@ public class TeleOperated
 	public static void runDriver()
 	{
 		// State Switching inputs.
-		if (dualShock.getRightBumper())
+		if (dualShock.getRightBumper() == true)
 		{
 			driveMode = Constants.DRIVE_NORMAL;
 		}
-		else if (dualShock.getLeftBumper())
+		else if (dualShock.getLeftBumper() == true)
 		{
 			driveMode = Constants.DRIVE_REVERSE;
+		}
+		if (operator.getIndexTrigger() == true)
+		{
+			shooterLeverState = Constants.FIRE;
 		}
 
 		
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
-			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
+			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 		}
 		else if (driveMode == Constants.DRIVE_REVERSE)
 		{
 			DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
 		}
-		//Operator Logic
-		if(operator.getIndexTrigger())
-		{
-			Shooter.fireLogic();
-		}
-
-		//PS4 Controller Logic		
-		if(dualShock.getCircleButton())
-		{
-			Shooter.mediumShot();
-		}
-		else if(dualShock.getXButton())
-		{
-			Shooter.mediumShotTest();
-		}
-		else if(dualShock.getSquareButton())
-		{
-			//Last Resort: The Ugly Way
-			Shooter.shooter.set(PILoop.loop(Shooter.shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
-		}
-		else
-		{
-			Shooter.flyWheel1.set(0.0);
-			Shooter.flyWheel2.set(0.0);
-			Intake.stopIntake();
-			Shooter.manualControl(operator.getYAxis());
-		}
 		
-		SmartDashboard.putNumber("Drive Distance", DriveBase.getDriveDis());
-		Shooter.sensorReadout();
-		Tracking.printOut();
-	}
-
-}
-
-/*
 		if (dualShock.getSquareButton() == true)
 		{
-			Tracking.autoTarget();
+			
 		}
 		
-		else
-		{
-			Tracking.resetVision();
-		}
 		
 		if(dualShock.getOptionsButton())
 		{
@@ -99,8 +68,19 @@ public class TeleOperated
 		
 		if(dualShock.getRightTriggerAxis() > 0)
 		{
+			if(Shooter.shooterLimitSwitch.get() == true)
+			{
+			
+				Shooter.shooter.set(0.0);
+			}
+			else
+			{
+				error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+				errorRefresh = error + errorRefresh;
+				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+				Shooter.shooter.set(output);
+			}
 			Shooter.intake();
-			Intake.pullBall();
 		}
 		
 		else if(dualShock.getXButton() == true)
@@ -111,30 +91,106 @@ public class TeleOperated
 		
 		else if (operator.getBaseFrontLeft() == true)
 		{
-			Shooter.closeShot();
-			Shooter.spinUpWheels();
+			error = Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if (Shooter.shooter.getEncPosition() < 1100)
+			{
+				Shooter.intake();
+			}
+			else
+			{
+				Shooter.spinUpWheels(.9);	
+			}
 		}
 		
 		else if (operator.getBaseCenterLeft() == true)
 		{
 			Shooter.farShot();
-			Shooter.spinUpWheels();
+			Shooter.spinUpWheels(1);
 		}
 		
 		else if (operator.getBaseBackLeft() == true)
 		{
-			double pidOut=PILoop.loop(Shooter.shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI);
-			Shooter.shooter.set(pidOut);
-			SmartDashboard.putNumber("PID Out", pidOut);
+			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if (Shooter.shooter.getEncPosition() < 1000)
+			{
+				Shooter.intake();
+			}
+			else
+			{
+				Shooter.spinUpWheels(1);	
+			}
+			
 		}
 		else
 		{
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
 			Intake.stopIntake();
-			Shooter.manualControl(operator.getYAxis());
+			error = 0;
+			output = 0;
+			errorRefresh = 0;
+			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
+			{
+				Shooter.manualControl(0.0);
+			}
+			else
+			{
+				Shooter.manualControl(operator.getYAxis());
+			}
 		}
-				if(!Shooter.leverLimSwitch.get())
+		
+		if (shooterLeverState == Constants.RESTING_POSITION)
 		{
-			Shooter.zeroShooterLeverEnc();
-}*/
+			Shooter.restShooterArm();
+		}
+		else if (shooterLeverState == Constants.FIRE)
+		{
+			
+			if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
+			{
+				SmartDashboard.putBoolean("Level Test", true);
+				Shooter.fire();
+			}
+			else
+			{
+				SmartDashboard.putBoolean("Level Test", false);
+				Shooter.resetShooterArm();
+				shooterLeverState = Constants.RESET;
+			}
+		}
+		else if (shooterLeverState == Constants.RESET)
+		{
+			if ((Shooter.shooterLever.getEncPosition() <= 0) || (Shooter.leverLimSwitch.get() == false))
+			{
+				Shooter.resetShooterArm();
+			}
+			else
+			{
+				shooterLeverState = Constants.RESTING_POSITION;
+			}
+		}
+		if(Shooter.shooterLimitSwitch.get())
+		{
+			Shooter.zeroShooterEnc();
+		}
+		if (Shooter.shooterLimitSwitch.get() == true)
+		{
+			SmartDashboard.putBoolean("Is pressed", true);
+		}
+		else
+		{
+			SmartDashboard.putBoolean("Is pressed", false);
+			
+		}
+		Shooter.sensorReadout();
+		Tracking.printOut();
+	}
+	
+	
+}

@@ -8,9 +8,8 @@ public class Shooter
 {
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
-	public static DigitalInput leverLimSwitch, ShooterLimSwitch;
+	public static DigitalInput leverLimSwitch, shooterLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
-	public static int shooterLeverState = Constants.RESTING_POSITION;
 	
 	public Shooter()
 	{
@@ -19,7 +18,7 @@ public class Shooter
 		shooter = new CANTalon(Constants.SHOOTER);
 		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
 		leverLimSwitch = new DigitalInput(Constants.LEVER_LIM_SWITCH);
-		ShooterLimSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
+		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
 		
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
@@ -36,10 +35,10 @@ public class Shooter
 		return instance;
 	}
 		
-	public static void spinUpWheels()
+	public static void spinUpWheels(double speed)
 	{
-		flyWheel1.set(1);
-		flyWheel2.set(-1);
+		flyWheel1.set(speed);
+		flyWheel2.set(-speed);
 	}
 	
 	public static void intake()
@@ -50,58 +49,17 @@ public class Shooter
 	
 	public static void manualControl(double joystick)
 	{
-		if(ShooterLimSwitch.get() && joystick<0)
-		{
-			shooter.set(0.0);
-		}
-		else
-		{
-			shooter.set(joystick);
-		}
+		shooter.set(joystick);
 	}
 	
-	public static void fire()
+	public static void fire ()
 	{
 		shooterLever.set(-.35);
 	}
 	
-	public static void fireLogic()
+	public static void resetShooterArm ()
 	{
-		if (shooterLeverState == Constants.RESTING_POSITION)
-		{
-			restShooterArm();
-		}
-		else if (shooterLeverState == Constants.FIRE)
-		{
-			
-			if (shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
-			{
-				SmartDashboard.putBoolean("Level Test", true);
-				fire();
-			}
-			else
-			{
-				SmartDashboard.putBoolean("Level Test", false);
-				resetShooterArm();
-				shooterLeverState = Constants.RESET;
-			}
-		}
-		else if (shooterLeverState == Constants.RESET)
-		{
-			if ((shooterLever.getEncPosition() <= 0) || (leverLimSwitch.get() == false))
-			{
-				resetShooterArm();
-			}
-			else
-			{
-				shooterLeverState = Constants.RESTING_POSITION;
-			}
-		}
-	}
-	
-	public static void resetShooterArm()
-	{
-		shooterLever.set(0.0);
+		shooterLever.set(.3);
 	}
 	
 	public static void restShooterArm()
@@ -111,24 +69,19 @@ public class Shooter
 		
 	public static void farShot()
 	{
-		shooter.set(PILoop.loop((double)shooter.getEncPosition(), Constants.FAR_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
+		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.FAR_SHOT, false));
 	}
 	
 	public static void mediumShot()
 	{
-		shooter.set(PILoop.loop(shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
-	}
-	
-	public static void mediumShotTest()
-	{
-		double pidOut=PILoop.loop(shooter.getEncPosition(), Constants.MEDIUM_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI);
+		double pidOut=PILoop.shooter(shooter.getEncPosition(), Constants.MEDIUM_SHOT, false);
 		shooter.set(pidOut);
 		SmartDashboard.putNumber("PID Out", pidOut);
 	}
-
+	
 	public static void closeShot()
 	{
-		shooter.set(PILoop.loop(shooter.getEncPosition(), Constants.CLOSE_SHOT, Constants.SHOOTER_KP, Constants.SHOOTER_KI));
+		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.CLOSE_SHOT, false));
 	}
 	
 	public static void lowGoal()
@@ -146,25 +99,10 @@ public class Shooter
 	public static void zeroShooterLeverEnc()
 	{
 		shooterLever.setEncPosition(0);
-		shooterLever.set(0.0);
 	}
 	
 	public static void zeroShooterEnc()
 	{
 		shooter.setEncPosition(0);
-		shooter.set(0.0);
 	}
-
-	public static void dropShooter()
-	{
-		if(!ShooterLimSwitch.get())
-		{
-			PILoop.loop(shooter.getEncPosition(), 0, Constants.SHOOTER_KP, Constants.SHOOTER_KI);
-		}
-		else
-		{
-			zeroShooterEnc();
-		}
-	}
-
 }
