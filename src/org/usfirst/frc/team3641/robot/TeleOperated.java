@@ -115,7 +115,7 @@ public class TeleOperated
 		}
 		else if (operator.getThumbTop())
 		{
-			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			error = Constants.CAMERA_THRESHOLD_ANGLE - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);

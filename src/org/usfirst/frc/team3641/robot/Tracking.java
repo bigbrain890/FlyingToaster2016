@@ -88,7 +88,7 @@ public class Tracking
 		
 		else if (visionState == Constants.DO_MATH)
 		{
-			angleOff = (xcord - Constants.CAMERA_LINE_UP+Constants.CAMERA_OFFSET) * Constants.DEGREES_PER_PIXEL;
+			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
 			if(target<0) 
 			{
