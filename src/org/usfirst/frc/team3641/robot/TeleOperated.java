@@ -69,7 +69,7 @@ public class TeleOperated
 			DriveBase.resetGyro();
 		}
 		
-		if(dualShock.getRightTriggerAxis() > 0)
+		if((dualShock.getRightTriggerAxis() > 0) || (operator.getThumbBottom() == true))
 		{
 			if(Shooter.shooterLimitSwitch.get() == true)
 			{
@@ -81,6 +81,10 @@ public class TeleOperated
 				error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
 				errorRefresh = error + errorRefresh;
 				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+				if (output < -.5)
+				{
+					output = -.5;
+				}
 				Shooter.shooter.set(output);
 			}
 			Shooter.intake();
