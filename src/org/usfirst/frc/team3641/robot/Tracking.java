@@ -17,6 +17,7 @@ public class Tracking
 	public static double errorRefresh = 0;
 	private static int packetCount = 0;
 	private static int checksum = packetCount;
+	private static double oldAngle, newAngle;
 
 
 	private Tracking()
@@ -43,7 +44,7 @@ public class Tracking
 		return instance;
 	}
 	
-	public static void autoTarget()
+	public static boolean autoTarget()
 	{
 		if (visionState == Constants.SEND_REQUEST)
 		{
@@ -90,6 +91,7 @@ public class Tracking
 		{
 			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
+			double direction = DriveBase.getDriveDirection();
 			if(target<0) 
 			{
 				target += 360;
@@ -98,11 +100,33 @@ public class Tracking
 			{
 				target -= 360;
 			}
-			visionState = Constants.TURN_TO_TARGET;
-			if(Math.abs(angleOff)<Constants.MIN_ANGLE_ERROR)
+			if(Math.abs(target - direction) < 1)
 			{
-				visionState = Constants.TRACKED;
+				SmartDashboard.putBoolean("Done Tracking", true);
+				DriveBase.driveNormal(0.0, 0.0);
+				return true;
 			}
+			else
+			{
+				SmartDashboard.putBoolean("TRACKED", false);
+				visionState = Constants.TURN_TO_TARGET;
+			}
+
+		}
+		
+		else if(visionState == Constants.WAIT_FOR_STILL)
+		{
+			newAngle = DriveBase.getDriveDirection();
+			if(Math.abs(newAngle-oldAngle) > Constants.MOTION_THRESHOLD)
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+			}
+			else
+			{
+				visionState = Constants.SEND_REQUEST;
+			}
+			
+			oldAngle = newAngle;
 		}
 		
 		else if (visionState == Constants.TURN_TO_TARGET)
@@ -157,19 +181,25 @@ public class Tracking
 				
 				DriveBase.driveNormal(0.0, driveOutput);
 			}
+			
+			if(Math.abs(error) < 1)
+			{
+				SmartDashboard.putBoolean("TRACKED", true);
+				DriveBase.driveNormal(0.0, 0.0);
+				visionState = Constants.WAIT_FOR_STILL;
+				oldAngle = ActualCurrentHeading;
+			}
 			else
 			{
-				visionState = Constants.SEND_REQUEST;
+				SmartDashboard.putBoolean("TRACKED", false);
 			}
-			
-			if(Math.abs(error) < 1) SmartDashboard.putBoolean("TRACKED", true);
-			else SmartDashboard.putBoolean("TRACKED", false);
 
 		}
 		else 
 		{
 			DriveBase.driveNormal(0.0, 0.0);
 		}
+		return false;
 		
 	}
 	

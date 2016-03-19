@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Autonomous
 {
+	private static double error=0, errorRefresh=0, output=0;
+
 	private static Autonomous instance;
 	private static Timer autoTimer, aimTimer;
 	public static int autonState = 1;
@@ -96,25 +98,30 @@ public class Autonomous
 			}
 			else
 			{
+				autonState++;
+			}
+		}
+		else if (autonState == 3)
+		{
+			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if(error <= 50)
+				autonState++;
+
+		}
+		else if (autonState == 4)
+		{
+			if (Tracking.autoTarget())
+			{
 				startTimers();
 				autonState++;
 			}
 		}
-		
-		else if (autonState == 3)
+		else if (autonState == 5)
 		{
-			if (aimTimer.get() < 3)
-			{
-				Tracking.autoTarget();
-			}
-			else
-			{
-				autonState++;
-			}
-		}
-		else if (autonState == 4)
-		{
-			if( aimTimer.get() < 5)
+			if( aimTimer.get() < 2)
 			{
 				Shooter.spinUpWheels(1);
 			}

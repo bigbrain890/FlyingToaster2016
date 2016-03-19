@@ -69,6 +69,8 @@ public class Constants
 	public static final int DO_MATH = 2;
 	public static final int TURN_TO_TARGET = 3;
 	public static final int TRACKED = 4;
+	public static final int WAIT_FOR_STILL = 5;
+	public static final double MOTION_THRESHOLD = .05;
 
 	
 	// Shooter stuff
