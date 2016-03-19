@@ -134,6 +134,14 @@ public class Tracking
 				}
 				errorRefresh += error;
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
+				if (driveOutput > 0)
+				{
+					driveOutput+= .1;
+				}
+				else
+				{
+					driveOutput-= .1;
+				}
 				if (Math.abs(driveOutput) > .55)
 				{
 					if (driveOutput < 0)
@@ -185,6 +193,7 @@ public class Tracking
 		SmartDashboard.putNumber("Vision State", visionState);
 		SmartDashboard.putNumber("X Cordinate", xcord);
 		SmartDashboard.putNumber("ErrRefresh", errorRefresh);
+		SmartDashboard.putNumber("Drive Output", driveOutput);
 
 	}
 }

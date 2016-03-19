@@ -86,8 +86,8 @@ public class Shooter
 	
 	public static void lowGoal()
 	{
-		flyWheel1.set(.6);
-		flyWheel2.set(-.6);
+		flyWheel1.set(.7);
+		flyWheel2.set(-.7);
 	}
 	
 	public static void sensorReadout()

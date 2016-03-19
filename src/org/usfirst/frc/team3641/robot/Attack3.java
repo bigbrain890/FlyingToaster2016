@@ -24,6 +24,11 @@ public class Attack3 extends Joystick
 		return getRawButton(11);
 	}
 	
+	public boolean getBaseBackRight()
+	{
+		return getRawButton(10);
+	}
+	
 	public boolean getBaseCenterLeft()
 	{
 		return getRawButton(8);

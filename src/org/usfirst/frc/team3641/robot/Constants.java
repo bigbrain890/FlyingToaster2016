@@ -20,7 +20,6 @@ public class Constants
 	public static final int ANALOG_ENC_PORT_0 = 0;
 	
 	//Pi Port
-	public static final int PI_COM_PIN = 2;
 	public static final int PI_PORT = 3641;
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
@@ -46,22 +45,22 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .14;
-	public static final double DRIVE_KI = .0000;
+	public static final double DRIVE_KP = .12;
+	public static final double DRIVE_KI = .00002;
 	public static final double SHOOTER_KP = 0.00048;
 	public static final double SHOOTER_KI = 0.0000023;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
 	public static final double CAM_KP = 0.0;
 	public static final double CAM_KI = 0.0;
-	public static final double KI_UPPER_LIMIT = 233;
-	public static final double KI_LOWER_LIMIT = -233;
+	public static final double KI_UPPER_LIMIT = 2000;
+	public static final double KI_LOWER_LIMIT = -2000;
 
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
 	
 	// Camera stuff
-	public static final int CAMERA_LINE_UP = 162;
+	public static final int CAMERA_LINE_UP = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final double MIN_ANGLE_ERROR = 1;
@@ -86,7 +85,7 @@ public class Constants
 	public static final int FAR_SHOT = 2500;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
-	public static final int CLOSE_SHOT = 3300;
+	public static final int CLOSE_SHOT = 3390;
 	public static final int SHOOTER_SERVO_PORT = 9;
 	public static final int LEVER_LIM_SWITCH = 8;
 	public static final int SHOOTER_LIM_SWITCH = 9;

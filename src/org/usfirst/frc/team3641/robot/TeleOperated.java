@@ -39,7 +39,7 @@ public class TeleOperated
 		{
 			driveMode = Constants.DRIVE_REVERSE;
 		}
-		if (operator.getIndexTrigger() == true)
+		if (operator.getIndexTrigger() == true || dualShock.getXButton() == true)
 		{
 			shooterLeverState = Constants.FIRE;
 		}
@@ -112,20 +112,34 @@ public class TeleOperated
 			}
 		}
 		
-		else if (operator.getBaseCenterLeft() == true)
-		{
-			Shooter.farShot();
-			//Shooter.spinUpWheels(1);
-		}
-		else if (operator.getThumbTop())
+		else if (operator.getThumbLeft())
 		{
 			error = Constants.CAMERA_THRESHOLD_ANGLE - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
 		}
+		else if (operator.getBaseCenterLeft())
+		{
+			error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			if (output < -.5)
+			{
+				output = -.5;
+			}
+			Shooter.shooter.set(output);
+			Shooter.lowGoal();
+		}
+		else if (operator.getThumbRight())
+		{
+			error = Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+		}
 		
-		else if (operator.getBaseBackLeft() == true)
+		else if (operator.getBaseBackLeft() == true || dualShock.getLeftTriggerAxis() > 0)
 		{
 			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -150,6 +164,10 @@ public class TeleOperated
 			output = 0;
 			errorRefresh = 0;
 			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
+			{
+				Shooter.manualControl(0.0);
+			}
+			else if (Shooter.shooter.getEncPosition() >= 4100 && operator.getYAxis() > 0)
 			{
 				Shooter.manualControl(0.0);
 			}
