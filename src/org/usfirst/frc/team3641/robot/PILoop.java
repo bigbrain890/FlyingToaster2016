@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3641.robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class PILoop 
 {
 	private static PILoop instance;
@@ -49,7 +47,6 @@ public class PILoop
 		{
 			motorOutput = ((error * Constants.SHOOTER_KP) * -1);
 		}
-		SmartDashboard.putBoolean("MediumShot", true);
 		return -motorOutput;
 	}
 	

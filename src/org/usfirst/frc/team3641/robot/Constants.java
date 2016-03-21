@@ -23,7 +23,7 @@ public class Constants
 	public static final int PI_PORT = 3641;
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
-	public static final String PI_IP_ADDR = "10.36.41.121";//"10.36.41.41"; Ethan's Pi
+	public static final String PI_IP_ADDR = "10.36.41.165";//"10.36.41.41"; Ethan's Pi
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -45,7 +45,7 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .12;
+	public static final double DRIVE_KP = .115;
 	public static final double DRIVE_KI = .00002;
 	public static final double SHOOTER_KP = 0.00048;
 	public static final double SHOOTER_KI = 0.0000023;
@@ -60,7 +60,7 @@ public class Constants
 	public static final int TRANSFER_RATE = 9600;
 	
 	// Camera stuff
-	public static final int CAMERA_LINE_UP = 160;
+	public static final int CAMERA_LINE_UP = 168;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	public static final double MIN_ANGLE_ERROR = 1;
@@ -84,7 +84,7 @@ public class Constants
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
-	public static final int FAR_SHOT = 2500;
+	public static final int FAR_SHOT = 2750;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
 	public static final int CLOSE_SHOT = 3390;

@@ -186,12 +186,10 @@ public class TeleOperated
 			
 			if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
 			{
-				SmartDashboard.putBoolean("Level Test", true);
 				Shooter.fire();
 			}
 			else
 			{
-				SmartDashboard.putBoolean("Level Test", false);
 				Shooter.resetShooterArm();
 				shooterLeverState = Constants.RESET;
 			}

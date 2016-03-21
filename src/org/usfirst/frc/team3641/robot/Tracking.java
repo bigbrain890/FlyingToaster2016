@@ -29,12 +29,7 @@ public class Tracking
 	{
 		return ultrasonic.getVoltage();
 	}
-	
-	public static double getDistance()
-	{
-		return getRawUltrasonic() / Constants.ULTRASONIC_CONVERSION_FACTOR;
-	}
-	
+		
 	public static Tracking getInstance()
 	{
 		if(instance == null)
@@ -100,15 +95,14 @@ public class Tracking
 			{
 				target -= 360;
 			}
+						
 			if(Math.abs(target - direction) < 1)
 			{
-				SmartDashboard.putBoolean("Done Tracking", true);
 				DriveBase.driveNormal(0.0, 0.0);
 				return true;
 			}
 			else
 			{
-				SmartDashboard.putBoolean("TRACKED", false);
 				visionState = Constants.TURN_TO_TARGET;
 			}
 
@@ -119,6 +113,7 @@ public class Tracking
 			newAngle = DriveBase.getDriveDirection();
 			if(Math.abs(newAngle-oldAngle) > Constants.MOTION_THRESHOLD)
 			{
+				SmartDashboard.putBoolean("TRACKED", true);
 				DriveBase.driveNormal(0.0, 0.0);
 			}
 			else
@@ -137,7 +132,6 @@ public class Tracking
 			*/
 			double ActualCurrentHeading = DriveBase.getDriveDirection();
 			double error = target - ActualCurrentHeading;
-			SmartDashboard.putNumber("Adjusted Heading", ActualCurrentHeading);
 			if(error>=180)
 			{
 				error -= 360;
@@ -184,14 +178,9 @@ public class Tracking
 			
 			if(Math.abs(error) < 1)
 			{
-				SmartDashboard.putBoolean("TRACKED", true);
 				DriveBase.driveNormal(0.0, 0.0);
 				visionState = Constants.WAIT_FOR_STILL;
 				oldAngle = ActualCurrentHeading;
-			}
-			else
-			{
-				SmartDashboard.putBoolean("TRACKED", false);
 			}
 
 		}
@@ -217,13 +206,8 @@ public class Tracking
 	
 	public static void printOut()
 	{
-		SmartDashboard.putNumber("Target", target);
-		SmartDashboard.putNumber("Heading", heading);
 		SmartDashboard.putNumber("Angle Off", angleOff);
 		SmartDashboard.putNumber("Vision State", visionState);
-		SmartDashboard.putNumber("X Cordinate", xcord);
-		SmartDashboard.putNumber("ErrRefresh", errorRefresh);
-		SmartDashboard.putNumber("Drive Output", driveOutput);
 
 	}
 }

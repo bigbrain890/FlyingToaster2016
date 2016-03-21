@@ -92,7 +92,6 @@ public class Shooter
 	
 	public static void sensorReadout()
 	{
-		SmartDashboard.putNumber("Shooter Lever", shooterLever.getEncPosition());
 		SmartDashboard.putNumber("Shooter Angle", shooter.getEncPosition());
 	}
 	
