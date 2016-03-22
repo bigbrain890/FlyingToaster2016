@@ -84,7 +84,7 @@ public class Constants
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
-	public static final int FAR_SHOT = 2650;
+	public static final int FAR_SHOT = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
 	public static final int CLOSE_SHOT = 3390;
