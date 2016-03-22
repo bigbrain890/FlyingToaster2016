@@ -90,6 +90,31 @@ public class TeleOperated
 			Shooter.intake();
 		}
 		
+		else if (dualShock.getLeftTriggerAxis() > 0)
+		{
+			if(Shooter.shooterLimitSwitch.get() == true)
+			{
+			
+				Shooter.shooter.set(0.0);
+			}
+			else
+			{
+				error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+				errorRefresh = error + errorRefresh;
+				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+				if (output < -.5)
+				{
+					output = -.5;
+				}
+				Shooter.shooter.set(output);
+				
+			}
+			if(Shooter.shooter.getEncPosition() < 400)
+			{
+				Shooter.lowGoal();
+			}
+		}
+		
 		else if(dualShock.getXButton() == true)
 		{
 			//Intake.spitBall();
@@ -139,7 +164,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 		
-		else if (operator.getBaseBackLeft() == true || dualShock.getLeftTriggerAxis() > 0)
+		else if (operator.getBaseBackLeft() == true)
 		{
 			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
