@@ -79,6 +79,11 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			DriveBase.resetDriveSensors();
+			autonState++;
+		}
+		else if (autonState == 2)
+		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
 				DriveBase.driveStraight(0.0,.55 );
@@ -90,7 +95,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -108,7 +113,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -118,7 +123,7 @@ public class Autonomous
 				//autonState++;
 
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			if (Tracking.autoTarget())
 			{
@@ -126,7 +131,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			if( aimTimer.get() < 2)
 			{

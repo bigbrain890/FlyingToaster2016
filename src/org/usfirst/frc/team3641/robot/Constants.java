@@ -24,7 +24,7 @@ public class Constants
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
 	public static final String PI_IP_ADDR = "10.36.41.165";//"10.36.41.41"; Ethan's Pi
-	public static final String PI_COMP_ADDR = "10.36.42.31";
+	public static final String PI_COMP_ADDR = "10.36.42.121";
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -87,8 +87,8 @@ public class Constants
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
-	public static final int FAR_SHOT_COMP = 2500;
-	public static final int FAR_SHOT_PRACTICE = 26000;
+	public static final int FAR_SHOT_COMP = 2600;
+	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
 	public static final int CLOSE_SHOT = 3390;
