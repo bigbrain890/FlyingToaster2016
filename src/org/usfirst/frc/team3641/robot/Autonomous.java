@@ -81,7 +81,7 @@ public class Autonomous
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
-				DriveBase.driveStraight(Constants.STRAIGHT, .4);
+				DriveBase.driveStraight(0.0,.55 );
 			}
 			else
 			{
@@ -94,21 +94,28 @@ public class Autonomous
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
-				DriveBase.driveNormal(0.0, .4);
+				error = 45 - DriveBase.getDriveDirection();
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
 			}
 			else
 			{
+				DriveBase.driveNormal(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 3)
 		{
-			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
-			if(error <= 50)
-				autonState++;
+			//if(error <= 50)
+				//autonState++;
 
 		}
 		else if (autonState == 4)

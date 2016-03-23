@@ -24,6 +24,7 @@ public class Constants
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
 	public static final String PI_IP_ADDR = "10.36.41.165";//"10.36.41.41"; Ethan's Pi
+	public static final String PI_COMP_ADDR = "10.36.42.31";
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -41,11 +42,11 @@ public class Constants
 	public static final int ROUGH_TERRAIN = 7;
 	public static final int PORTCULLIS = 8;
 	public static final int RAMPARTS = 9;
-	public static final int TARGET_DEFENSE_DRIVE_DIS = 130;
+	public static final int TARGET_DEFENSE_DRIVE_DIS = 150;
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .115;
+	public static final double DRIVE_KP = .09;
 	public static final double DRIVE_KI = .00002;
 	public static final double SHOOTER_KP = 0.00048;
 	public static final double SHOOTER_KI = 0.0000023;
@@ -60,9 +61,11 @@ public class Constants
 	public static final int TRANSFER_RATE = 9600;
 	
 	// Camera stuff
-	public static final int CAMERA_LINE_UP = 168;
+	public static final int CAMERA_LINE_UP_COMP = 180;
+	public static final int CAMERA_LINE_UP_PRACTICE = 167;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
+	
 	public static final double MIN_ANGLE_ERROR = 1;
 	public static final int SEND_REQUEST = 0;
 	public static final int RESPONSE_CAPTURE = 1;
@@ -84,7 +87,8 @@ public class Constants
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
-	public static final int FAR_SHOT = 2600;
+	public static final int FAR_SHOT_COMP = 2500;
+	public static final int FAR_SHOT_PRACTICE = 26000;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
 	public static final int CLOSE_SHOT = 3390;
@@ -97,9 +101,6 @@ public class Constants
 	public static final int ROLLERS = 9;
 	public static final int INTAKE = 10;
 	
-	// Punmatic Ports
-	public static final int DRIVE_TRAIN = 0;
-	public static final int PTO = 1;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.

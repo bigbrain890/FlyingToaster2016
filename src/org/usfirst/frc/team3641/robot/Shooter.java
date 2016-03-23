@@ -69,7 +69,7 @@ public class Shooter
 		
 	public static void farShot()
 	{
-		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.FAR_SHOT, false));
+		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.FAR_SHOT_COMP, false));
 	}
 	
 	public static void mediumShot()

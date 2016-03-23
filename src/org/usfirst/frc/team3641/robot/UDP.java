@@ -19,7 +19,7 @@ public class UDP
 		try 
 		{
 			port = Constants.PI_PORT;
-			address = InetAddress.getByName(Constants.PI_IP_ADDR);
+			address = InetAddress.getByName(Constants.PI_COMP_ADDR);
 			socket = new DatagramSocket();
 			buf = new byte[256];
 			socket.setSoTimeout(1);

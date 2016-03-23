@@ -71,7 +71,7 @@ public class TeleOperated
 		
 		if((dualShock.getRightTriggerAxis() > 0) || (operator.getThumbBottom() == true))
 		{
-			if(Shooter.shooterLimitSwitch.get() == true)
+			if(Shooter.shooterLimitSwitch.get() == false)
 			{
 			
 				Shooter.shooter.set(0.0);
@@ -92,7 +92,7 @@ public class TeleOperated
 		
 		else if (dualShock.getLeftTriggerAxis() > 0)
 		{
-			if(Shooter.shooterLimitSwitch.get() == true)
+			if(Shooter.shooterLimitSwitch.get() == false)
 			{
 			
 				Shooter.shooter.set(0.0);
@@ -166,7 +166,7 @@ public class TeleOperated
 		
 		else if (operator.getBaseBackLeft() == true)
 		{
-			error = Constants.FAR_SHOT - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
@@ -188,7 +188,7 @@ public class TeleOperated
 			error = 0;
 			output = 0;
 			errorRefresh = 0;
-			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
+			if(!Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
 			{
 				Shooter.manualControl(0.0);
 			}
@@ -230,11 +230,11 @@ public class TeleOperated
 				shooterLeverState = Constants.RESTING_POSITION;
 			}
 		}
-		if(Shooter.shooterLimitSwitch.get())
+		if(!Shooter.shooterLimitSwitch.get())
 		{
 			Shooter.zeroShooterEnc();
 		}
-		if (Shooter.shooterLimitSwitch.get() == true)
+		if (Shooter.shooterLimitSwitch.get() == false)
 		{
 			SmartDashboard.putBoolean("Is pressed", true);
 		}

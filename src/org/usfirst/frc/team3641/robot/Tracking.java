@@ -77,14 +77,14 @@ public class Tracking
 				}
 				if(Shooter.shooter.getAnalogInPosition() > Constants.SHOOTER_REVERSE)
 				{
-					xcord = (Constants.CAMERA_LINE_UP*2)-xcord;
+					xcord = (Constants.CAMERA_LINE_UP_PRACTICE*2)-xcord;
 				}
 			}
 		}
 		
 		else if (visionState == Constants.DO_MATH)
 		{
-			angleOff = (xcord - Constants.CAMERA_LINE_UP) * Constants.DEGREES_PER_PIXEL;
+			angleOff = (xcord - Constants.CAMERA_LINE_UP_PRACTICE) * Constants.DEGREES_PER_PIXEL;
 			target = heading + angleOff;
 			double direction = DriveBase.getDriveDirection();
 			if(target<0) 
@@ -154,22 +154,22 @@ public class Tracking
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				if (driveOutput > 0)
 				{
-					driveOutput+= .1;
+					driveOutput+= .05;
 				}
 				else
 				{
-					driveOutput-= .1;
+					driveOutput-= .05;
 				}
-				if (Math.abs(driveOutput) > .55)
+				if (Math.abs(driveOutput) > .45)
 				{
 					if (driveOutput < 0)
 					{
-						driveOutput = -.55;
+						driveOutput = -.45;
 					}
 					
 					else
 					{
-						driveOutput = .55;
+						driveOutput = .45;
 					}
 				}
 				
