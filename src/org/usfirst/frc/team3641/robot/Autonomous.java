@@ -100,6 +100,14 @@ public class Autonomous
 			if (DriveBase.getDriveDirection() < 45)
 			{
 				error = 45 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
 				double rotate = error*Constants.DRIVE_KP;
 				if (rotate > .5)
 				{

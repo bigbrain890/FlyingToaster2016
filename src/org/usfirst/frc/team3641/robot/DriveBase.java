@@ -83,7 +83,15 @@ public class DriveBase
 	
 	public static void driveStraight(double target_angle, double drive_speed)
 	{
-		double error = target_angle - getDriveDirection();
+		double error = (target_angle) - (getDriveDirection());
+		if (error >= 180)
+		{
+			error -= 360;
+		}
+		else if (error<=-180)
+		{
+			error+=360;
+		}
 		driveNormal(-drive_speed, -1 * error * Constants.DRIVE_KP);
 	}
 	

@@ -46,23 +46,23 @@ public class Constants
 	public static final int STRAIGHT = 0;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .09;
-	public static final double DRIVE_KI = .00002;
+	public static final double DRIVE_KP = .07;
+	public static final double DRIVE_KI = .0001;
 	public static final double SHOOTER_KP = 0.00048;
 	public static final double SHOOTER_KI = 0.0000023;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
 	public static final double CAM_KP = 0.0;
 	public static final double CAM_KI = 0.0;
-	public static final double KI_UPPER_LIMIT = 2000;
-	public static final double KI_LOWER_LIMIT = -2000;
+	public static final double KI_UPPER_LIMIT = 2300;
+	public static final double KI_LOWER_LIMIT = -2300;
 
 	// PI serial transfer rate
 	public static final int TRANSFER_RATE = 9600;
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP_COMP = 180;
-	public static final int CAMERA_LINE_UP_PRACTICE = 167;
+	public static final int CAMERA_LINE_UP_PRACTICE = 165;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	
@@ -87,7 +87,7 @@ public class Constants
 	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
-	public static final int FAR_SHOT_COMP = 2600;
+	public static final int FAR_SHOT_COMP = 2550;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static final int MEDIUM_SHOT = 2400;
