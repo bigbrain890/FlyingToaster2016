@@ -9,6 +9,7 @@ public class Autonomous
 	private static Autonomous instance;
 	private static Timer autoTimer, aimTimer;
 	public static int autonState = 1;
+	static int shooterLeverState = 0;
 	
 	private Autonomous()
 	{
@@ -84,9 +85,119 @@ public class Autonomous
 		}
 		else if (autonState == 2)
 		{
-			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS_LOW)
 			{
 				DriveBase.driveStraight(0.0,.55 );
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+				autonState++;
+			}
+		}
+		
+		else if (autonState == 3)
+		{
+			if (DriveBase.getDriveDirection() < 45)
+			{
+				error = 45 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0,0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 4)
+		{
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if(error <= 50)
+				autonState++;
+
+		}
+		else if (autonState == 5)
+		{
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if (Tracking.autoTarget())
+			{
+				startTimers();
+				autonState++;
+			}
+		}
+		else if (autonState == 6)
+		{
+			if( aimTimer.get() < 4)
+			{
+				Shooter.spinUpWheels(1);
+				shooterLeverState = Constants.FIRE;
+			}
+			
+			else
+			{
+				if (shooterLeverState == Constants.RESTING_POSITION)
+				{
+					Shooter.restShooterArm();
+				}
+				else if (shooterLeverState == Constants.FIRE)
+				{
+					
+					if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
+					{
+						Shooter.fire();
+					}
+					else
+					{
+						Shooter.resetShooterArm();
+						shooterLeverState = Constants.RESET;
+					}
+				}
+				else if (shooterLeverState == Constants.RESET)
+				{
+					if ((Shooter.shooterLever.getEncPosition() <= 0) || (Shooter.leverLimSwitch.get() == false))
+					{
+						Shooter.resetShooterArm();
+					}
+					else
+					{
+						shooterLeverState = Constants.RESTING_POSITION;
+					}
+				}
+			}
+		}
+	}
+	
+	public static void rockWall()
+	{
+		if (autonState == 1)
+		{
+			DriveBase.resetDriveSensors();
+			autonState++;
+		}
+		else if (autonState == 2)
+		{
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			{
+				DriveBase.driveStraight(0.0,.85 );
 			}
 			else
 			{
@@ -153,11 +264,6 @@ public class Autonomous
 		}
 	}
 	
-	public static void rockWall()
-	{
-		DriveBase.driveNormal(-1, 0.0);
-	}
-	
 	public static void shoveInFreezer()
 	{
 		
@@ -175,12 +281,158 @@ public class Autonomous
 	
 	public static void moat()
 	{
+		if (autonState == 1)
+		{
+			DriveBase.resetDriveSensors();
+			autonState++;
+		}
+		else if (autonState == 2)
+		{
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			{
+				DriveBase.driveStraight(0.0,.85 );
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+				autonState++;
+			}
+		}
 		
+		else if (autonState == 3)
+		{
+			if (DriveBase.getDriveDirection() < 45)
+			{
+				error = 45 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0,0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 4)
+		{
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			//if(error <= 50)
+				//autonState++;
+
+		}
+		else if (autonState == 5)
+		{
+			if (Tracking.autoTarget())
+			{
+				startTimers();
+				autonState++;
+			}
+		}
+		else if (autonState == 6)
+		{
+			if( aimTimer.get() < 2)
+			{
+				Shooter.spinUpWheels(1);
+			}
+			
+			else
+			{
+				Shooter.fire();
+			}
+		}
 	}
 	
 	public static void roughTerrain()
 	{
+		if (autonState == 1)
+		{
+			DriveBase.resetDriveSensors();
+			autonState++;
+		}
+		else if (autonState == 2)
+		{
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			{
+				DriveBase.driveStraight(0.0,.75 );
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+				autonState++;
+			}
+		}
 		
+		else if (autonState == 3)
+		{
+			if (DriveBase.getDriveDirection() < 45)
+			{
+				error = 45 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0,0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 4)
+		{
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			//if(error <= 50)
+				//autonState++;
+
+		}
+		else if (autonState == 5)
+		{
+			if (Tracking.autoTarget())
+			{
+				startTimers();
+				autonState++;
+			}
+		}
+		else if (autonState == 6)
+		{
+			if( aimTimer.get() < 2)
+			{
+				Shooter.spinUpWheels(1);
+			}
+			
+			else
+			{
+				Shooter.fire();
+			}
+		}
 	}
 	
 	public static void portcullis()
@@ -190,6 +442,79 @@ public class Autonomous
 	
 	public static void ramparts()
 	{
+		if (autonState == 1)
+		{
+			DriveBase.resetDriveSensors();
+			autonState++;
+		}
+		else if (autonState == 2)
+		{
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			{
+				DriveBase.driveStraight(0.0,.75 );
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, 0.0);
+				autonState++;
+			}
+		}
 		
+		else if (autonState == 3)
+		{
+			if (DriveBase.getDriveDirection() < 45)
+			{
+				error = 45 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0,0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 4)
+		{
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			//if(error <= 50)
+				//autonState++;
+
+		}
+		else if (autonState == 5)
+		{
+			if (Tracking.autoTarget())
+			{
+				startTimers();
+				autonState++;
+			}
+		}
+		else if (autonState == 6)
+		{
+			if( aimTimer.get() < 2)
+			{
+				Shooter.spinUpWheels(1);
+			}
+			
+			else
+			{
+				Shooter.fire();
+			}
+		}
 	}
 }

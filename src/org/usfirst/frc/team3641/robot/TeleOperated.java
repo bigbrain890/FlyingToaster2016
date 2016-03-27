@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Preferences;
 
 public class TeleOperated
 {
@@ -8,6 +9,8 @@ public class TeleOperated
 	public static PS4Controller dualShock;
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
+	static public int driveBack = Constants.UNPRESSED;
+	static public double driveBackTarg = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	static double errorRefresh = 0;
 	static double error = 0;
@@ -39,12 +42,19 @@ public class TeleOperated
 		{
 			driveMode = Constants.DRIVE_REVERSE;
 		}
-		if (operator.getIndexTrigger() == true || dualShock.getXButton() == true)
+		if (operator.getIndexTrigger() == true)
 		{
 			shooterLeverState = Constants.FIRE;
 		}
-
-		
+		if(dualShock.getXButton() == true)
+		{
+				driveBack = Constants.DO_DRIVE_BACK_MATH;
+		}
+		else if(dualShock.getTriangleButton() == true)
+		{
+			driveBack = Constants.RESTING_POSITION;
+		}
+				
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
@@ -66,6 +76,29 @@ public class TeleOperated
 			else
 			{
 				DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
+			}
+		}
+		if (driveBack == Constants.DO_DRIVE_BACK_MATH)
+		{
+			driveBackTarg = DriveBase.getDriveDis() - Constants.ROLL_BACK;
+			driveBack = Constants.DRIVE_BACK;
+		}
+		else if (driveBack == Constants.DRIVE_BACK)
+		{
+			double error = driveBackTarg - DriveBase.getDriveDis();
+			double output = error * Constants.DRIVE_KP;
+			if(output > .35)
+			{
+				output = .35;
+			}
+			else if (error < -.35)
+			{
+				output = -.35; 
+			}
+			DriveBase.driveNormal(-output, 0.0);
+			if(Math.abs(error) < 2)
+			{
+				driveBack = Constants.RESTING_POSITION;
 			}
 		}
 		
@@ -101,6 +134,7 @@ public class TeleOperated
 				}
 				Shooter.shooter.set(output);
 			}
+			Shooter.pullBackShooterArm();
 			Shooter.intake();
 		}
 		
@@ -127,27 +161,51 @@ public class TeleOperated
 			{
 				Shooter.lowGoal();
 			}
-		}
-		
-		else if(dualShock.getXButton() == true)
-		{
-			//Intake.spitBall();
-		}
-		
+		}		
 		
 		else if (operator.getBaseFrontLeft() == true)
 		{
-			error = Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition();
+			int shooterPos = Shooter.shooter.getEncPosition();
+			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
+			error = Constants.CLOSE_SHOT - shooterPos;
 			errorRefresh = error + errorRefresh;
-			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			if (errorRefresh > 5500)
+			{
+				errorRefresh = 5500;
+			}
+			else if (errorRefresh < -5500)
+			{
+				errorRefresh = -5500;
+			}
+		
+			double angle = (shooterPos / 45.7) - 10;
+			double offset = Math.cos(angle);
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) + (offset * Constants.OFFSET_KP));
+			if (output > .75)
+			{
+				output = .75;
+			}
+			else if (output < -.75)
+			{
+				output = -.75;
+			}
 			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 1100)
+			if (Shooter.shooter.getEncPosition() < 2000)
 			{
 				Shooter.intake();
 			}
 			else
 			{
-				Shooter.spinUpWheels(.9);	
+				Shooter.spinUpWheels(.75);	
+			}
+			double shotAccuracy = Math.abs(Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition());
+			if(shotAccuracy < 30)
+			{
+				SmartDashboard.putBoolean("FIRE", true);
+			}
+			else
+			{
+				SmartDashboard.putBoolean("FIRE", false);
 			}
 		}
 		
@@ -180,11 +238,12 @@ public class TeleOperated
 		
 		else if (operator.getBaseBackLeft() == true)
 		{
+			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 1000)
+			if (Shooter.shooter.getEncPosition() < 2000)
 			{
 				Shooter.intake();
 			}
@@ -192,13 +251,21 @@ public class TeleOperated
 			{
 				Shooter.spinUpWheels(1);	
 			}
+			double shotAccuracy = Math.abs(Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition());
+			if(shotAccuracy < 30)
+			{
+				SmartDashboard.putBoolean("FIRE", true);
+			}
+			else
+			{
+				SmartDashboard.putBoolean("FIRE", false);
+			}
 			
 		}
 		else
 		{
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
-			Intake.stopIntake();
 			error = 0;
 			output = 0;
 			errorRefresh = 0;
@@ -214,6 +281,7 @@ public class TeleOperated
 			{
 				Shooter.manualControl(operator.getYAxis());
 			}
+			SmartDashboard.putBoolean("FIRE", false);
 		}
 		
 		if (shooterLeverState == Constants.RESTING_POSITION)

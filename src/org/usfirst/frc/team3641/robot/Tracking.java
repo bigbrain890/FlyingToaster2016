@@ -154,22 +154,22 @@ public class Tracking
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				if (driveOutput > 0)
 				{
-					driveOutput+= .05;
+					driveOutput+= .15;
 				}
 				else
 				{
-					driveOutput-= .05;
+					driveOutput-= .15;
 				}
-				if (Math.abs(driveOutput) > .45)
+				if (Math.abs(driveOutput) > .55)
 				{
 					if (driveOutput < 0)
 					{
-						driveOutput = -.45;
+						driveOutput = -.55;
 					}
 					
 					else
 					{
-						driveOutput = .45;
+						driveOutput = .55;
 					}
 				}
 				
@@ -208,6 +208,8 @@ public class Tracking
 	{
 		SmartDashboard.putNumber("Angle Off", angleOff);
 		SmartDashboard.putNumber("Vision State", visionState);
+		SmartDashboard.putNumber("Target", target);
+		SmartDashboard.putNumber("X Cordinate", xcord);
 
 	}
 }
