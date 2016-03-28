@@ -12,7 +12,6 @@ public class DriveBase
 	public static CANTalon leftMotor1, leftMotor2, rightMotor1, rightMotor2;
 	public static RobotDrive chassis;
 	public static AHRS gyro;
-	public static FeedbackDevice dankEncoder;
 	
 	public DriveBase()
 	{

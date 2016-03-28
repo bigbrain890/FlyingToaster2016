@@ -29,8 +29,6 @@ public class Constants
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
-	public static final int SHOOTER_POT = 1;
-	public static final int INTAKE_POT = 3;
 	
 	// Auton References
 	public static final int LOW_BAR = 1;
@@ -54,13 +52,8 @@ public class Constants
 	public static final double OFFSET_KP = .07;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
-	public static final double CAM_KP = 0.0;
-	public static final double CAM_KI = 0.0;
 	public static final double KI_UPPER_LIMIT = 2300;
 	public static final double KI_LOWER_LIMIT = -2300;
-
-	// PI serial transfer rate
-	public static final int TRANSFER_RATE = 9600;
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP_COMP = 171;
@@ -75,7 +68,7 @@ public class Constants
 	public static final int TURN_TO_TARGET = 3;
 	public static final int TRACKED = 4;
 	public static final int WAIT_FOR_STILL = 5;
-	public static final double MOTION_THRESHOLD = .05;
+	public static final double MOTION_THRESHOLD = .5;
 
 	
 	// Shooter stuff
@@ -83,28 +76,16 @@ public class Constants
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
-	public static final int MANIPULATOR1 = 9;
-	public static final int MANIPULATOR2 = 10;
-	public static final double CAM_FIRE = 0.0; 		//Position for shoving ball into shooting wheels.
-	public static final double CAM_HOLD = 0.0; 		//Position for holding ball in shooter.
-	public static final double CAM_INTAKE = 0.0; 	// Position for anticipating intaked ball.
-	public static final double SHOOTER_INTAKE = 0.0;//Position to put shooter arm at to intake the ball.
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static final int INTAKE_DOWN = 0;
 	public static int FAR_SHOT_COMP = 2450;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
-	public static final int MEDIUM_SHOT = 2400;
+	public static int MEDIUM_SHOT = 2400;
 	public static int CLOSE_SHOT = 3450;
-	public static final int SHOOTER_SERVO_PORT = 9;
-	public static final int LEVER_LIM_SWITCH = 8;
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	
-	//Ben was here :D
-	
 	// Intake Motors
-	//public static final int ROLLERS = 9;
-	//public static final int INTAKE = 10;
 	public static final int DEFENSE_ARM1 = 9;
 	public static final int DEFENSE_ARM2 = 10;
 	

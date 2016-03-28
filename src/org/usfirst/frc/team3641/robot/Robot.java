@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot
     	PILoop.getInstance();
     	UDP.getInstance();
     	TCP.getInstance();
-    	Manipulator.getInstance();
     	server = CameraServer.getInstance();
     	server.startAutomaticCapture();
     }

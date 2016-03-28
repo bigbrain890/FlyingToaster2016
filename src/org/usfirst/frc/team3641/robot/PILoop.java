@@ -65,20 +65,6 @@ public class PILoop
 		return motorOutput;
 	}
 	
-	public static double cam(double current, double target, boolean useIntegral)
-	{
-		double error = target - current;
-		if (useIntegral == true)
-		{
-			errorRefresh = error + errorRefresh;
-			motorOutput = (((error * Constants.CAM_KP) * -1) + (errorRefresh * Constants.CAM_KI));
-		}
-		else
-		{
-			motorOutput = ((error * Constants.INTAKE_KP) * -1);
-		}
-		return motorOutput;
-	}
 	
 	public void reset()
 	{

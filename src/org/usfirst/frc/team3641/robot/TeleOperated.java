@@ -54,6 +54,7 @@ public class TeleOperated
 		{
 			driveBack = Constants.RESTING_POSITION;
 		}
+		
 				
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
@@ -303,7 +304,7 @@ public class TeleOperated
 		}
 		else if (shooterLeverState == Constants.RESET)
 		{
-			if ((Shooter.shooterLever.getEncPosition() <= 0) || (Shooter.leverLimSwitch.get() == false))
+			if ((Shooter.shooterLever.getEncPosition() <= 25))
 			{
 				Shooter.resetShooterArm();
 			}

@@ -173,7 +173,7 @@ public class Autonomous
 				}
 				else if (shooterLeverState == Constants.RESET)
 				{
-					if ((Shooter.shooterLever.getEncPosition() <= 0) || (Shooter.leverLimSwitch.get() == false))
+					if ((Shooter.shooterLever.getEncPosition() <= 25))
 					{
 						Shooter.resetShooterArm();
 					}

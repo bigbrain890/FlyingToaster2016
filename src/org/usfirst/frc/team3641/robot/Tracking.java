@@ -110,8 +110,7 @@ public class Tracking
 		
 		else if(visionState == Constants.WAIT_FOR_STILL)
 		{
-			newAngle = DriveBase.getDriveDirection();
-			if(Math.abs(newAngle-oldAngle) > Constants.MOTION_THRESHOLD)
+			if(Math.abs(DriveBase.gyro.getRate()) > Constants.MOTION_THRESHOLD)
 			{
 				SmartDashboard.putBoolean("TRACKED", true);
 				DriveBase.driveNormal(0.0, 0.0);
@@ -121,7 +120,6 @@ public class Tracking
 				visionState = Constants.SEND_REQUEST;
 			}
 			
-			oldAngle = newAngle;
 		}
 		
 		else if (visionState == Constants.TURN_TO_TARGET)

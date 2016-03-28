@@ -8,7 +8,7 @@ public class Shooter
 {
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
-	public static DigitalInput leverLimSwitch, shooterLimitSwitch;
+	public static DigitalInput shooterLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
 	
 	public Shooter()
@@ -17,7 +17,6 @@ public class Shooter
 		flyWheel2 = new CANTalon(Constants.FLY_WHEEL_2);
 		shooter = new CANTalon(Constants.SHOOTER);
 		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
-		leverLimSwitch = new DigitalInput(Constants.LEVER_LIM_SWITCH);
 		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
 		
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
