@@ -77,7 +77,7 @@ public class Constants
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
-	public static final int INTAKE_DOWN = 0;
+	public static final int SHOOTER_DOWN = 0;
 	public static int FAR_SHOT_COMP = 2450;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
@@ -85,9 +85,11 @@ public class Constants
 	public static int CLOSE_SHOT = 3450;
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	
-	// Intake Motors
-	public static final int DEFENSE_ARM1 = 9;
+	// Intake Stuff
+	public static final int INTAKE_LIM_SWITCH = 8;
+	public static final int INTAKE_ARTICULATION_1 = 9;
 	public static final int ROLLERS = 10;
+	public static final int INTAKE_ARTICULATION_2 = 11;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.

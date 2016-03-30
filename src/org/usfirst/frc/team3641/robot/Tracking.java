@@ -151,22 +151,22 @@ public class Tracking
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				if (driveOutput > 0)
 				{
-					driveOutput+= .15;
+					driveOutput+= .5;
 				}
 				else
 				{
-					driveOutput-= .15;
+					driveOutput-= .5;
 				}
-				if (Math.abs(driveOutput) > .55)
+				if (Math.abs(driveOutput) > .7)
 				{
 					if (driveOutput < 0)
 					{
-						driveOutput = -.55;
+						driveOutput = -.7;
 					}
 					
 					else
 					{
-						driveOutput = .55;
+						driveOutput = .7;
 					}
 				}
 				

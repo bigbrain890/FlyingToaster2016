@@ -12,6 +12,7 @@ public class TeleOperated
 	static public int driveBack = Constants.UNPRESSED;
 	static public double driveBackTarg = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
+	public static int intakeState = Constants.SHOOTER_DOWN;
 	static double errorRefresh = 0;
 	static double error = 0;
 	static double output = 0;
@@ -60,6 +61,10 @@ public class TeleOperated
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
 			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+		}
+		if (dualShock.getShareButton() == true)
+		{
+			DriveBase.driveNormal(0.0, Preferences.getInstance().getDouble("Turn Speed", .5));
 		}
 		
 		else if (driveMode == Constants.DRIVE_TANK)
@@ -110,7 +115,7 @@ public class TeleOperated
 			}
 			else
 			{
-				error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+				error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
 				errorRefresh = error + errorRefresh;
 				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 				if (output < -.5)
@@ -133,7 +138,7 @@ public class TeleOperated
 			}
 			else
 			{
-				error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+				error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
 				errorRefresh = error + errorRefresh;
 				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 				if (output < -.5)
@@ -206,7 +211,7 @@ public class TeleOperated
 		}
 		else if (operator.getBaseCenterLeft())
 		{
-			error = Constants.INTAKE_DOWN - Shooter.shooter.getEncPosition();
+			error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			if (output < -.5)
