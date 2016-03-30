@@ -40,7 +40,7 @@ public class TeleOperated
 		}
 		else if (dualShock.getLeftBumper() == true)
 		{
-			driveMode = Constants.DRIVE_REVERSE;
+			driveMode = Constants.DRIVE_TANK;
 		}
 		if (operator.getIndexTrigger() == true)
 		{
@@ -59,31 +59,20 @@ public class TeleOperated
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
-			if(dualShock.getRightAnalogStickButton() == true)
-			{
-				DriveBase.driveNormal(dualShock.getLeftStickYAxis() * .4, dualShock.getRightStickXAxis() * -.4);
-			}
-			else
-			{
-				DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
-			}
+			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 		}
-		else if (driveMode == Constants.DRIVE_REVERSE)
+		
+		else if (driveMode == Constants.DRIVE_TANK)
 		{
-			if(dualShock.getRightAnalogStickButton() == true)
-			{
-				DriveBase.driveReverse(dualShock.getLeftStickYAxis() * .4, dualShock.getRightStickXAxis() * .4);
-			}
-			else
-			{
-				DriveBase.driveReverse(dualShock.getLeftStickYAxis(), dualShock.getRightStickXAxis());
-			}
+			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
+		
 		if (driveBack == Constants.DO_DRIVE_BACK_MATH)
 		{
 			driveBackTarg = DriveBase.getDriveDis() - Constants.ROLL_BACK;
 			driveBack = Constants.DRIVE_BACK;
 		}
+		
 		else if (driveBack == Constants.DRIVE_BACK)
 		{
 			double error = driveBackTarg - DriveBase.getDriveDis();
@@ -107,21 +96,16 @@ public class TeleOperated
 		{
 			Tracking.autoTarget();
 		}
+		
 		else
 		{
 			Tracking.resetVision();
 		}
 		
-		if(dualShock.getOptionsButton())
-		{
-			DriveBase.resetGyro();
-		}
-		
 		if((dualShock.getRightTriggerAxis() > 0) || (operator.getThumbBottom() == true))
 		{
-			if(Shooter.shooterLimitSwitch.get() == false)
+			if(Shooter.shooterLimitSwitch.get() == true)
 			{
-			
 				Shooter.shooter.set(0.0);
 			}
 			else
@@ -137,11 +121,12 @@ public class TeleOperated
 			}
 			Shooter.pullBackShooterArm();
 			Shooter.intake();
+			Intake.intakeBall();
 		}
 		
 		else if (dualShock.getLeftTriggerAxis() > 0)
 		{
-			if(Shooter.shooterLimitSwitch.get() == false)
+			if(Shooter.shooterLimitSwitch.get() == true)
 			{
 			
 				Shooter.shooter.set(0.0);
@@ -157,10 +142,12 @@ public class TeleOperated
 				}
 				Shooter.shooter.set(output);
 				
+				
 			}
 			if(Shooter.shooter.getEncPosition() < 400)
 			{
 				Shooter.lowGoal();
+				Intake.lowGoal();
 			}
 		}		
 		
@@ -270,7 +257,8 @@ public class TeleOperated
 			error = 0;
 			output = 0;
 			errorRefresh = 0;
-			if(!Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
+			Intake.stopIntake();
+			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
 			{
 				Shooter.manualControl(0.0);
 			}
@@ -313,11 +301,11 @@ public class TeleOperated
 				shooterLeverState = Constants.RESTING_POSITION;
 			}
 		}
-		if(!Shooter.shooterLimitSwitch.get())
+		if(Shooter.shooterLimitSwitch.get())
 		{
 			Shooter.zeroShooterEnc();
 		}
-		if (Shooter.shooterLimitSwitch.get() == false)
+		if (Shooter.shooterLimitSwitch.get() == true)
 		{
 			SmartDashboard.putBoolean("Is pressed", true);
 		}

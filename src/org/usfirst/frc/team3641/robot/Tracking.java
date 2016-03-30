@@ -17,7 +17,6 @@ public class Tracking
 	public static double errorRefresh = 0;
 	private static int packetCount = 0;
 	private static int checksum = packetCount;
-	private static double oldAngle, newAngle;
 
 
 	private Tracking()
@@ -178,7 +177,6 @@ public class Tracking
 			{
 				DriveBase.driveNormal(0.0, 0.0);
 				visionState = Constants.WAIT_FOR_STILL;
-				oldAngle = ActualCurrentHeading;
 			}
 
 		}

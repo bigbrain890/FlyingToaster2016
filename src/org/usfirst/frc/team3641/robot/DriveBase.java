@@ -34,11 +34,6 @@ public class DriveBase
 		return instance;
 	}
 	
-	public static void driveReverse(double throttle, double rotate)
-	{
-		chassis.arcadeDrive(throttle, rotate*-1);
-	}
-	
 	public static void driveNormal(double throttle, double rotate)
 	{
 		chassis.arcadeDrive(throttle * -1, rotate);
@@ -46,12 +41,7 @@ public class DriveBase
 	
 	public static void driveTank(double left, double right)
 	{
-		chassis.tankDrive(left * -1, right * -1);
-	}
-	
-	public static void driveReverseTank(double left, double right)
-	{
-		chassis.tankDrive(left, right);
+		chassis.tankDrive(-left, -right);
 	}
 	
 	public static double getDriveDis()

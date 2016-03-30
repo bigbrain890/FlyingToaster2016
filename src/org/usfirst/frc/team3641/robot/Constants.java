@@ -87,7 +87,7 @@ public class Constants
 	
 	// Intake Motors
 	public static final int DEFENSE_ARM1 = 9;
-	public static final int DEFENSE_ARM2 = 10;
+	public static final int ROLLERS = 10;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
@@ -98,10 +98,11 @@ public class Constants
 	public static final double LIGHTING_BLINK = 4.0;
 	public static final double ROTATION_STALL_INPUT = .25;
 	public static final int LEVER_MAX_SWING = -1000;
+	public static final double LOW_GEAR_MULTIPLIER = .35;
 	
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = false;
-	public static final boolean DRIVE_REVERSE = true;
+	public static final boolean DRIVE_TANK = true;
 	public static final int RESTING_POSITION = 0;
 	public static final int DO_DRIVE_BACK_MATH = 1;
 	public static final int DRIVE_BACK = 2;

@@ -106,6 +106,28 @@ public class PS4Controller extends Joystick
 	{
 		return getRawButton(13);
 	}
-
 	
+	public boolean getDPadTopHalf()
+	{
+		if(getPOV(1) == 315 || getPOV(1) == 0 || getPOV(1) == 225)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean getDPadBottomHalf()
+	{
+		if(getPOV(1) == 135 || getPOV(1) == 180 || getPOV(1) == 225)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
