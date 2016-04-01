@@ -12,7 +12,7 @@ public class TeleOperated
 	static public int driveBack = Constants.UNPRESSED;
 	static public double driveBackTarg = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
-	public static int intakeState = Constants.SHOOTER_DOWN;
+	public static int intakeState = Constants.INTAKE_DOWN;
 	static double errorRefresh = 0;
 	static double error = 0;
 	static double output = 0;
@@ -55,18 +55,37 @@ public class TeleOperated
 		{
 			driveBack = Constants.RESTING_POSITION;
 		}
+		if (dualShock.getRightAnalogStickButton() == true)
+		{
+			intakeState = Constants.INTAKE_DOWN;
+		}
+		else if (dualShock.getLeftAnalogStickButton() == true)
+		{
+			intakeState = Constants.INTAKE_UP;
+		}
 		
 				
 		// Actually driving and stuff
 		if (driveMode == Constants.DRIVE_NORMAL)
 		{
 			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+			if(dualShock.getRightDPad() == true)
+			{
+				DriveBase.driveNormal(0.0, -.53);
+			}
+			else if (dualShock.getleftDPad() == true)
+			{
+				DriveBase.driveNormal(0.0, .53);
+			}
+			else if (dualShock.getTopDPad() == true)
+			{
+				DriveBase.driveNormal(-.5, 0.0);
+			}
+			else if (dualShock.getBottomDPad() == true)
+			{
+				DriveBase.driveNormal(.5, 0.0);
+			}
 		}
-		if (dualShock.getShareButton() == true)
-		{
-			DriveBase.driveNormal(0.0, Preferences.getInstance().getDouble("Turn Speed", .5));
-		}
-		
 		else if (driveMode == Constants.DRIVE_TANK)
 		{
 			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
@@ -162,18 +181,16 @@ public class TeleOperated
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
 			error = Constants.CLOSE_SHOT - shooterPos;
 			errorRefresh = error + errorRefresh;
-			if (errorRefresh > 5500)
+			if (errorRefresh > 25000)
 			{
-				errorRefresh = 5500;
+				errorRefresh = 25000;
 			}
-			else if (errorRefresh < -5500)
+			else if (errorRefresh < -25000)
 			{
-				errorRefresh = -5500;
+				errorRefresh = -25000;
 			}
 		
-			double angle = (shooterPos / 45.7) - 10;
-			double offset = Math.cos(angle);
-			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) + (offset * Constants.OFFSET_KP));
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) );
 			if (output > .75)
 			{
 				output = .75;

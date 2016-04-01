@@ -49,7 +49,7 @@ public class Constants
 	public static final double DRIVE_KI = .0001;
 	public static final double SHOOTER_KP = 0.00055;
 	public static final double SHOOTER_KI = 0.0000023;
-	public static final double OFFSET_KP = .07;
+	public static final double OFFSET_KP = .16;
 	public static final double INTAKE_KP = 0.0;
 	public static final double INTAKE_KI = 0.0;
 	public static final double KI_UPPER_LIMIT = 2300;
@@ -72,12 +72,12 @@ public class Constants
 
 	
 	// Shooter stuff
+	public static final double SHOOTER_DOWN = 0.0;
 	public static final int FLY_WHEEL_1 = 7;
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
 	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
-	public static final int SHOOTER_DOWN = 0;
 	public static int FAR_SHOT_COMP = 2450;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
@@ -86,6 +86,8 @@ public class Constants
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	
 	// Intake Stuff
+	public static final int INTAKE_DOWN = 0;
+	public static final int INTAKE_UP = 1;
 	public static final int INTAKE_LIM_SWITCH = 8;
 	public static final int INTAKE_ARTICULATION_1 = 9;
 	public static final int ROLLERS = 10;

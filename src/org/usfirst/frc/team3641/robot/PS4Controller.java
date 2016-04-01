@@ -109,7 +109,7 @@ public class PS4Controller extends Joystick
 	
 	public boolean getDPadTopHalf()
 	{
-		if(getPOV(1) == 315 || getPOV(1) == 0 || getPOV(1) == 225)
+		if(getPOV(0) == 315 || getPOV(1) == 0 || getPOV(1) == 45)
 		{
 			return true;
 		}
@@ -121,7 +121,7 @@ public class PS4Controller extends Joystick
 	
 	public boolean getDPadBottomHalf()
 	{
-		if(getPOV(1) == 135 || getPOV(1) == 180 || getPOV(1) == 225)
+		if(getPOV(0) == 135 || getPOV(1) == 180 || getPOV(1) == 225)
 		{
 			return true;
 		}
@@ -130,4 +130,53 @@ public class PS4Controller extends Joystick
 			return false;
 		}
 	}
+	
+	public boolean getleftDPad()
+	{
+		if(getPOV(0) == 270)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean getRightDPad()
+	{
+		if(getPOV(0) == 90)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean getTopDPad()
+	{
+		if(getPOV(0) == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}	
+	}
+	
+	public boolean getBottomDPad()
+	{
+		if(getPOV(0) == 180)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 }
