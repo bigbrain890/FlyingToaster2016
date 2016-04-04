@@ -3,11 +3,13 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.AnalogInput;
 public class Intake {
 
 	private static Intake instance;
 	public static CANTalon rollers, intake1, intake2;
 	public static DigitalInput limSwitch;
+	public static AnalogInput intake1Pot, intake2Pot;
 	
 	public Intake()
 	{
@@ -15,6 +17,8 @@ public class Intake {
 		intake1 = new CANTalon(Constants.INTAKE_ARTICULATION_1);
 		intake2 = new CANTalon(Constants.INTAKE_ARTICULATION_2);
 		limSwitch = new DigitalInput(Constants.INTAKE_LIM_SWITCH);
+		intake1Pot = new AnalogInput(Constants.INTAKE1_POT);
+		intake2Pot = new AnalogInput(Constants.INTAKE2_POT);
 	}
 	
 	public static Intake getInstance()
@@ -43,16 +47,7 @@ public class Intake {
 	
 	public static void setDown()
 	{
-		if(limSwitch.get() == false)
-		{
-			intake1.set(-.5);
-			intake2.set(-.5);
-		}
-		else
-		{
-			intake1.set(0);
-			intake2.set(0);
-		}
+
 	}
 	
 }

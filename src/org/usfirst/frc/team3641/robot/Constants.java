@@ -77,7 +77,6 @@ public class Constants
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
-	public static final double SHOOTER_REVERSE = 9999; //TODO: ADD REAL VALUE HERE! Value of pot when shooter is vertical.
 	public static int FAR_SHOT_COMP = 2450;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
@@ -86,6 +85,8 @@ public class Constants
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	
 	// Intake Stuff
+	public static final int INTAKE1_POT = 3;
+	public static final int INTAKE2_POT = 2;
 	public static final int INTAKE_DOWN = 0;
 	public static final int INTAKE_UP = 1;
 	public static final int INTAKE_LIM_SWITCH = 8;

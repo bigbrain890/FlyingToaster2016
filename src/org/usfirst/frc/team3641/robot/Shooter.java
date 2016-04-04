@@ -42,8 +42,8 @@ public class Shooter
 	
 	public static void intake()
 	{
-		flyWheel1.set(-.75);
-		flyWheel2.set(.75);
+		flyWheel1.set(.75);
+		flyWheel2.set(-.75);
 	}
 	
 	public static void manualControl(double joystick)
@@ -90,8 +90,8 @@ public class Shooter
 	
 	public static void lowGoal()
 	{
-		flyWheel1.set(1);
-		flyWheel2.set(-1);
+		flyWheel1.set(-1);
+		flyWheel2.set(1);
 	}
 	
 	public static void sensorReadout()

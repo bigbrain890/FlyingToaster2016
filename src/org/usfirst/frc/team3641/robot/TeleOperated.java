@@ -49,7 +49,7 @@ public class TeleOperated
 		}
 		if(dualShock.getXButton() == true)
 		{
-				driveBack = Constants.DO_DRIVE_BACK_MATH;
+			driveBack = Constants.DO_DRIVE_BACK_MATH;
 		}
 		else if(dualShock.getTriangleButton() == true)
 		{
@@ -89,6 +89,15 @@ public class TeleOperated
 		else if (driveMode == Constants.DRIVE_TANK)
 		{
 			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
+		}
+		
+		if(intakeState == Constants.INTAKE_DOWN)
+		{
+			Intake.setDown();
+		}
+		else if (intakeState == Constants.INTAKE_UP)
+		{
+			
 		}
 		
 		if (driveBack == Constants.DO_DRIVE_BACK_MATH)
