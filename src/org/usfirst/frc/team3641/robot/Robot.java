@@ -89,11 +89,13 @@ public class Robot extends IterativeRobot
         TeleOperated.runDriver();
         SmartDashboard.putNumber("Direction", DriveBase.getDriveDirection());
         SmartDashboard.putNumber("Drive Distance", DriveBase.getDriveDis());
+    	Intake.sensorReadOut();
+
     }
 	
     public void testPeriodic()
     {
-    	//Teh Codez Goes Here
+    	
     }
     
 }

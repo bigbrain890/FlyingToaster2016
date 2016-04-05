@@ -50,7 +50,7 @@ public class Constants
 	public static final double SHOOTER_KP = 0.00055;
 	public static final double SHOOTER_KI = 0.0000023;
 	public static final double OFFSET_KP = .16;
-	public static final double INTAKE_KP = 0.0;
+	public static final double INTAKE_KP = 0.25;
 	public static final double INTAKE_KI = 0.0;
 	public static final double KI_UPPER_LIMIT = 2300;
 	public static final double KI_LOWER_LIMIT = -2300;
@@ -85,14 +85,19 @@ public class Constants
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	
 	// Intake Stuff
-	public static final int INTAKE1_POT = 3;
-	public static final int INTAKE2_POT = 2;
+	public static final double LEFT_INTAKE_DOWN = .78;
+	public static final double RIGHT_INTAKE_DOWN = 1.28;
+	public static final double LEFT_INTAKE_UP = 4.18;
+	public static final double RIGHT_INTAKE_UP = 4.2;
+	public static final int LEFT_POT = 3;
+	public static final int RIGHT_POT = 2;
 	public static final int INTAKE_DOWN = 0;
 	public static final int INTAKE_UP = 1;
+	public static final int INTAKE_REST = 2;
 	public static final int INTAKE_LIM_SWITCH = 8;
-	public static final int INTAKE_ARTICULATION_1 = 9;
+	public static final int RIGHT_INTAKE_MOTOR = 9;
 	public static final int ROLLERS = 10;
-	public static final int INTAKE_ARTICULATION_2 = 11;
+	public static final int LEFT_INTAKE_MOTOR = 11;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.

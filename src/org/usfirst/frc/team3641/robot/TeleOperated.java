@@ -55,14 +55,20 @@ public class TeleOperated
 		{
 			driveBack = Constants.RESTING_POSITION;
 		}
-		if (dualShock.getRightAnalogStickButton() == true)
+		if (dualShock.getShareButton() == true)
 		{
 			intakeState = Constants.INTAKE_DOWN;
 		}
+		else if (dualShock.getRightAnalogStickButton() == true)
+		{
+			intakeState = Constants.INTAKE_DOWN;
+		}
+		
 		else if (dualShock.getLeftAnalogStickButton() == true)
 		{
 			intakeState = Constants.INTAKE_UP;
 		}
+		
 		
 				
 		// Actually driving and stuff
@@ -93,11 +99,26 @@ public class TeleOperated
 		
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
-			Intake.setDown();
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+			}
 		}
 		else if (intakeState == Constants.INTAKE_UP)
 		{
-			
+			double leftError = Constants.LEFT_INTAKE_UP - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
 		}
 		
 		if (driveBack == Constants.DO_DRIVE_BACK_MATH)

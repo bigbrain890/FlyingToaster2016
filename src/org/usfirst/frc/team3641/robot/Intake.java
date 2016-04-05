@@ -3,22 +3,23 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogInput;
 public class Intake {
 
 	private static Intake instance;
-	public static CANTalon rollers, intake1, intake2;
+	public static CANTalon rollers, rightIntake, leftIntake;
 	public static DigitalInput limSwitch;
-	public static AnalogInput intake1Pot, intake2Pot;
+	public static AnalogInput leftPot, rightPot;
 	
 	public Intake()
 	{
 		rollers = new CANTalon(Constants.ROLLERS);
-		intake1 = new CANTalon(Constants.INTAKE_ARTICULATION_1);
-		intake2 = new CANTalon(Constants.INTAKE_ARTICULATION_2);
+		leftIntake = new CANTalon(Constants.LEFT_INTAKE_MOTOR);
+		rightIntake = new CANTalon(Constants.RIGHT_INTAKE_MOTOR);
 		limSwitch = new DigitalInput(Constants.INTAKE_LIM_SWITCH);
-		intake1Pot = new AnalogInput(Constants.INTAKE1_POT);
-		intake2Pot = new AnalogInput(Constants.INTAKE2_POT);
+		leftPot = new AnalogInput(Constants.LEFT_POT);
+		rightPot = new AnalogInput(Constants.RIGHT_POT);
 	}
 	
 	public static Intake getInstance()
@@ -48,6 +49,12 @@ public class Intake {
 	public static void setDown()
 	{
 
+	}
+	
+	public static void sensorReadOut()
+	{
+		SmartDashboard.putNumber("Left Pot", leftPot.getVoltage());
+		SmartDashboard.putNumber("Right Pot", rightPot.getVoltage());
 	}
 	
 }
