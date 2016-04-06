@@ -92,8 +92,9 @@ public class Tracking
 				target -= 360;
 			}
 						
-			if(Math.abs(target - direction) < 1)
+			if(Math.abs(target - direction) < Constants.ACCEPTABLE_ERROR)
 			{
+				SmartDashboard.putBoolean("TRACKED", true);
 				DriveBase.driveNormal(0.0, 0.0);
 				return true;
 			}
@@ -108,7 +109,6 @@ public class Tracking
 		{
 			if(Math.abs(DriveBase.gyro.getRate()) > Constants.MOTION_THRESHOLD)
 			{
-				SmartDashboard.putBoolean("TRACKED", true);
 				DriveBase.driveNormal(0.0, 0.0);
 			}
 			else
@@ -117,7 +117,22 @@ public class Tracking
 			}
 			
 		}
-		
+		else if (visionState == Constants.TURN_TO_TARGET_NO_PID)
+		{
+			double ActualCurrentHeading = DriveBase.getDriveDirection();
+			double error = target - ActualCurrentHeading;
+			if(error>=180)
+			{
+				error -= 360;
+			}
+			else if(error<=-180)
+			{
+				error += 360;
+			}
+			
+			SmartDashboard.putNumber("Error",error);
+		}
+
 		else if (visionState == Constants.TURN_TO_TARGET)
 		{
 			/*
@@ -148,11 +163,11 @@ public class Tracking
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				if (driveOutput > 0)
 				{
-					driveOutput+= .5;
+					driveOutput+= .2;
 				}
 				else
 				{
-					driveOutput-= .5;
+					driveOutput-= .2;
 				}
 				if (Math.abs(driveOutput) > .7)
 				{

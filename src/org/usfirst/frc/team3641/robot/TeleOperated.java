@@ -236,7 +236,7 @@ public class TeleOperated
 			}
 			else
 			{
-				Shooter.spinUpWheels(.75);	
+				Shooter.spinUpWheels(-.75);	
 			}
 			double shotAccuracy = Math.abs(Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition());
 			if(shotAccuracy < 30)
@@ -289,7 +289,7 @@ public class TeleOperated
 			}
 			else
 			{
-				Shooter.spinUpWheels(1);	
+				Shooter.spinUpWheels(-1);	
 			}
 			double shotAccuracy = Math.abs(Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition());
 			if(shotAccuracy < 30)

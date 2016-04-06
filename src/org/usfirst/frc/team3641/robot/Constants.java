@@ -66,9 +66,10 @@ public class Constants
 	public static final int RESPONSE_CAPTURE = 1;
 	public static final int DO_MATH = 2;
 	public static final int TURN_TO_TARGET = 3;
+	public static final int TURN_TO_TARGET_NO_PID = 42;
 	public static final int TRACKED = 4;
 	public static final int WAIT_FOR_STILL = 5;
-	public static final double MOTION_THRESHOLD = .5;
+	public static final double MOTION_THRESHOLD = .25;
 
 	
 	// Shooter stuff
@@ -83,6 +84,7 @@ public class Constants
 	public static int MEDIUM_SHOT = 2400;
 	public static int CLOSE_SHOT = 3450;
 	public static final int SHOOTER_LIM_SWITCH = 9;
+	public static double ACCEPTABLE_ERROR = 1;
 	
 	// Intake Stuff
 	public static final double LEFT_INTAKE_DOWN = .78;
