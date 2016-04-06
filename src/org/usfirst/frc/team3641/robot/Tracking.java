@@ -139,7 +139,7 @@ public class Tracking
 				DriveBase.driveNormal(0.0, Constants.ROTATION_STALL_INPUT);
 			}
 			
-			SmartDashboard.putNumber("Error",error);
+			SmartDashboard.putNumber("Error", error);
 		}
 
 		else if (visionState == Constants.TURN_TO_TARGET)

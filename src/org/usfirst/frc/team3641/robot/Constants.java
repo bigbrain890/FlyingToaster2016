@@ -67,7 +67,7 @@ public class Constants
 	public static final int DO_MATH = 2;
 	public static final int TURN_TO_TARGET = 3;
 	public static final int TURN_TO_TARGET_NO_PID = 42;
-	public static final int TRACKED = 4;
+	public static final int TRACKED = 4; 
 	public static final int WAIT_FOR_STILL = 5;
 	public static final double MOTION_THRESHOLD = .25;
 
@@ -101,6 +101,8 @@ public class Constants
 	public static final int RIGHT_INTAKE_MOTOR = 9;
 	public static final int ROLLERS = 10;
 	public static final int LEFT_INTAKE_MOTOR = 11;
+	public static final int WINCH_ONE = 12;
+	public static final int WINCH_TWO = 13;
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
@@ -112,6 +114,17 @@ public class Constants
 	public static final double ROTATION_STALL_INPUT = .25;
 	public static final int LEVER_MAX_SWING = -1000;
 	public static final double LOW_GEAR_MULTIPLIER = .35;
+	
+	//Climber
+	public static final int WINCH_DISTANCE = 3641; //TODO: Find Real Distance
+	public static final int FIRE_HARPOON = 0;
+	public static final int FIND_WINCH_OFFSET = 1;
+	public static final int WINCH_UP = 2;
+	public static final int DONE_CLIMBING = 3641;
+	public static final int WINCH_VELOCITY = 9001; //TODO: Adjust before using (IT'S OVER NINE-THOUSAND!)
+	public static final double WINCH_KP = 0.0;
+	public static final double WINCH_KI = 0.0;
+
 	
 	//Teleop State Variables
 	public static final boolean DRIVE_NORMAL = false;
