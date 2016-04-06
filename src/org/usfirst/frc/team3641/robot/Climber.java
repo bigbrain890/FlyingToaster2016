@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 
 public class Climber
 {
+	/*
 	private static Climber instance;
 	public static CANTalon winch1, winch2;
 	public static int climbState;
@@ -86,5 +87,5 @@ public class Climber
 		}
 		return climbState;
 	}
-
+	*/
 }
