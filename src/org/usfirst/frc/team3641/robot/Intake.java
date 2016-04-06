@@ -11,6 +11,7 @@ public class Intake {
 	public static CANTalon rollers, rightIntake, leftIntake;
 	public static DigitalInput limSwitch;
 	public static AnalogInput leftPot, rightPot;
+	public static DigitalInput ballSensor;
 	
 	public Intake()
 	{
@@ -20,6 +21,7 @@ public class Intake {
 		limSwitch = new DigitalInput(Constants.INTAKE_LIM_SWITCH);
 		leftPot = new AnalogInput(Constants.LEFT_POT);
 		rightPot = new AnalogInput(Constants.RIGHT_POT);
+		ballSensor = new DigitalInput(Constants.BALL_SENSOR);
 	}
 	
 	public static Intake getInstance()
@@ -33,7 +35,8 @@ public class Intake {
 	
 	public static void intakeBall()
 	{
-		rollers.set(Preferences.getInstance().getDouble("Intake Speed", 1.0));
+		if(doesWeHasBall() == false)
+			rollers.set(Preferences.getInstance().getDouble("Intake Speed", 1.0));
 	}
 	
 	public static void stopIntake()
@@ -51,10 +54,19 @@ public class Intake {
 
 	}
 	
+	public static boolean doesWeHasBall()
+	{
+		if(ballSensor.get())
+			return false;
+		else
+			return true;
+	}
+	
 	public static void sensorReadOut()
 	{
 		SmartDashboard.putNumber("Left Pot", leftPot.getVoltage());
 		SmartDashboard.putNumber("Right Pot", rightPot.getVoltage());
+		SmartDashboard.putBoolean("Does We Has Ball?", doesWeHasBall());
 	}
 	
 }

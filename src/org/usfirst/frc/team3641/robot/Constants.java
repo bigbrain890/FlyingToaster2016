@@ -97,6 +97,7 @@ public class Constants
 	public static final int INTAKE_UP = 1;
 	public static final int INTAKE_REST = 2;
 	public static final int INTAKE_LIM_SWITCH = 8;
+	public static final int BALL_SENSOR = 7;
 	public static final int RIGHT_INTAKE_MOTOR = 9;
 	public static final int ROLLERS = 10;
 	public static final int LEFT_INTAKE_MOTOR = 11;

@@ -130,6 +130,15 @@ public class Tracking
 				error += 360;
 			}
 			
+			if(error < 0)
+			{
+				DriveBase.driveNormal(0.0, Constants.ROTATION_STALL_INPUT);
+			}
+			else
+			{
+				DriveBase.driveNormal(0.0, Constants.ROTATION_STALL_INPUT);
+			}
+			
 			SmartDashboard.putNumber("Error",error);
 		}
 
