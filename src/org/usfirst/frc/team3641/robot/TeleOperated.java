@@ -77,11 +77,11 @@ public class TeleOperated
 			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 			if(dualShock.getRightDPad() == true)
 			{
-				DriveBase.driveNormal(0.0, -.53);
+				DriveBase.driveNormal(0.0, -.57);
 			}
 			else if (dualShock.getleftDPad() == true)
 			{
-				DriveBase.driveNormal(0.0, .53);
+				DriveBase.driveNormal(0.0, .57);
 			}
 			else if (dualShock.getTopDPad() == true)
 			{
