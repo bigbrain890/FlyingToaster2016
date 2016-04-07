@@ -32,10 +32,10 @@ public class Intake {
 		return instance;
 	}
 	
-	public static void intakeBall()
+	public static void intakeBall(double speed)
 	{
 		if(doesWeHasBall() == false)
-			rollers.set(Preferences.getInstance().getDouble("Intake Speed", 1.0));
+			rollers.set(speed);
 	}
 	
 	public static void stopIntake()

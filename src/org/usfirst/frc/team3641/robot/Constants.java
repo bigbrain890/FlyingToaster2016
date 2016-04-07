@@ -87,10 +87,10 @@ public class Constants
 	public static double ACCEPTABLE_ERROR = 1;
 	
 	// Intake Stuff
-	public static final double LEFT_INTAKE_DOWN = .78;
-	public static final double RIGHT_INTAKE_DOWN = 1.28;
-	public static final double LEFT_INTAKE_UP = 4.18;
-	public static final double RIGHT_INTAKE_UP = 4.2;
+	public static final double LEFT_INTAKE_DOWN = 4.55;
+	public static final double RIGHT_INTAKE_DOWN = .93;
+	public static final double LEFT_INTAKE_UP = 1.35 ;
+	public static final double RIGHT_INTAKE_UP = 4.18 ;
 	public static final int LEFT_POT = 3;
 	public static final int RIGHT_POT = 2;
 	public static final int INTAKE_DOWN = 0;

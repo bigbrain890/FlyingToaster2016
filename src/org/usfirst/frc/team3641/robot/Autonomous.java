@@ -84,9 +84,9 @@ public class Autonomous
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -209,9 +209,9 @@ public class Autonomous
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -317,9 +317,9 @@ public class Autonomous
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -410,9 +410,9 @@ public class Autonomous
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -508,9 +508,9 @@ public class Autonomous
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);

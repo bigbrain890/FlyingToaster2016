@@ -85,27 +85,34 @@ public class TeleOperated
 			}
 			else if (dualShock.getTopDPad() == true)
 			{
-				DriveBase.driveNormal(-.5, 0.0);
+				Intake.leftIntake.set(.2);
+				Intake.rightIntake.set(-.2);
 			}
 			else if (dualShock.getBottomDPad() == true)
 			{
-				DriveBase.driveNormal(.5, 0.0);
+				Intake.leftIntake.set(-.2);
+				Intake.rightIntake.set(.2);
+			}
+			else
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
 			}
 		}
 		else if (driveMode == Constants.DRIVE_TANK)
 		{
 			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
-		
+	
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
 			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
 			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -117,8 +124,13 @@ public class TeleOperated
 			double rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
 			double leftOutput = leftError * Constants.INTAKE_KP;
 			double rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
+			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
+			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+			}
 		}
 		
 		if (driveBack == Constants.DO_DRIVE_BACK_MATH)
@@ -156,7 +168,7 @@ public class TeleOperated
 			Tracking.resetVision();
 		}
 		
-		if((dualShock.getRightTriggerAxis() > 0) || (operator.getThumbBottom() == true))
+		if((dualShock.getRightThrottleButton() == true) || (operator.getThumbBottom() == true))
 		{
 			if(Shooter.shooterLimitSwitch.get() == true)
 			{
@@ -175,7 +187,7 @@ public class TeleOperated
 			}
 			Shooter.pullBackShooterArm();
 			Shooter.intake();
-			Intake.intakeBall();
+			Intake.intakeBall((dualShock.getRightTriggerAxis() + 1) / 2);
 		}
 		
 		else if (dualShock.getLeftTriggerAxis() > 0)
@@ -254,6 +266,14 @@ public class TeleOperated
 			error = Constants.CAMERA_THRESHOLD_ANGLE - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			if(output < 0 && output < -.5)
+			{
+				output = -.5;
+			}
+			else if(output > 0 && output > .5)
+			{
+				output = .5;
+			}
 			Shooter.shooter.set(output);
 		}
 		else if (operator.getBaseCenterLeft())
@@ -267,6 +287,7 @@ public class TeleOperated
 			}
 			Shooter.shooter.set(output);
 			Shooter.lowGoal();
+			Intake.lowGoal();
 		}
 		else if (operator.getThumbRight())
 		{
