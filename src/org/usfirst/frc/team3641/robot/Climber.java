@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3641.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
+//import edu.wpi.first.wpilibj.CANTalon;
 
 public class Climber
 {

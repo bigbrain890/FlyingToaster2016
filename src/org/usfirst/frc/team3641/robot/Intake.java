@@ -18,7 +18,6 @@ public class Intake {
 		rollers = new CANTalon(Constants.ROLLERS);
 		leftIntake = new CANTalon(Constants.LEFT_INTAKE_MOTOR);
 		rightIntake = new CANTalon(Constants.RIGHT_INTAKE_MOTOR);
-		limSwitch = new DigitalInput(Constants.INTAKE_LIM_SWITCH);
 		leftPot = new AnalogInput(Constants.LEFT_POT);
 		rightPot = new AnalogInput(Constants.RIGHT_POT);
 		ballSensor = new DigitalInput(Constants.BALL_SENSOR);

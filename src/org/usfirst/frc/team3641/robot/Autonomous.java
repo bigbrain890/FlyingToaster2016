@@ -80,10 +80,25 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 2)
+		{
 			DriveBase.resetDriveSensors();
 			autonState++;
 		}
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS_LOW)
 			{
@@ -96,7 +111,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -122,7 +137,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -132,7 +147,7 @@ public class Autonomous
 				autonState++;
 
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -144,7 +159,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 7)
 		{
 			if( aimTimer.get() < 4)
 			{
@@ -190,10 +205,25 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 2)
+		{
 			DriveBase.resetDriveSensors();
 			autonState++;
 		}
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
@@ -206,7 +236,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -232,7 +262,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -242,7 +272,7 @@ public class Autonomous
 				//autonState++;
 
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			if (Tracking.autoTarget())
 			{
@@ -250,7 +280,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 7)
 		{
 			if( aimTimer.get() < 2)
 			{
@@ -283,10 +313,25 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 2)
+		{
 			DriveBase.resetDriveSensors();
 			autonState++;
 		}
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
@@ -299,7 +344,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -325,7 +370,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -335,7 +380,7 @@ public class Autonomous
 				//autonState++;
 
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			if (Tracking.autoTarget())
 			{
@@ -343,7 +388,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 7)
 		{
 			if( aimTimer.get() < 2)
 			{
@@ -361,10 +406,25 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 2)
+		{
 			DriveBase.resetDriveSensors();
 			autonState++;
 		}
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
@@ -377,7 +437,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -403,7 +463,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -413,7 +473,7 @@ public class Autonomous
 				//autonState++;
 
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			if (Tracking.autoTarget())
 			{
@@ -421,7 +481,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 7)
 		{
 			if( aimTimer.get() < 2)
 			{
@@ -444,10 +504,25 @@ public class Autonomous
 	{
 		if (autonState == 1)
 		{
+			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			double leftOutput = leftError * Constants.INTAKE_KP;
+			double rightOutput = rightError * Constants.INTAKE_KP;
+			Intake.leftIntake.set(leftOutput);
+			Intake.rightIntake.set(-rightOutput);
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
+			{
+				Intake.leftIntake.set(0.0);
+				Intake.rightIntake.set(0.0);
+				autonState++;
+			}
+		}
+		else if (autonState == 2)
+		{
 			DriveBase.resetDriveSensors();
 			autonState++;
 		}
-		else if (autonState == 2)
+		else if (autonState == 3)
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
@@ -460,7 +535,7 @@ public class Autonomous
 			}
 		}
 		
-		else if (autonState == 3)
+		else if (autonState == 4)
 		{
 			if (DriveBase.getDriveDirection() < 45)
 			{
@@ -486,7 +561,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 4)
+		else if (autonState == 5)
 		{
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
@@ -496,7 +571,7 @@ public class Autonomous
 				//autonState++;
 
 		}
-		else if (autonState == 5)
+		else if (autonState == 6)
 		{
 			if (Tracking.autoTarget())
 			{
@@ -504,7 +579,7 @@ public class Autonomous
 				autonState++;
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 7)
 		{
 			if( aimTimer.get() < 2)
 			{
