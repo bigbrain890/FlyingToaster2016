@@ -13,10 +13,13 @@ public class TeleOperated
 	static public double driveBackTarg = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	public static int intakeState = Constants.INTAKE_DOWN;
-	static double errorRefresh = 0;
-	static double error = 0;
-	static double output = 0;
-	
+	private static double errorRefresh = 0;
+	private static double error = 0;
+	private static double output = 0;
+	private static double leftError = 0;
+	private static double rightError = 0;
+	private static double leftOutput = 0;
+	private static double rightOutput = 0;
 	private TeleOperated()
 	{
 		dualShock = new PS4Controller(Constants.PS4_CONTROLLER);
@@ -34,15 +37,6 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		// State Switching inputs.
-		if (dualShock.getRightBumper() == true)
-		{
-			driveMode = Constants.DRIVE_NORMAL;
-		}
-		else if (dualShock.getLeftBumper() == true)
-		{
-			driveMode = Constants.DRIVE_TANK;
-		}
 		if (operator.getIndexTrigger() == true)
 		{
 			shooterLeverState = Constants.FIRE;
@@ -83,16 +77,6 @@ public class TeleOperated
 			{
 				DriveBase.driveNormal(0.0, .53);
 			}
-			else if (dualShock.getTopDPad() == true)
-			{
-				Intake.leftIntake.set(.2);
-				Intake.rightIntake.set(-.2);
-			}
-			else if (dualShock.getBottomDPad() == true)
-			{
-				Intake.leftIntake.set(-.2);
-				Intake.rightIntake.set(.2);
-			}
 			else
 			{
 				Intake.leftIntake.set(0.0);
@@ -106,10 +90,10 @@ public class TeleOperated
 	
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
@@ -120,10 +104,10 @@ public class TeleOperated
 		}
 		else if (intakeState == Constants.INTAKE_UP)
 		{
-			double leftError = Constants.LEFT_INTAKE_UP - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_UP - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
@@ -160,7 +144,8 @@ public class TeleOperated
 		
 		if (dualShock.getSquareButton() == true)
 		{
-			Tracking.autoTarget();
+			DriveBase.gyro.reset();
+			//Tracking.autoTarget();
 		}
 		
 		else
@@ -387,7 +372,16 @@ public class TeleOperated
 			SmartDashboard.putBoolean("Is pressed", false);
 			
 		}
+		if (dualShock.getRightBumper() == true)
+		{
+			Intake.rollers.set(1);
+		}
+		else if (dualShock.getLeftBumper() == true)
+		{
+			Intake.lowGoal();
+		}
 		Shooter.sensorReadout();
+		Intake.sensorReadOut();
 		Tracking.printOut();
 	}
 	
