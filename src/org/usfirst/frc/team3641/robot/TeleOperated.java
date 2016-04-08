@@ -10,7 +10,7 @@ public class TeleOperated
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
 	static public int driveBack = Constants.UNPRESSED;
-	static public double driveBackTarg = 0;
+	static public double driveBackTarg = 0, leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	public static int intakeState = Constants.INTAKE_DOWN;
 	static double errorRefresh = 0;
@@ -79,24 +79,13 @@ public class TeleOperated
 			{
 				DriveBase.driveNormal(0.0, -.57);
 			}
-			else if (dualShock.getleftDPad() == true)
+			if (dualShock.getleftDPad() == true)
 			{
 				DriveBase.driveNormal(0.0, .57);
 			}
 			else if (dualShock.getTopDPad() == true)
 			{
-				Intake.leftIntake.set(.2);
-				Intake.rightIntake.set(-.2);
-			}
-			else if (dualShock.getBottomDPad() == true)
-			{
-				Intake.leftIntake.set(-.2);
-				Intake.rightIntake.set(.2);
-			}
-			else
-			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.lowGoal();
 			}
 		}
 		else if (driveMode == Constants.DRIVE_TANK)
@@ -106,10 +95,10 @@ public class TeleOperated
 	
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
@@ -120,10 +109,10 @@ public class TeleOperated
 		}
 		else if (intakeState == Constants.INTAKE_UP)
 		{
-			double leftError = Constants.LEFT_INTAKE_UP - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_UP - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(-leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
@@ -156,16 +145,6 @@ public class TeleOperated
 			{
 				driveBack = Constants.RESTING_POSITION;
 			}
-		}
-		
-		if (dualShock.getSquareButton() == true)
-		{
-			Tracking.autoTarget();
-		}
-		
-		else
-		{
-			Tracking.resetVision();
 		}
 		
 		if((dualShock.getRightThrottleButton() == true) || (operator.getThumbBottom() == true))
@@ -250,17 +229,8 @@ public class TeleOperated
 			{
 				Shooter.spinUpWheels(-.75);	
 			}
-			double shotAccuracy = Math.abs(Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition());
-			if(shotAccuracy < 30)
-			{
-				SmartDashboard.putBoolean("FIRE", true);
-			}
-			else
-			{
-				SmartDashboard.putBoolean("FIRE", false);
-			}
 		}
-		
+/*		
 		else if (operator.getThumbLeft())
 		{
 			error = Constants.CAMERA_THRESHOLD_ANGLE - Shooter.shooter.getEncPosition();
@@ -276,6 +246,7 @@ public class TeleOperated
 			}
 			Shooter.shooter.set(output);
 		}
+*/		
 		else if (operator.getBaseCenterLeft())
 		{
 			error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
@@ -289,6 +260,7 @@ public class TeleOperated
 			Shooter.lowGoal();
 			Intake.lowGoal();
 		}
+/*
 		else if (operator.getThumbRight())
 		{
 			error = Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition();
@@ -296,7 +268,7 @@ public class TeleOperated
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
 		}
-		
+*/		
 		else if (operator.getBaseBackLeft() == true)
 		{
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
@@ -312,16 +284,6 @@ public class TeleOperated
 			{
 				Shooter.spinUpWheels(-1);	
 			}
-			double shotAccuracy = Math.abs(Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition());
-			if(shotAccuracy < 30)
-			{
-				SmartDashboard.putBoolean("FIRE", true);
-			}
-			else
-			{
-				SmartDashboard.putBoolean("FIRE", false);
-			}
-			
 		}
 		else
 		{
@@ -343,7 +305,6 @@ public class TeleOperated
 			{
 				Shooter.manualControl(operator.getYAxis());
 			}
-			SmartDashboard.putBoolean("FIRE", false);
 		}
 		
 		if (shooterLeverState == Constants.RESTING_POSITION)
@@ -377,9 +338,6 @@ public class TeleOperated
 		if(Shooter.shooterLimitSwitch.get())
 		{
 			Shooter.zeroShooterEnc();
-		}
-		if (Shooter.shooterLimitSwitch.get() == true)
-		{
 			SmartDashboard.putBoolean("Is pressed", true);
 		}
 		else
@@ -388,7 +346,6 @@ public class TeleOperated
 			
 		}
 		Shooter.sensorReadout();
-		Tracking.printOut();
 	}
 	
 	

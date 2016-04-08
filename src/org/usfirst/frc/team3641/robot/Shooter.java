@@ -20,7 +20,7 @@ public class Shooter
 		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
 		
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
-		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		
 		
 	}
