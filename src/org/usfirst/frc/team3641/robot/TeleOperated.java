@@ -77,26 +77,29 @@ public class TeleOperated
 			{
 				DriveBase.driveNormal(0.0, .53);
 			}
-			else
+			else if (dualShock.getTopDPad() == true)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				DriveBase.driveNormal(-.5, 0.0);
+			}
+			else if (dualShock.getBottomDPad() == true)
+			{
+				DriveBase.driveNormal(.5, 0.0);
 			}
 		}
 		else if (driveMode == Constants.DRIVE_TANK)
 		{
 			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
-	
+		
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
 			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(-leftOutput);
+			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() > Constants.LEFT_INTAKE_DOWN)
+			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -108,7 +111,7 @@ public class TeleOperated
 			rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(-leftOutput);
+			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
 			{
@@ -380,8 +383,9 @@ public class TeleOperated
 		{
 			Intake.lowGoal();
 		}
+		SmartDashboard.putNumber("POT", Intake.rightPot.getVoltage());
 		Shooter.sensorReadout();
-		Intake.sensorReadOut();
+		//Intake.sensorReadOut();
 		Tracking.printOut();
 	}
 	
