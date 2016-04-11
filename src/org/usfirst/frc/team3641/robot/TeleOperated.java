@@ -10,16 +10,13 @@ public class TeleOperated
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
 	static public int driveBack = Constants.UNPRESSED;
-	static public double driveBackTarg = 0;
+	static public double driveBackTarg = 0, leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	public static int intakeState = Constants.INTAKE_DOWN;
 	private static double errorRefresh = 0;
 	private static double error = 0;
 	private static double output = 0;
-	private static double leftError = 0;
-	private static double rightError = 0;
-	private static double leftOutput = 0;
-	private static double rightOutput = 0;
+
 	private TeleOperated()
 	{
 		dualShock = new PS4Controller(Constants.PS4_CONTROLLER);
@@ -71,11 +68,11 @@ public class TeleOperated
 			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 			if(dualShock.getRightDPad() == true)
 			{
-				DriveBase.driveNormal(0.0, -.53);
+				DriveBase.driveNormal(0.0, -.57);
 			}
-			else if (dualShock.getleftDPad() == true)
+			if (dualShock.getleftDPad() == true)
 			{
-				DriveBase.driveNormal(0.0, .53);
+				DriveBase.driveNormal(0.0, .57);
 			}
 			else if (dualShock.getTopDPad() == true)
 			{
@@ -113,7 +110,7 @@ public class TeleOperated
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
+			if(Intake.rightPot.getVoltage() < Constants.RIGHT_INTAKE_UP)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -143,17 +140,6 @@ public class TeleOperated
 			{
 				driveBack = Constants.RESTING_POSITION;
 			}
-		}
-		
-		if (dualShock.getSquareButton() == true)
-		{
-			DriveBase.gyro.reset();
-			//Tracking.autoTarget();
-		}
-		
-		else
-		{
-			Tracking.resetVision();
 		}
 		
 		if((dualShock.getRightThrottleButton() == true) || (operator.getThumbBottom() == true))
@@ -238,17 +224,8 @@ public class TeleOperated
 			{
 				Shooter.spinUpWheels(-.75);	
 			}
-			double shotAccuracy = Math.abs(Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition());
-			if(shotAccuracy < 30)
-			{
-				SmartDashboard.putBoolean("FIRE", true);
-			}
-			else
-			{
-				SmartDashboard.putBoolean("FIRE", false);
-			}
 		}
-		
+/*		
 		else if (operator.getThumbLeft())
 		{
 			error = Constants.CAMERA_THRESHOLD_ANGLE - Shooter.shooter.getEncPosition();
@@ -264,6 +241,7 @@ public class TeleOperated
 			}
 			Shooter.shooter.set(output);
 		}
+*/		
 		else if (operator.getBaseCenterLeft())
 		{
 			error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
@@ -277,6 +255,7 @@ public class TeleOperated
 			Shooter.lowGoal();
 			Intake.lowGoal();
 		}
+/*
 		else if (operator.getThumbRight())
 		{
 			error = Constants.CLOSE_SHOT - Shooter.shooter.getEncPosition();
@@ -284,7 +263,7 @@ public class TeleOperated
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
 		}
-		
+*/		
 		else if (operator.getBaseBackLeft() == true)
 		{
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
@@ -300,16 +279,6 @@ public class TeleOperated
 			{
 				Shooter.spinUpWheels(-1);	
 			}
-			double shotAccuracy = Math.abs(Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition());
-			if(shotAccuracy < 30)
-			{
-				SmartDashboard.putBoolean("FIRE", true);
-			}
-			else
-			{
-				SmartDashboard.putBoolean("FIRE", false);
-			}
-			
 		}
 		else
 		{
@@ -331,7 +300,6 @@ public class TeleOperated
 			{
 				Shooter.manualControl(operator.getYAxis());
 			}
-			SmartDashboard.putBoolean("FIRE", false);
 		}
 		
 		if (shooterLeverState == Constants.RESTING_POSITION)
@@ -365,9 +333,6 @@ public class TeleOperated
 		if(Shooter.shooterLimitSwitch.get())
 		{
 			Shooter.zeroShooterEnc();
-		}
-		if (Shooter.shooterLimitSwitch.get() == true)
-		{
 			SmartDashboard.putBoolean("Is pressed", true);
 		}
 		else
@@ -383,10 +348,9 @@ public class TeleOperated
 		{
 			Intake.lowGoal();
 		}
-		SmartDashboard.putNumber("POT", Intake.rightPot.getVoltage());
-		Shooter.sensorReadout();
-		//Intake.sensorReadOut();
+		Intake.sensorReadOut();
 		Tracking.printOut();
+
 	}
 	
 	

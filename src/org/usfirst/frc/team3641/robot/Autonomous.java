@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Autonomous
 {
-	private static double error=0, errorRefresh=0, output=0;
+	private static double error=0, errorRefresh=0, output=0, leftError=0, rightError=0,leftOutput=0, rightOutput=0;
 
 	private static Autonomous instance;
 	private static Timer autoTimer, aimTimer, intakeTimer;
@@ -86,10 +86,11 @@ public class Autonomous
 		}
 		if (autonState == 2)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
@@ -216,10 +217,10 @@ public class Autonomous
 		}
 		if (autonState == 2)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
@@ -329,10 +330,10 @@ public class Autonomous
 		}
 		if (autonState == 2)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
@@ -427,10 +428,10 @@ public class Autonomous
 		}
 		if (autonState == 2)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
@@ -530,10 +531,10 @@ public class Autonomous
 		}
 		if (autonState == 2)
 		{
-			double leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
-			double rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
-			double leftOutput = leftError * Constants.INTAKE_KP;
-			double rightOutput = rightError * Constants.INTAKE_KP;
+			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
+			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
+			leftOutput = leftError * Constants.INTAKE_KP;
+			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
