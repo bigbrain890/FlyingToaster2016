@@ -110,7 +110,7 @@ public class TeleOperated
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.rightPot.getVoltage() < Constants.RIGHT_INTAKE_UP)
+			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
