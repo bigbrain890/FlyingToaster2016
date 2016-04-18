@@ -222,7 +222,7 @@ public class TeleOperated
 			}
 			else
 			{
-				Shooter.spinUpWheels(-.75);	
+				Shooter.spinUpWheels(-.59);	
 			}
 		}
 /*		
@@ -266,10 +266,19 @@ public class TeleOperated
 */		
 		else if (operator.getBaseBackLeft() == true)
 		{
+			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			if (output > .75)
+			{
+				output = .75;
+			}
+			else if (output < -.75)
+			{
+				output = -.75;
+			}
 			Shooter.shooter.set(output);
 			if (Shooter.shooter.getEncPosition() < 2000)
 			{
@@ -282,23 +291,49 @@ public class TeleOperated
 		}
 		else
 		{
+			Tracking.lightOff();
 			Shooter.flyWheel1.set(0.0);
 			Shooter.flyWheel2.set(0.0);
 			error = 0;
 			output = 0;
 			errorRefresh = 0;
 			Intake.stopIntake();
+			
+
 			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
 			{
 				Shooter.manualControl(0.0);
+				if(operator.getBaseBackRight())
+				{
+					double speed = operator.getYAxis();
+					Climber.winch1.set(-speed);
+					Climber.winch2.set(speed);
+				}
+
 			}
 			else if (Shooter.shooter.getEncPosition() >= 4100 && operator.getYAxis() > 0)
 			{
 				Shooter.manualControl(0.0);
+				if(operator.getBaseBackRight())
+				{
+					double speed = operator.getYAxis();
+					Climber.winch1.set(-speed);
+					Climber.winch2.set(speed);
+				}
+
 			}
 			else
 			{
-				Shooter.manualControl(operator.getYAxis());
+				if(operator.getBaseBackRight())
+				{
+					double speed = operator.getYAxis();
+					Climber.winch1.set(-speed);
+					Climber.winch2.set(speed);
+				}
+				else
+				{
+					Shooter.manualControl(operator.getYAxis());
+				}
 			}
 		}
 		
@@ -350,6 +385,7 @@ public class TeleOperated
 		}
 		Intake.sensorReadOut();
 		Tracking.printOut();
+		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition());
 
 	}
 	

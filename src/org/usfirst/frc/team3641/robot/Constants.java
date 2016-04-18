@@ -40,10 +40,17 @@ public class Constants
 	public static final int ROUGH_TERRAIN = 7;
 	public static final int PORTCULLIS = 8;
 	public static final int RAMPARTS = 9;
+	public static final int ONE_BALL = 10;
 	public static final int TARGET_DEFENSE_DRIVE_DIS = 190;
 	public static final int TARGET_DEFENSE_DRIVE_DIS_LOW = 175;
+	public static final double FINAL_BATTER_SHOT_DIS = 295.206;
+	public static final double FINAL_BATTER_SHOT_ANGLE = 66.81;
+	public static final int AUTON_BALL_SETPOINT = 3650;
 	public static final int STRAIGHT = 0;
-	public static final int MAX_INTAKE_DOWN_TIME = 3;
+	public static final double MAX_INTAKE_DOWN_TIME = 1.5;
+	public static final double KI_DEADBAND_THRESHOLD = 3;
+	public static final double SENSOR_AUTON_GYRO_ROTATION = 15;
+	
 	// PID Contants
 	public static final double DRIVE_KP = .13;
 	public static final double DRIVE_KI = .0001;
@@ -87,7 +94,7 @@ public class Constants
 	public static double ACCEPTABLE_ERROR = 1;
 	
 	// Intake Stuff
-	public static final double LEFT_INTAKE_DOWN = .4;
+	public static final double LEFT_INTAKE_DOWN = .45;
 	public static final double RIGHT_INTAKE_DOWN = .5;
 	public static final double LEFT_INTAKE_UP = 3.05 ;
 	public static final double RIGHT_INTAKE_UP = 3.15 ;
@@ -100,8 +107,8 @@ public class Constants
 	public static final int RIGHT_INTAKE_MOTOR = 9;
 	public static final int ROLLERS = 10;
 	public static final int LEFT_INTAKE_MOTOR = 11;
-	public static final int WINCH_ONE = 12;
-	public static final int WINCH_TWO = 13;
+	public static final int WINCH_ONE = 12; //Left Side
+	public static final int WINCH_TWO = 13; //Right Side
 	
 	//Misc
 	public static final double DRIVE_ENCODER_MULTIPLIER = 0.02454369; // Assuming 1:1 ratio between encoder and wheel.
@@ -113,6 +120,7 @@ public class Constants
 	public static final double ROTATION_STALL_INPUT = .25;
 	public static final int LEVER_MAX_SWING = -1000;
 	public static final double LOW_GEAR_MULTIPLIER = .35;
+	public static final int FLASHLIGHT_SPIKE = 3;
 	
 	//Climber
 	public static final int WINCH_DISTANCE = 3641; //TODO: Find Real Distance

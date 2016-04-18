@@ -1,12 +1,15 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Relay;
+
 import java.lang.String;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Tracking 
 {
 	private static AnalogInput ultrasonic;
+	private static Relay flashlight;
 	private static Tracking instance;
 	private static int visionState = 0;
 	private static int xcord = 0;
@@ -18,10 +21,10 @@ public class Tracking
 	private static int packetCount = 0;
 	private static int checksum = packetCount;
 
-
 	private Tracking()
 	{
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
+		flashlight = new Relay(Constants.FLASHLIGHT_SPIKE);
 	}
 
 	public static double getRawUltrasonic()
@@ -229,4 +232,17 @@ public class Tracking
 		SmartDashboard.putNumber("X Cordinate", xcord);
 
 	}
+
+	public static void lightOn()
+	{
+		SmartDashboard.putBoolean("Flashlight", true);
+		flashlight.set(Relay.Value.kOn);
+	}
+	
+	public static void lightOff()
+	{
+		SmartDashboard.putBoolean("Flashlight", false);
+		flashlight.set(Relay.Value.kOff);
+	}
+	
 }

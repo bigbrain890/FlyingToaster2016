@@ -21,8 +21,7 @@ public class Robot extends IterativeRobot
     	PILoop.getInstance();
     	UDP.getInstance();
     	Intake.getInstance();
-    	server = CameraServer.getInstance();
-    	server.startAutomaticCapture();
+    	Climber.getInstance();
     }
 
     public void autonomousInit()
@@ -30,6 +29,7 @@ public class Robot extends IterativeRobot
     	Autonomous.startTimers();
     	DriveBase.resetEncoders();
     	DriveBase.resetGyro();
+		Tracking.lightOff();
     	if (Preferences.getInstance().getBoolean("Low Bar", false))
     	{
     		mode = Constants.LOW_BAR; 
@@ -74,6 +74,11 @@ public class Robot extends IterativeRobot
     	{
     		mode = Constants.RAMPARTS;
     	}
+    	
+    	else if (Preferences.getInstance().getBoolean("One Ball", false))
+    	{
+    		mode = Constants.ONE_BALL;
+    	}
    
     }
     
@@ -94,7 +99,7 @@ public class Robot extends IterativeRobot
 	
     public void testPeriodic()
     {
-    	
+    	Autonomous.run(mode);
     }
     
 }
