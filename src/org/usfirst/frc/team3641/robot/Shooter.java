@@ -4,12 +4,15 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
+
 public class Shooter 
 {
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
 	public static DigitalInput shooterLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
+	public static Encoder leftWheelPackEncoder, rightWheelPackEncoder;
 	
 	public Shooter()
 	{
@@ -18,6 +21,8 @@ public class Shooter
 		shooter = new CANTalon(Constants.SHOOTER);
 		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
 		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
+		leftWheelPackEncoder = new Encoder(Constants.LEFT_SHOOTER_ENCODER_1, Constants.LEFT_MOTOR_2);
+		rightWheelPackEncoder = new Encoder(Constants.RIGHT_SHOOTER_ENCODER_1, Constants.RIGHT_SHOOTER_ENCODER_2);
 		
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);

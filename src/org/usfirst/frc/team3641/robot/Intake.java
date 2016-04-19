@@ -47,11 +47,6 @@ public class Intake {
 		rollers.set(-1);
 	}
 	
-	public static void setDown()
-	{
-
-	}
-	
 	public static boolean doesWeHasBall()
 	{
 		if(ballSensor.get())
