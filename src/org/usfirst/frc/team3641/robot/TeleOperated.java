@@ -277,7 +277,9 @@ public class TeleOperated
 			}
 			else
 			{
-				Shooter.spinUpWheels(-.59);	
+				//Shooter.spinUpWheels(-.59);	
+				Shooter.targetSpeed(Constants.CASTLE_WALL_SHOT_SPEED);
+				
 			}
 			
 		}

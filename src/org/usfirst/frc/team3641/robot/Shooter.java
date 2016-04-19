@@ -13,6 +13,7 @@ public class Shooter
 	public static DigitalInput shooterLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
 	public static Encoder leftWheelPackEncoder, rightWheelPackEncoder;
+	public static double leftError, leftErrorRefresh, rightError, rightErrorRefresh, leftOutput, rightOutput;
 	
 	public Shooter()
 	{
@@ -112,5 +113,20 @@ public class Shooter
 	public static void zeroShooterEnc()
 	{
 		shooter.setEncPosition(0);
+	}
+	
+	public static void targetSpeed(double velocity)
+	{
+		leftError = velocity - leftWheelPackEncoder.getRate();
+		leftErrorRefresh = leftErrorRefresh + leftError;
+		
+		rightError = velocity - rightWheelPackEncoder.getRate();
+		rightErrorRefresh = rightErrorRefresh + rightError;
+
+		leftOutput = ((leftError * Constants.FLYWHEEL_KP) + (leftErrorRefresh * Constants.FLYWHEEL_KI) );
+		rightOutput = ((rightError * Constants.FLYWHEEL_KP) + (rightErrorRefresh * Constants.FLYWHEEL_KI) );
+		
+		flyWheel1.set(leftOutput);
+		flyWheel2.set(-rightOutput);
 	}
 }

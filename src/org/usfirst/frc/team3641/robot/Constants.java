@@ -69,6 +69,9 @@ public class Constants
 	public static final double INTAKE_KI = 0.0;
 	public static final double KI_UPPER_LIMIT = 2300;
 	public static final double KI_LOWER_LIMIT = -2300;
+	public static final double FLYWHEEL_KP = .13;
+	public static final double FLYWHEEL_KI = .0001;
+	public static final double CASTLE_WALL_SHOT_SPEED = 900000; //TODO: FIND SPEED
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP_COMP = 171;
