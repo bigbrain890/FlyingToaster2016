@@ -410,6 +410,7 @@ public class TeleOperated
 		else if (dualShock.getLeftBumper() == true)
 		{
 			Intake.lowGoal();
+			Shooter.intake();
 		}
 		Intake.sensorReadOut();
 		Tracking.printOut();
