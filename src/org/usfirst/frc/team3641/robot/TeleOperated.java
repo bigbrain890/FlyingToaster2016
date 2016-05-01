@@ -48,7 +48,6 @@ public class TeleOperated
 		}
 		if (dualShock.getShareButton() == true)
 		{
-			intakeState = Constants.INTAKE_DOWN;
 		}
 		else if (dualShock.getRightAnalogStickButton() == true)
 		{
@@ -161,7 +160,14 @@ public class TeleOperated
 			}
 			Shooter.pullBackShooterArm();
 			Shooter.intake();
-			Intake.intakeBall((dualShock.getRightTriggerAxis() + 1) / 2);
+			if(Intake.doesWeHasBall())
+			{
+				Intake.intakeBall((dualShock.getRightTriggerAxis() + 1) / 2);
+			}
+			else
+			{
+				Intake.stopIntake();
+			}
 		}
 		
 		else if (dualShock.getLeftTriggerAxis() > 0)
@@ -245,16 +251,38 @@ public class TeleOperated
 */		
 		else if (operator.getBaseCenterLeft())
 		{
-			error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
-			errorRefresh = error + errorRefresh;
-			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			if (output < -.5)
+			error = Constants.CASTLE_WALL_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = errorRefresh + error;
+			if (errorRefresh > 25000)
 			{
-				output = -.5;
+				errorRefresh = 25000;
+			}
+			else if (errorRefresh < -25000)
+			{
+				errorRefresh = -25000;
+			}
+		
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) );
+			if (output > .75)
+			{
+				output = .75;
+			}
+			else if (output < -.75)
+			{
+				output = -.75;
 			}
 			Shooter.shooter.set(output);
-			Shooter.lowGoal();
-			Intake.lowGoal();
+			if (Shooter.shooter.getEncPosition() < 3000)
+			{
+				Shooter.intake();
+			}
+			else
+			{
+				//Shooter.spinUpWheels(-.59);	
+				Shooter.targetSpeed(Constants.CASTLE_WALL_SHOT_SPEED);
+				
+			}
+			
 		}
 /*
 		else if (operator.getThumbRight())
@@ -384,6 +412,7 @@ public class TeleOperated
 		else if (dualShock.getLeftBumper() == true)
 		{
 			Intake.lowGoal();
+			Shooter.intake();
 		}
 		if(dualShock.getSquareButton())
 		{
@@ -396,7 +425,7 @@ public class TeleOperated
 		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
-		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition());
+		//SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
 
 	}
 	
