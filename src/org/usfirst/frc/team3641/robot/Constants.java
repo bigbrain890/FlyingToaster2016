@@ -52,7 +52,7 @@ public class Constants
 	public static final double SENSOR_AUTON_GYRO_ROTATION = 15;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .13;
+	public static final double DRIVE_KP = .06;
 	public static final double DRIVE_KI = .0001;
 	public static final double SHOOTER_KP = 0.00055;
 	public static final double SHOOTER_KI = 0.0000023;
@@ -64,7 +64,7 @@ public class Constants
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP_COMP = 171;
-	public static final int CAMERA_LINE_UP_PRACTICE = 170;
+	public static final int CAMERA_LINE_UP_PRACTICE = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye
 	
@@ -86,6 +86,8 @@ public class Constants
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
 	public static int FAR_SHOT_COMP = 2450;
+	public static int AUTON_SHOT = 2975;
+	public static final int AUTON_CAMERA_ANGLE = 2300;
 	public static final int FAR_SHOT_PRACTICE = 2600;
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static int MEDIUM_SHOT = 2400;
@@ -94,8 +96,8 @@ public class Constants
 	public static double ACCEPTABLE_ERROR = 1;
 	
 	// Intake Stuff
-	public static final double LEFT_INTAKE_DOWN = .45;
-	public static final double RIGHT_INTAKE_DOWN = .5;
+	public static final double LEFT_INTAKE_DOWN = .49;
+	public static final double RIGHT_INTAKE_DOWN = .55;
 	public static final double LEFT_INTAKE_UP = 3.05 ;
 	public static final double RIGHT_INTAKE_UP = 3.15 ;
 	public static final int LEFT_POT = 3;

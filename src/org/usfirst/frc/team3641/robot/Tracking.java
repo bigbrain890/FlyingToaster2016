@@ -40,7 +40,11 @@ public class Tracking
 		}
 		return instance;
 	}
-	
+	public static void flush()
+	{
+		UDP.sendData("Request");
+		UDP.flush(null);
+	}
 	public static boolean autoTarget()
 	{
 		if (visionState == Constants.SEND_REQUEST)
@@ -161,8 +165,6 @@ public class Tracking
 			{
 				error += 360;
 			}
-			if(error>=2 || error <=1 || true)
-			{
 				if (errorRefresh > Constants.KI_UPPER_LIMIT)
 				{
 					errorRefresh = Constants.KI_UPPER_LIMIT;
@@ -171,31 +173,34 @@ public class Tracking
 				{
 					errorRefresh = Constants.KI_LOWER_LIMIT;
 				}
-				errorRefresh += error;
+				if (Math.abs(error) <= 5)
+				{
+					errorRefresh += error;
+				}
 				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 				if (driveOutput > 0)
 				{
-					driveOutput+= .2;
+					driveOutput+= .18;
 				}
 				else
 				{
-					driveOutput-= .2;
+					driveOutput-= .18;
 				}
-				if (Math.abs(driveOutput) > .7)
+				if (Math.abs(driveOutput) > .65)
 				{
 					if (driveOutput < 0)
 					{
-						driveOutput = -.7;
+						driveOutput = -.65;
 					}
 					
 					else
 					{
-						driveOutput = .7;
+						driveOutput = .65;
 					}
 				}
 				
 				DriveBase.driveNormal(0.0, driveOutput);
-			}
+				SmartDashboard.putNumber("DriveOutput", driveOutput);
 			
 			if(Math.abs(error) < 1)
 			{

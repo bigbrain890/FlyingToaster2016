@@ -1,14 +1,14 @@
 package org.usfirst.frc.team3641.robot;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Autonomous
 {
 	private static double error=0, errorRefresh=0, output=0, leftError=0, rightError=0,leftOutput=0, rightOutput=0, driveError=0, oldDriveError=0, driveOutput=0, driveErrorRefresh=0;
-
 	private static Autonomous instance;
-	private static Timer autoTimer, aimTimer, intakeTimer;
+	private static Timer autoTimer, aimTimer, intakeTimer, waitForStill;
 	public static int autonState = 1;
 	static int shooterLeverState = 0;
 	public static int counter = 0;
@@ -18,6 +18,7 @@ public class Autonomous
 		autoTimer = new Timer();
 		aimTimer = new Timer();
 		intakeTimer = new Timer();
+		waitForStill = new Timer();
 	}
 	
 	public static Autonomous getInstance()
@@ -228,7 +229,7 @@ public class Autonomous
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
+			if(intakeTimer.get() >= 7)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -341,7 +342,7 @@ public class Autonomous
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
+			if(intakeTimer.get() >= 7)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -439,7 +440,7 @@ public class Autonomous
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
+			if(intakeTimer.get() >= 7)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -542,7 +543,7 @@ public class Autonomous
 			rightOutput = rightError * Constants.INTAKE_KP;
 			Intake.leftIntake.set(leftOutput);
 			Intake.rightIntake.set(-rightOutput);
-			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
+			if(intakeTimer.get() >= 7)
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
@@ -558,7 +559,7 @@ public class Autonomous
 		{
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
-				DriveBase.driveStraight(0.0,.8 );
+				DriveBase.driveStraight(0.0,.85 );
 			}
 			else
 			{
@@ -630,11 +631,11 @@ public class Autonomous
 		if (autonState == 1)
 		{
 			intakeTimer.start();
+			Tracking.flush();
 			autonState++;
 		}
 		if (autonState == 2)
 		{
-
 			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
@@ -645,19 +646,22 @@ public class Autonomous
 			{
 				Intake.leftIntake.set(0.0);
 				Intake.rightIntake.set(0.0);
+				Tracking.flush();
 				autonState++;
 			}
 		}
 		else if (autonState == 3)
 		{
 			DriveBase.resetDriveSensors();
+			Tracking.flush();
+
 			autonState++;
 		}
 		else if (autonState == 4)
 		{
-			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS_LOW)
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
-				DriveBase.driveStraight(0.0,.6 );
+				DriveBase.driveStraight(0.0,.73 );
 			}
 			else
 			{
@@ -668,124 +672,92 @@ public class Autonomous
 		
 		else if (autonState == 5)
 		{
-			if((DriveBase.getDriveDis() < Constants.FINAL_BATTER_SHOT_DIS) )//&& (DriveBase.getDriveDirection() < Constants.FINAL_BATTER_SHOT_ANGLE))
+			if (DriveBase.getDriveDirection() < 40)
 			{
-				DriveBase.driveTank(-.59, -.48);
+				error = 55 - DriveBase.getDriveDirection();
+				if (error >= 180)
+				{
+					error -= 360;
+				}
+				else if (error<=-180)
+				{
+					error+=360;
+				}
+				double rotate = error*Constants.DRIVE_KP;
+				if (rotate > .7)
+				{
+					rotate = .7;
+				}
+				else if (rotate < .5)
+				{
+					rotate = .5;
+				}
+				DriveBase.driveNormal(0.0, -rotate);
 			}
-			/*else if ((DriveBase.getDriveDis() >= Constants.FINAL_BATTER_SHOT_DIS) && (DriveBase.getDriveDirection() < Constants.FINAL_BATTER_SHOT_ANGLE))
-			{
-				DriveBase.driveNormal(0.0, -.5);
-			}
-			else if ((DriveBase.getDriveDis() < Constants.FINAL_BATTER_SHOT_DIS) && (DriveBase.getDriveDirection() >= Constants.FINAL_BATTER_SHOT_ANGLE))
-			{
-				DriveBase.driveNormal(-.49, 0.0);
-			}*/
 			else
 			{
+				DriveBase.driveNormal(0.0,0.0);
+				waitForStill.start();
 				autonState++;
-				autoTimer.start();
 			}
 		}
-		else if (autonState == 6)
+		else if (autonState == 6) //Wait for the rotation to stop before taking a picture
 		{
-			error = Constants.AUTON_BALL_SETPOINT - Shooter.shooter.getEncPosition();
-			errorRefresh = error + errorRefresh;
-			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
-			driveError = Constants.SENSOR_AUTON_GYRO_ROTATION - DriveBase.getDriveDirection();
-			if(driveError>=180)
+			if(waitForStill.get() < 1)
 			{
-				driveError -= 360;
+				DriveBase.driveNormal(0.0, 0.0);
 			}
-			else if(driveError<=-180)
+			else
 			{
-				driveError += 360;
-			}
-			driveErrorRefresh = driveErrorRefresh + driveError;
-			driveOutput = ((driveError * Constants.DRIVE_KP) + (driveErrorRefresh * Constants.DRIVE_KI));
-			DriveBase.driveNormal(0.0, -driveOutput);
-			if (driveError > 0 && oldDriveError < 0)
-			{
-				errorRefresh = 0;
-			}
-			else if (driveError < 0 && oldDriveError > 0)
-			{
-				errorRefresh = 0;
-			}
-			oldDriveError = driveError;
-			if((Math.abs(error)<= 100) || (autoTimer.get() > 3))
-			{
+				Tracking.resetVision();
 				autonState++;
-				aimTimer.start();
 			}
-
 		}
 		else if (autonState == 7)
 		{
-			double time = aimTimer.get();
-			error = Constants.AUTON_BALL_SETPOINT - Shooter.shooter.getEncPosition();
+			if(Shooter.shooter.getEncPosition() > 2000)
+			{
+				Tracking.autoTarget();
+			}
+			error = Constants.AUTON_CAMERA_ANGLE - Shooter.shooter.getEncPosition();
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 			Shooter.shooter.set(output);
-			Shooter.spinUpWheels(-.59);
-			
-			//Drive Rotation PID
-			driveError = Constants.SENSOR_AUTON_GYRO_ROTATION - DriveBase.getDriveDirection();
-			if(driveError>=180)
+			if (Shooter.shooter.getEncPosition() < 2000)
 			{
-				driveError -= 360;
+				Shooter.flyWheel1.set(.85);
+				Shooter.flyWheel2.set(-.85);
 			}
-			else if(driveError<=-180)
+			else
 			{
-				driveError += 360;
+				Shooter.spinUpWheels(-1);	
 			}
-			driveErrorRefresh = driveErrorRefresh + driveError;
-			driveOutput = ((driveError * Constants.DRIVE_KP) );// + (driveErrorRefresh * Constants.DRIVE_KI));
-			DriveBase.driveNormal(0.0, -driveOutput);
-			if (driveError > 0 && oldDriveError < 0)
-			{
-				errorRefresh = 0;
-			}
-			else if (driveError < 0 && oldDriveError > 0)
-			{
-				errorRefresh = 0;
-			}
-			oldDriveError = driveError;
-			
-			if(time > 2)
+			if(intakeTimer.get() >= 11)
 			{
 				autonState++;
 			}
-			shooterLeverState = Constants.FIRE;
 		}
 		else if (autonState == 8)
 		{
-			Shooter.spinUpWheels(-.59);
-			
-			//Drive Rotation PID
-			driveError = Constants.SENSOR_AUTON_GYRO_ROTATION - DriveBase.getDriveDirection();
-			if(driveError>=180)
+			Constants.AUTON_SHOT = Preferences.getInstance().getInt("Auton Shot", Constants.AUTON_SHOT);
+			error = Constants.AUTON_SHOT - Shooter.shooter.getEncPosition();
+			errorRefresh = error + errorRefresh;
+			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
+			Shooter.shooter.set(output);
+			if (Shooter.shooter.getEncPosition() < 2000)
 			{
-				driveError -= 360;
+				Shooter.flyWheel1.set(.85);
+				Shooter.flyWheel2.set(-.85);
 			}
-			else if(driveError<=-180)
+			else
 			{
-				driveError += 360;
+				Shooter.spinUpWheels(-1);	
 			}
-
-			driveErrorRefresh = driveErrorRefresh + driveError;
-			driveOutput = ((driveError * Constants.DRIVE_KP) );// + (driveErrorRefresh * Constants.DRIVE_KI));
-			DriveBase.driveNormal(0.0, -driveOutput);
-			if (driveError > 0 && oldDriveError < 0)
+			if (intakeTimer.get() >=13)
 			{
-				errorRefresh = 0;
+				shooterLeverState = Constants.FIRE;
 			}
-			else if (driveError < 0 && oldDriveError > 0)
-			{
-				errorRefresh = 0;
-			}
-			oldDriveError = driveError;
-			
+		}
 			if (shooterLeverState == Constants.RESTING_POSITION)
 			{
 				Shooter.restShooterArm();
@@ -814,8 +786,6 @@ public class Autonomous
 					shooterLeverState = Constants.RESTING_POSITION;
 				}
 			}
-		}
-		SmartDashboard.putNumber("autonState", autonState);
 	}
 			
 		

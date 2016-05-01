@@ -63,7 +63,7 @@ public class TeleOperated
 		
 				
 		// Actually driving and stuff
-		if (driveMode == Constants.DRIVE_NORMAL)
+		if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
 		{
 			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 			if(dualShock.getRightDPad() == true)
@@ -83,7 +83,7 @@ public class TeleOperated
 				DriveBase.driveNormal(.5, 0.0);
 			}
 		}
-		else if (driveMode == Constants.DRIVE_TANK)
+		else if ((driveMode == Constants.DRIVE_TANK) && (dualShock.getSquareButton() != true))
 		{
 			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
 		}
@@ -218,7 +218,8 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 			if (Shooter.shooter.getEncPosition() < 2000)
 			{
-				Shooter.intake();
+				Shooter.flyWheel1.set(.85);
+				Shooter.flyWheel2.set(-.85);
 			}
 			else
 			{
@@ -282,7 +283,8 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 			if (Shooter.shooter.getEncPosition() < 2000)
 			{
-				Shooter.intake();
+				Shooter.flyWheel1.set(.85);
+				Shooter.flyWheel2.set(-.85);
 			}
 			else
 			{
@@ -303,7 +305,7 @@ public class TeleOperated
 			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
 			{
 				Shooter.manualControl(0.0);
-				if(operator.getBaseBackRight())
+				if(operator.getBaseFrontRight())
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
@@ -314,7 +316,7 @@ public class TeleOperated
 			else if (Shooter.shooter.getEncPosition() >= 4100 && operator.getYAxis() > 0)
 			{
 				Shooter.manualControl(0.0);
-				if(operator.getBaseBackRight())
+				if(operator.getBaseFrontRight())
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
@@ -324,7 +326,7 @@ public class TeleOperated
 			}
 			else
 			{
-				if(operator.getBaseBackRight())
+				if(operator.getBaseFrontRight())
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
@@ -383,6 +385,15 @@ public class TeleOperated
 		{
 			Intake.lowGoal();
 		}
+		if(dualShock.getSquareButton())
+		{
+			Tracking.autoTarget();
+		}
+		else
+		{
+			Tracking.resetVision();
+		}
+		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
 		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition());
