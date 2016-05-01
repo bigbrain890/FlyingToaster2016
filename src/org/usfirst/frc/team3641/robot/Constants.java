@@ -29,6 +29,14 @@ public class Constants
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
+	public static final int LEFT_SHOOTER_ENCODER_1 = 7;
+	public static final int LEFT_SHOOTER_ENCODER_2 = 6;
+	public static final int RIGHT_SHOOTER_ENCODER_1 = 5;
+	public static final int RIGHT_SHOOTER_ENCODER_2 = 4;
+	public static final int SHOOTER_LIM_SWITCH = 9;
+	public static final int BALL_SENSOR = 8;
+	public static final int LEFT_POT = 3;
+	public static final int RIGHT_POT = 2;
 	
 	// Auton References
 	public static final int LOW_BAR = 1;
@@ -61,6 +69,9 @@ public class Constants
 	public static final double INTAKE_KI = 0.0;
 	public static final double KI_UPPER_LIMIT = 2300;
 	public static final double KI_LOWER_LIMIT = -2300;
+	public static final double FLYWHEEL_KP = .13;
+	public static final double FLYWHEEL_KI = .0001;
+	public static final double CASTLE_WALL_SHOT_SPEED = 900000; //TODO: FIND SPEED
 	
 	// Camera stuff
 	public static final int CAMERA_LINE_UP_COMP = 171;
@@ -92,7 +103,7 @@ public class Constants
 	public static final int CAMERA_THRESHOLD_ANGLE = 1873;
 	public static int MEDIUM_SHOT = 2400;
 	public static int CLOSE_SHOT = 3450;
-	public static final int SHOOTER_LIM_SWITCH = 9;
+	public static int CASTLE_WALL_SHOT = 3750;
 	public static double ACCEPTABLE_ERROR = 1;
 	
 	// Intake Stuff
@@ -100,12 +111,9 @@ public class Constants
 	public static final double RIGHT_INTAKE_DOWN = .55;
 	public static final double LEFT_INTAKE_UP = 3.05 ;
 	public static final double RIGHT_INTAKE_UP = 3.15 ;
-	public static final int LEFT_POT = 3;
-	public static final int RIGHT_POT = 2;
 	public static final int INTAKE_DOWN = 0;
 	public static final int INTAKE_UP = 1;
 	public static final int INTAKE_REST = 2;
-	public static final int BALL_SENSOR = 8;
 	public static final int RIGHT_INTAKE_MOTOR = 9;
 	public static final int ROLLERS = 10;
 	public static final int LEFT_INTAKE_MOTOR = 11;

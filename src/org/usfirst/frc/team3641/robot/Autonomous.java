@@ -113,6 +113,7 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			Shooter.intake();
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS_LOW)
 			{
 				DriveBase.driveStraight(0.0,.55 );
@@ -243,6 +244,7 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			Shooter.intake();
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
 				DriveBase.driveStraight(0.0,.85 );
@@ -356,6 +358,7 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			Shooter.intake();
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
 				DriveBase.driveStraight(0.0,.85 );
@@ -454,6 +457,7 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			Shooter.intake();
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
 				DriveBase.driveStraight(0.0,.75 );
@@ -557,6 +561,7 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
+			Shooter.intake();
 			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
 				DriveBase.driveStraight(0.0,.85 );
@@ -659,7 +664,8 @@ public class Autonomous
 		}
 		else if (autonState == 4)
 		{
-			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS)
+			Shooter.intake();
+			if (DriveBase.getDriveDis() < Constants.TARGET_DEFENSE_DRIVE_DIS_LOW)
 			{
 				DriveBase.driveStraight(0.0,.73 );
 			}
