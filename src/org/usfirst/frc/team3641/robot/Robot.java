@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot
     	UDP.getInstance();
     	Intake.getInstance();
     	Climber.getInstance();
+    	Test.getInstance();
     }
 
     public void autonomousInit()
@@ -99,7 +100,7 @@ public class Robot extends IterativeRobot
 	
     public void testPeriodic()
     {
-    	Autonomous.run(mode);
+    	Test.runTest();
     }
     
 }
