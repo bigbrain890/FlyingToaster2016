@@ -154,4 +154,10 @@ public class Constants
 	public static final int FIRE = 1;
 	public static final int RESET = 2;
 	
+	//Motion Profile Constants
+	public static final int REST = 0;
+	public static final int ACCEL = 1;
+	public static final int CRUISE = 2;
+	public static final int DECEL = 3;
+	
 }

@@ -53,6 +53,11 @@ public class DriveBase
 	{
 		return gyro.getAngle();
 	}
+	
+	public static double getDriveSpeed()
+	{
+		return rightMotor1.getAnalogInVelocity() * Constants.DRIVE_ENCODER_MULTIPLIER;
+	}
 
 	public static void resetGyro()
 	{
