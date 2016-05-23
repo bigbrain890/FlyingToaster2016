@@ -10,7 +10,7 @@ public class TeleOperated
 	public static Attack3 operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
 	static public int driveBack = Constants.UNPRESSED;
-	static public double driveBackTarg = 0, leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
+	static public double leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	public static int intakeState = Constants.INTAKE_DOWN;
 	private static double errorRefresh = 0;
@@ -34,22 +34,16 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		if (operator.getIndexTrigger() == true)
+		if ((operator.getIndexTrigger() == true) || (dualShock.getXButton() == true))
 		{
 			shooterLeverState = Constants.FIRE;
 		}
-		if(dualShock.getXButton() == true)
-		{
-			driveBack = Constants.DO_DRIVE_BACK_MATH;
-		}
-		else if(dualShock.getTriangleButton() == true)
-		{
-			driveBack = Constants.RESTING_POSITION;
-		}
 		if (dualShock.getShareButton() == true)
 		{
+			
 		}
-		else if (dualShock.getRightAnalogStickButton() == true)
+/*		
+		if (dualShock.getRightAnalogStickButton() == true)
 		{
 			intakeState = Constants.INTAKE_DOWN;
 		}
@@ -58,7 +52,7 @@ public class TeleOperated
 		{
 			intakeState = Constants.INTAKE_UP;
 		}
-		
+	*/
 		
 				
 		// Actually driving and stuff
@@ -76,10 +70,12 @@ public class TeleOperated
 			else if (dualShock.getTopDPad() == true)
 			{
 				DriveBase.driveNormal(-.5, 0.0);
+				intakeState = Constants.INTAKE_DOWN;
 			}
 			else if (dualShock.getBottomDPad() == true)
 			{
 				DriveBase.driveNormal(.5, 0.0);
+				intakeState = Constants.INTAKE_UP;
 			}
 		}
 		else if ((driveMode == Constants.DRIVE_TANK) && (dualShock.getSquareButton() != true))
@@ -116,32 +112,7 @@ public class TeleOperated
 			}
 		}
 		
-		if (driveBack == Constants.DO_DRIVE_BACK_MATH)
-		{
-			driveBackTarg = DriveBase.getDriveDis() - Constants.ROLL_BACK;
-			driveBack = Constants.DRIVE_BACK;
-		}
-		
-		else if (driveBack == Constants.DRIVE_BACK)
-		{
-			double error = driveBackTarg - DriveBase.getDriveDis();
-			double output = error * Constants.DRIVE_KP;
-			if(output > .35)
-			{
-				output = .35;
-			}
-			else if (error < -.35)
-			{
-				output = -.35; 
-			}
-			DriveBase.driveNormal(-output, 0.0);
-			if(Math.abs(error) < 2)
-			{
-				driveBack = Constants.RESTING_POSITION;
-			}
-		}
-		
-		if((dualShock.getRightThrottleButton() == true) || (operator.getThumbBottom() == true))
+		if(dualShock.getRightThrottleButton() == true)
 		{
 			if(Shooter.shooterLimitSwitch.get() == true)
 			{
@@ -160,14 +131,8 @@ public class TeleOperated
 			}
 			Shooter.pullBackShooterArm();
 			Shooter.intake();
-			if(Intake.doesWeHasBall())
-			{
-				Intake.intakeBall((dualShock.getRightTriggerAxis() + 1) / 2);
-			}
-			else
-			{
-				Intake.stopIntake();
-			}
+			Intake.intakeBall((dualShock.getRightTriggerAxis() + 1) / 2);
+
 		}
 		
 		else if (dualShock.getLeftTriggerAxis() > 0)
@@ -197,7 +162,7 @@ public class TeleOperated
 			}
 		}		
 		
-		else if (operator.getBaseFrontLeft() == true)
+		else if ((operator.getBaseFrontLeft() == true) || (dualShock.getLeftAnalogStickButton() == true))
 		{
 			int shooterPos = Shooter.shooter.getEncPosition();
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
@@ -293,7 +258,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if (operator.getBaseBackLeft() == true)
+		else if ((operator.getBaseBackLeft() == true) || (dualShock.getRightAnalogStickButton() == true))
 		{
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
@@ -425,7 +390,7 @@ public class TeleOperated
 		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
-		//SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
+		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
 
 	}
 	

@@ -33,7 +33,6 @@ public class Intake {
 	
 	public static void intakeBall(double speed)
 	{
-		if(doesWeHasBall() == false)
 			rollers.set(speed);
 	}
 	
