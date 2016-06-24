@@ -34,7 +34,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		if ((operator.getIndexTrigger() == true) || (dualShock.getXButton() == true))
+		if (operator.getIndexTrigger() == true)
 		{
 			shooterLeverState = Constants.FIRE;
 		}
@@ -42,7 +42,7 @@ public class TeleOperated
 		{
 			
 		}
-/*		
+		
 		if (dualShock.getRightAnalogStickButton() == true)
 		{
 			intakeState = Constants.INTAKE_DOWN;
@@ -52,7 +52,7 @@ public class TeleOperated
 		{
 			intakeState = Constants.INTAKE_UP;
 		}
-	*/
+	
 		
 				
 		// Actually driving and stuff
@@ -70,12 +70,10 @@ public class TeleOperated
 			else if (dualShock.getTopDPad() == true)
 			{
 				DriveBase.driveNormal(-.5, 0.0);
-				intakeState = Constants.INTAKE_DOWN;
 			}
 			else if (dualShock.getBottomDPad() == true)
 			{
 				DriveBase.driveNormal(.5, 0.0);
-				intakeState = Constants.INTAKE_UP;
 			}
 		}
 		else if ((driveMode == Constants.DRIVE_TANK) && (dualShock.getSquareButton() != true))
@@ -162,7 +160,7 @@ public class TeleOperated
 			}
 		}		
 		
-		else if ((operator.getBaseFrontLeft() == true) || (dualShock.getLeftAnalogStickButton() == true))
+		else if (operator.getBaseFrontLeft() == true)
 		{
 			int shooterPos = Shooter.shooter.getEncPosition();
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
@@ -258,7 +256,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if ((operator.getBaseBackLeft() == true) || (dualShock.getRightAnalogStickButton() == true))
+		else if (operator.getBaseBackLeft() == true)
 		{
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
