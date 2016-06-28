@@ -130,7 +130,7 @@ public class Constants
 	public static final double ROTATION_STALL_INPUT = .25;
 	public static final int LEVER_MAX_SWING = -1000;
 	public static final double LOW_GEAR_MULTIPLIER = .35;
-	public static final int FLASHLIGHT_SPIKE = 3;
+	public static final int FLASHLIGHT_SPIKE = 0;
 	
 	//Climber
 	public static final int WINCH_DISTANCE = 3641; //TODO: Find Real Distance
