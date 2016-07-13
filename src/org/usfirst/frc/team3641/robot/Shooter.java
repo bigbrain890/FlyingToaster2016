@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3641.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -8,23 +9,26 @@ import edu.wpi.first.wpilibj.Encoder;
 
 public class Shooter 
 {
+	private static AnalogInput ultrasonic;
 	private static Shooter instance;
 	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
-	public static DigitalInput shooterLimitSwitch;
+	public static DigitalInput shooterLimitSwitch, shooterLeverLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
-	public static Encoder leftWheelPackEncoder, rightWheelPackEncoder;
 	public static double leftError, leftErrorRefresh, rightError, rightErrorRefresh, leftOutput, rightOutput;
+	static int targetAngle;
+	static int counter = 1;
+	static double [] ultraSonicVals ;
 	
 	public Shooter()
 	{
+		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 		flyWheel1 = new CANTalon(Constants.FLY_WHEEL_1);
 		flyWheel2 = new CANTalon(Constants.FLY_WHEEL_2);
 		shooter = new CANTalon(Constants.SHOOTER);
 		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
 		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
-		leftWheelPackEncoder = new Encoder(Constants.LEFT_SHOOTER_ENCODER_1, Constants.LEFT_MOTOR_2);
-		rightWheelPackEncoder = new Encoder(Constants.RIGHT_SHOOTER_ENCODER_1, Constants.RIGHT_SHOOTER_ENCODER_2);
-		
+		shooterLeverLimitSwitch = new DigitalInput(Constants.SHOOTER_LEVER_LIMIT_SWITCH);
+
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		
@@ -38,6 +42,29 @@ public class Shooter
 			instance = new Shooter();
 		}
 		return instance;
+	}
+	
+	public static int autoAngle()
+	{
+		double averageDis = 0;
+		if (counter == 1)
+		{
+			for (int i = 0; i <=2; i++)
+			{
+				ultraSonicVals[i] = ultrasonic.getVoltage();
+			}
+			counter++;
+		}
+		else if (counter == 2)
+		{
+			averageDis = (ultraSonicVals[0] + ultraSonicVals[1] + ultraSonicVals[2]) / 3;
+			counter++;
+		}
+		else if (counter == 3)
+		{
+			double disToBase = averageDis * Constants.COSINE_30;
+		}
+		return targetAngle;
 	}
 		
 	public static void spinUpWheels(double speed)
@@ -115,18 +142,5 @@ public class Shooter
 		shooter.setEncPosition(0);
 	}
 	
-	public static void targetSpeed(double velocity)
-	{
-		leftError = velocity - leftWheelPackEncoder.getRate();
-		leftErrorRefresh = leftErrorRefresh + leftError;
-		
-		rightError = velocity - rightWheelPackEncoder.getRate();
-		rightErrorRefresh = rightErrorRefresh + rightError;
 
-		leftOutput = ((leftError * Constants.FLYWHEEL_KP) + (leftErrorRefresh * Constants.FLYWHEEL_KI) );
-		rightOutput = ((rightError * Constants.FLYWHEEL_KP) + (rightErrorRefresh * Constants.FLYWHEEL_KI) );
-		
-		flyWheel1.set(leftOutput);
-		flyWheel2.set(-rightOutput);
-	}
 }

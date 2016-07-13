@@ -241,8 +241,7 @@ public class TeleOperated
 			}
 			else
 			{
-				//Shooter.spinUpWheels(-.59);	
-				Shooter.targetSpeed(Constants.CASTLE_WALL_SHOT_SPEED);
+				Shooter.spinUpWheels(-.59);	
 				
 			}
 			
@@ -349,13 +348,17 @@ public class TeleOperated
 		}
 		else if (shooterLeverState == Constants.RESET)
 		{
-			if ((Shooter.shooterLever.getEncPosition() <= 25))
+			if ((Shooter.shooterLever.getEncPosition() <= 25) || (Shooter.shooterLeverLimitSwitch.get() == false))
 			{
 				Shooter.resetShooterArm();
 			}
 			else
 			{
 				shooterLeverState = Constants.RESTING_POSITION;
+				if( Shooter.shooterLeverLimitSwitch.get())
+				{
+					Shooter.zeroShooterLeverEnc();
+				}
 			}
 		}
 		if(Shooter.shooterLimitSwitch.get())

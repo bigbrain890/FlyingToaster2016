@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Tracking 
 {
-	private static AnalogInput ultrasonic;
 	private static Relay flashlight;
 	private static Tracking instance;
 	private static int visionState = 0;
@@ -23,15 +22,9 @@ public class Tracking
 
 	private Tracking()
 	{
-		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
 		flashlight = new Relay(Constants.FLASHLIGHT_SPIKE);
 	}
 
-	public static double getRawUltrasonic()
-	{
-		return ultrasonic.getVoltage();
-	}
-		
 	public static Tracking getInstance()
 	{
 		if(instance == null)

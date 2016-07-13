@@ -31,8 +31,6 @@ public class Constants
 	public static final double ULTRASONIC_CONVERSION_FACTOR = 0.009766;
 	public static final int LEFT_SHOOTER_ENCODER_1 = 7;
 	public static final int LEFT_SHOOTER_ENCODER_2 = 6;
-	public static final int RIGHT_SHOOTER_ENCODER_1 = 5;
-	public static final int RIGHT_SHOOTER_ENCODER_2 = 4;
 	public static final int SHOOTER_LIM_SWITCH = 9;
 	public static final int BALL_SENSOR = 8;
 	public static final int LEFT_POT = 3;
@@ -96,6 +94,7 @@ public class Constants
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
+	public static final int SHOOTER_LEVER_LIMIT_SWITCH = 5;
 	public static int FAR_SHOT_COMP = 2450;
 	public static int AUTON_SHOT = 2975;
 	public static final int AUTON_CAMERA_ANGLE = 2300;
@@ -131,6 +130,7 @@ public class Constants
 	public static final int LEVER_MAX_SWING = -1000;
 	public static final double LOW_GEAR_MULTIPLIER = .35;
 	public static final int FLASHLIGHT_SPIKE = 0;
+	public static final double COSINE_30 = 0.866025;
 	
 	//Climber
 	public static final int WINCH_DISTANCE = 3641; //TODO: Find Real Distance
