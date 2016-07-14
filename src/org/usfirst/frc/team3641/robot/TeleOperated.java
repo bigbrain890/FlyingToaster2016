@@ -331,7 +331,7 @@ public class TeleOperated
 		
 		if (shooterLeverState == Constants.RESTING_POSITION)
 		{
-			Shooter.restShooterArm();
+			Shooter.shooterLever.set(0.0);
 		}
 		else if (shooterLeverState == Constants.FIRE)
 		{
@@ -348,17 +348,14 @@ public class TeleOperated
 		}
 		else if (shooterLeverState == Constants.RESET)
 		{
-			if ((Shooter.shooterLever.getEncPosition() <= 25) || (Shooter.shooterLeverLimitSwitch.get() == false))
-			{
-				Shooter.resetShooterArm();
-			}
-			else
+			if (Shooter.shooterLeverLimitSwitch.get() == true)
 			{
 				shooterLeverState = Constants.RESTING_POSITION;
-				if( Shooter.shooterLeverLimitSwitch.get())
-				{
-					Shooter.zeroShooterLeverEnc();
-				}
+				Shooter.zeroShooterLeverEnc();
+			}
+			else if (Shooter.shooterLever.getEncPosition() <= 25)
+			{
+				Shooter.resetShooterArm();
 			}
 		}
 		if(Shooter.shooterLimitSwitch.get())
@@ -388,11 +385,17 @@ public class TeleOperated
 		{
 			Tracking.resetVision();
 		}
+		if(dualShock.getCircleButton())
+		{
+			UDP.getData();
+		}
 		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
 		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
-
+		SmartDashboard.putBoolean("Shooter Lever Lim", Shooter.shooterLeverLimitSwitch.get());
+		SmartDashboard.putNumber("Shooter Lever Encoder Tick", Shooter.shooterLever.getEncPosition());
+		SmartDashboard.putNumber("Shooter Lever State", shooterLeverState);
 	}
 	
 	

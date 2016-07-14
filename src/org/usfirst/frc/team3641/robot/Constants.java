@@ -58,8 +58,8 @@ public class Constants
 	public static final double SENSOR_AUTON_GYRO_ROTATION = 15;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .06;
-	public static final double DRIVE_KI = .0001;
+	public static final double DRIVE_KP = .07;
+	public static final double DRIVE_KI = .001;
 	public static final double SHOOTER_KP = 0.00055;
 	public static final double SHOOTER_KI = 0.0000023;
 	public static final double OFFSET_KP = .16;
@@ -72,7 +72,7 @@ public class Constants
 	public static final double CASTLE_WALL_SHOT_SPEED = 900000; //TODO: FIND SPEED
 	
 	// Camera stuff
-	public static final int CAMERA_LINE_UP_COMP = 171;
+	public static final int CAMERA_LINE_UP_COMP = 160;
 	public static final int CAMERA_LINE_UP_PRACTICE = 160;
 	public static final double DEGREES_PER_PIXEL = 0.2140625; //Life Cam
 	//public static final double DEGREES_PER_PIXEL = 0.2375;  //PS3 Eye

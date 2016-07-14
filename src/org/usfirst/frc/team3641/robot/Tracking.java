@@ -158,6 +158,8 @@ public class Tracking
 			{
 				error += 360;
 			}
+			if(Math.abs(error)<5);
+			{
 				if (errorRefresh > Constants.KI_UPPER_LIMIT)
 				{
 					errorRefresh = Constants.KI_UPPER_LIMIT;
@@ -170,31 +172,32 @@ public class Tracking
 				{
 					errorRefresh += error;
 				}
-				driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
-				if (driveOutput > 0)
+			}
+			driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
+			if (driveOutput > 0)
+			{
+				driveOutput+= .18;
+			}
+			else
+			{
+				driveOutput-= .18;
+			}
+			if (Math.abs(driveOutput) > .65)
+			{
+				if (driveOutput < 0)
 				{
-					driveOutput+= .18;
-				}
-				else
-				{
-					driveOutput-= .18;
-				}
-				if (Math.abs(driveOutput) > .65)
-				{
-					if (driveOutput < 0)
-					{
-						driveOutput = -.65;
-					}
-					
-					else
-					{
-						driveOutput = .65;
-					}
+					driveOutput = -.65;
 				}
 				
-				DriveBase.driveNormal(0.0, driveOutput);
-				SmartDashboard.putNumber("DriveOutput", driveOutput);
+				else
+				{
+					driveOutput = .65;
+				}
+			}
 			
+			DriveBase.driveNormal(0.0, driveOutput);
+			SmartDashboard.putNumber("DriveOutput", driveOutput);
+		
 			if(Math.abs(error) < 1)
 			{
 				DriveBase.driveNormal(0.0, 0.0);
