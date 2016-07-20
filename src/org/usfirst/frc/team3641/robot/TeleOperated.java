@@ -260,21 +260,29 @@ public class TeleOperated
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
-			errorRefresh = error + errorRefresh;
-			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			if (output > .75)
+			if(Math.abs(error)<335)
 			{
-				output = .75;
+				errorRefresh = error + errorRefresh;
 			}
-			else if (output < -.75)
+			else 
 			{
-				output = -.75;
+				errorRefresh = 0;
+			}
+			output = ((error * Constants.SHOOTER_LONG_KP) + (errorRefresh * Constants.SHOOTER_LONG_KI));
+
+			if (output > .85)
+			{
+				output = .85;
+			}
+			else if (output < -.85)
+			{
+				output = -.85;
 			}
 			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 2000)
+			if (Shooter.shooter.getEncPosition() < 1900)
 			{
-				Shooter.flyWheel1.set(.85);
-				Shooter.flyWheel2.set(-.85);
+				Shooter.flyWheel1.set(.35);
+				Shooter.flyWheel2.set(-.35);
 			}
 			else
 			{
@@ -389,9 +397,14 @@ public class TeleOperated
 		{
 			UDP.getData();
 		}
+		if(dualShock.getXButton())
+		{
+			shooterLeverState=Constants.RESET;
+		}
 		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
+		SmartDashboard.putNumber("Auton State Value", Autonomous.autonState);
 		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
 		SmartDashboard.putBoolean("Shooter Lever Lim", Shooter.shooterLeverLimitSwitch.get());
 		SmartDashboard.putNumber("Shooter Lever Encoder Tick", Shooter.shooterLever.getEncPosition());

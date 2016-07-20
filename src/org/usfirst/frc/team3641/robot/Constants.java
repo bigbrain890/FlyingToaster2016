@@ -48,25 +48,27 @@ public class Constants
 	public static final int RAMPARTS = 9;
 	public static final int ONE_BALL = 10;
 	public static final int TARGET_DEFENSE_DRIVE_DIS = 190;
-	public static final int TARGET_DEFENSE_DRIVE_DIS_LOW = 175;
+	public static final int TARGET_DEFENSE_DRIVE_DIS_LOW = 240;
 	public static final double FINAL_BATTER_SHOT_DIS = 295.206;
 	public static final double FINAL_BATTER_SHOT_ANGLE = 66.81;
 	public static final int AUTON_BALL_SETPOINT = 3650;
 	public static final int STRAIGHT = 0;
-	public static final double MAX_INTAKE_DOWN_TIME = 1.5;
+	public static final double MAX_INTAKE_DOWN_TIME = 1;
 	public static final double KI_DEADBAND_THRESHOLD = 3;
 	public static final double SENSOR_AUTON_GYRO_ROTATION = 15;
 	
 	// PID Contants
-	public static final double DRIVE_KP = .07;
+	public static final double DRIVE_KP = .06;
 	public static final double DRIVE_KI = .001;
 	public static final double SHOOTER_KP = 0.00055;
 	public static final double SHOOTER_KI = 0.0000023;
+	public static final double SHOOTER_LONG_KP = 0.00065;
+	public static final double SHOOTER_LONG_KI = 0.00002;
 	public static final double OFFSET_KP = .16;
 	public static final double INTAKE_KP = 0.25;
 	public static final double INTAKE_KI = 0.0;
-	public static final double KI_UPPER_LIMIT = 2300;
-	public static final double KI_LOWER_LIMIT = -2300;
+	public static final double KI_UPPER_LIMIT = 320;
+	public static final double KI_LOWER_LIMIT = -320;
 	public static final double FLYWHEEL_KP = .13;
 	public static final double FLYWHEEL_KI = .0001;
 	public static final double CASTLE_WALL_SHOT_SPEED = 900000; //TODO: FIND SPEED

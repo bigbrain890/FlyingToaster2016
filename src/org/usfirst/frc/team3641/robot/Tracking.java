@@ -16,6 +16,7 @@ public class Tracking
 	private static double target = 0;
 	private static double heading = 0;
 	private static double driveOutput = 0;
+	private static double lastError = 0;
 	public static double errorRefresh = 0;
 	private static int packetCount = 0;
 	private static int checksum = packetCount;
@@ -158,8 +159,16 @@ public class Tracking
 			{
 				error += 360;
 			}
-			if(Math.abs(error)<5);
+			if((errorRefresh > 0 && lastError < 0) || (errorRefresh < 0 && lastError > 0))
 			{
+				errorRefresh = 0;
+			}
+			if(Math.abs(error)<5)
+			{
+				if (Math.abs(error) <= 5)
+				{
+					errorRefresh += error;
+				}
 				if (errorRefresh > Constants.KI_UPPER_LIMIT)
 				{
 					errorRefresh = Constants.KI_UPPER_LIMIT;
@@ -168,10 +177,10 @@ public class Tracking
 				{
 					errorRefresh = Constants.KI_LOWER_LIMIT;
 				}
-				if (Math.abs(error) <= 5)
-				{
-					errorRefresh += error;
-				}
+			}
+			else
+			{
+				errorRefresh = 0;
 			}
 			driveOutput = -1 * (((error * Constants.DRIVE_KP) + (errorRefresh * Constants.DRIVE_KI)));
 			if (driveOutput > 0)
@@ -194,6 +203,7 @@ public class Tracking
 					driveOutput = .65;
 				}
 			}
+			lastError = error;
 			
 			DriveBase.driveNormal(0.0, driveOutput);
 			SmartDashboard.putNumber("DriveOutput", driveOutput);

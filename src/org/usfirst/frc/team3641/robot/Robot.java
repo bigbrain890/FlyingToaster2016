@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Preferences;
 public class Robot extends IterativeRobot 
 {
 	private int mode;
+	private double speed = 0, rotation = 0;
 	public static CameraServer server;
 
     public void robotInit()
@@ -74,13 +75,12 @@ public class Robot extends IterativeRobot
     	else if (Preferences.getInstance().getBoolean("Ramparts", false))
     	{
     		mode = Constants.RAMPARTS;
-    	}
+       	}
     	
     	else if (Preferences.getInstance().getBoolean("One Ball", false))
     	{
     		mode = Constants.ONE_BALL;
     	}
-   
     }
     
     public void autonomousPeriodic() 
