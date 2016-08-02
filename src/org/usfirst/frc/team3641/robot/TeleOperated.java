@@ -13,6 +13,7 @@ public class TeleOperated
 	static public double leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
 	public static int shooterLeverState = Constants.RESTING_POSITION;
 	public static int intakeState = Constants.INTAKE_DOWN;
+	public static int cruiseState = Constants.CRUISE_OFF;
 	private static double errorRefresh = 0;
 	private static double error = 0;
 	private static double output = 0;
@@ -38,9 +39,13 @@ public class TeleOperated
 		{
 			shooterLeverState = Constants.FIRE;
 		}
-		if (dualShock.getShareButton() == true)
+		if(dualShock.getRightBumper() == true)
 		{
-			
+			cruiseState = Constants.CRUISE_ON;
+		}
+		if(dualShock.getLeftBumper() == true)
+		{
+			cruiseState = Constants.CRUISE_OFF;
 		}
 /*		
 		if (dualShock.getRightAnalogStickButton() == true)
@@ -56,31 +61,53 @@ public class TeleOperated
 		
 				
 		// Actually driving and stuff
+		if (cruiseState == Constants.CRUISE_OFF){
+			
+			if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
+			{
+				DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+				if(dualShock.getRightDPad() == true)
+				{
+					DriveBase.driveNormal(0.0, -.57);
+				}
+				if (dualShock.getleftDPad() == true)
+				{
+					DriveBase.driveNormal(0.0, .57);
+				}
+				else if (dualShock.getTopDPad() == true)
+				{
+					intakeState = Constants.INTAKE_DOWN;
+				}
+				else if (dualShock.getBottomDPad() == true)
+				{
+					intakeState = Constants.INTAKE_UP;
+				}
+			}
+			
+		}
+		else if (cruiseState == Constants.CRUISE_ON)
+		{
 		if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
-		{
-			DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
-			if(dualShock.getRightDPad() == true)
 			{
-				DriveBase.driveNormal(0.0, -.57);
-			}
-			if (dualShock.getleftDPad() == true)
-			{
-				DriveBase.driveNormal(0.0, .57);
-			}
-			else if (dualShock.getTopDPad() == true)
-			{
-				intakeState = Constants.INTAKE_DOWN;
-			}
-			else if (dualShock.getBottomDPad() == true)
-			{
-				intakeState = Constants.INTAKE_UP;
+				DriveBase.driveNormal(-.5, -1* dualShock.getRightStickXAxis());
+				if(dualShock.getRightDPad() == true)
+				{
+					DriveBase.driveNormal(0.0, -.57);
+				}
+				if (dualShock.getleftDPad() == true)
+				{
+					DriveBase.driveNormal(0.0, .57);
+				}
+				else if (dualShock.getTopDPad() == true)
+				{
+					intakeState = Constants.INTAKE_DOWN;
+				}
+				else if (dualShock.getBottomDPad() == true)
+				{
+					intakeState = Constants.INTAKE_UP;
+				}
 			}
 		}
-		else if ((driveMode == Constants.DRIVE_TANK) && (dualShock.getSquareButton() != true))
-		{
-			DriveBase.driveTank(dualShock.getLeftStickYAxis(), dualShock.getRightStickYAxis());
-		}
-		
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
 			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
@@ -375,15 +402,6 @@ public class TeleOperated
 		{
 			SmartDashboard.putBoolean("Is pressed", false);
 			
-		}
-		if (dualShock.getRightBumper() == true)
-		{
-			Intake.rollers.set(1);
-		}
-		else if (dualShock.getLeftBumper() == true)
-		{
-			Intake.lowGoal();
-			Shooter.intake();
 		}
 		if(dualShock.getSquareButton())
 		{

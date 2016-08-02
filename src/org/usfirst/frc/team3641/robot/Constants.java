@@ -155,6 +155,8 @@ public class Constants
 	public static final double ROLL_BACK = 46.5;
 	public static final int FIRE = 1;
 	public static final int RESET = 2;
+	public static final int CRUISE_ON = 1;
+	public static final int CRUISE_OFF = 2;
 	
 	//Motion Profile Constants
 	public static final int REST = 0;
