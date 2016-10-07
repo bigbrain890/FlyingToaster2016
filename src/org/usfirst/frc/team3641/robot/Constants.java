@@ -4,7 +4,8 @@ public class Constants
 {
 	// Drive Controllers
 	public static final int PS4_CONTROLLER = 0;
-	public static final int ATTACK3 = 1;
+	//public static final int ATTACK3 = 1;
+	public static final int E3DPro = 1;
 	public static final int CONTROL_BOARD = 2;
 	
 	// Drive Motors

@@ -7,7 +7,7 @@ public class TeleOperated
 {
 	private static TeleOperated instance;
 	public static PS4Controller dualShock;
-	public static Attack3 operator;
+	public static Extreme3DPro operator;
 	static public boolean driveMode = Constants.DRIVE_NORMAL;
 	static public int driveBack = Constants.UNPRESSED;
 	static public double leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
@@ -21,7 +21,7 @@ public class TeleOperated
 	private TeleOperated()
 	{
 		dualShock = new PS4Controller(Constants.PS4_CONTROLLER);
-		operator = new Attack3(Constants.ATTACK3);
+		operator = new Extreme3DPro(Constants.E3DPro);
 	}
 	
 	public static TeleOperated getInstance()
@@ -35,7 +35,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		if ((operator.getIndexTrigger() == true) || (dualShock.getXButton() == true))
+		if ((operator.getButton(1) == true) || (dualShock.getXButton() == true))
 		{
 			shooterLeverState = Constants.FIRE;
 		}
@@ -187,7 +187,7 @@ public class TeleOperated
 			}
 		}		
 		
-		else if ((operator.getBaseFrontLeft() == true) || (dualShock.getRightAnalogStickButton() == true))
+		else if ((operator.getButton(6) == true) || (dualShock.getRightAnalogStickButton() == true))
 		{
 			int shooterPos = Shooter.shooter.getEncPosition();
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
@@ -239,7 +239,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if (operator.getBaseCenterLeft())
+		else if (operator.getButton(8))
 		{
 			error = Constants.CASTLE_WALL_SHOT - Shooter.shooter.getEncPosition();
 			errorRefresh = errorRefresh + error;
@@ -282,8 +282,9 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if ((operator.getBaseBackLeft() == true) || (dualShock.getLeftAnalogStickButton() == true))
+		else if ((operator.getButton(7) == true) || (dualShock.getLeftAnalogStickButton() == true))
 		{
+			shooterLeverState = Constants.FIRE;
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
@@ -330,7 +331,7 @@ public class TeleOperated
 			if(Shooter.shooterLimitSwitch.get() && operator.getYAxis() < 0)
 			{
 				Shooter.manualControl(0.0);
-				if(operator.getBaseFrontRight())
+				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
@@ -341,7 +342,7 @@ public class TeleOperated
 			else if (Shooter.shooter.getEncPosition() >= 4100 && operator.getYAxis() > 0)
 			{
 				Shooter.manualControl(0.0);
-				if(operator.getBaseFrontRight())
+				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
@@ -351,7 +352,7 @@ public class TeleOperated
 			}
 			else
 			{
-				if(operator.getBaseFrontRight())
+				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
 					Climber.winch1.set(-speed);
