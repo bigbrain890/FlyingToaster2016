@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3641.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
