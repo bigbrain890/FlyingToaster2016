@@ -6,6 +6,8 @@ import com.ctre.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Shooter 
 {
@@ -18,6 +20,12 @@ public class Shooter
 	static int targetAngle;
 	static int counter = 1;
 	static double [] ultraSonicVals ;
+	
+	private static boolean done;
+	private static double shooterLeverInitalEncoderPosition = 0;
+	private static boolean lastModeOn = false;
+	private static Timer timer;
+	private static double error = 0, output = 0, errorRefresh = 0;
 	
 	public Shooter()
 	{
@@ -32,6 +40,7 @@ public class Shooter
 		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		
+		timer = new Timer();
 		
 	}
 	
@@ -118,7 +127,37 @@ public class Shooter
 	
 	public static void closeShot()
 	{
-		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.CLOSE_SHOT, false));
+		int shooterPos = Shooter.shooter.getEncPosition();
+		error = Constants.CLOSE_SHOT - shooterPos;
+		errorRefresh = error + errorRefresh;
+		if (errorRefresh > 25000)
+		{
+			errorRefresh = 25000;
+		}
+		else if (errorRefresh < -25000)
+		{
+			errorRefresh = -25000;
+		}
+	
+		output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) );
+		if (output > .75)
+		{
+			output = .75;
+		}
+		else if (output < -.75)
+		{
+			output = -.75;
+		}
+		Shooter.shooter.set(output);
+		if (Shooter.shooter.getEncPosition() < 2000)
+		{
+			Shooter.flyWheel1.set(.85);
+			Shooter.flyWheel2.set(-.85);
+		}
+		else
+		{
+			Shooter.spinUpWheels(-.59);	
+		}
 	}
 	
 	public static void lowGoal()
@@ -142,5 +181,35 @@ public class Shooter
 		shooter.setEncPosition(0);
 	}
 	
-
+	public static void set(double power)
+	{
+		flyWheel1.set(-power);
+		flyWheel2.set(power);
+	}
+	
+	public static void setShooterLever(boolean on)
+	{
+		if(on)
+		{
+			if(!lastModeOn)
+			{
+				timer.reset();
+				timer.start();
+				shooterLeverInitalEncoderPosition = shooterLever.getEncPosition();
+				System.out.println("Starting to go");
+				done = false;
+			}
+			shooterLever.set(-.1);
+			if(Math.abs(shooterLeverInitalEncoderPosition - shooterLever.getEncPosition()) > 900 || timer.get() > 0.5) done = true;
+			if(!done) shooterLever.set(-.35);
+			else if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
+			else shooterLever.set(.35);
+		}
+		else
+		{
+			if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
+			else shooterLever.set(.1);
+		}
+		lastModeOn = on;
+	}
 }

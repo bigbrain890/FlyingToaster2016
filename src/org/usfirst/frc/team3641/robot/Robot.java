@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot
     	Intake.getInstance();
     	Climber.getInstance();
     	Test.getInstance();
+    	Shooter.shooter.enableBrakeMode(false);
     }
 
     public void autonomousInit()
@@ -90,17 +91,12 @@ public class Robot extends IterativeRobot
 
 	public void teleopPeriodic()
     {
-		
-        TeleOperated.runDriver();
-        SmartDashboard.putNumber("Direction", DriveBase.getDriveDirection());
-        SmartDashboard.putNumber("Drive Distance", DriveBase.getDriveDis());
-    	Intake.sensorReadOut();
-
+        TeleOperated.runBoth();
     }
 	
     public void testPeriodic()
     {
-    	Test.runTest();
+    	//Test.runTest();
     }
     
 }

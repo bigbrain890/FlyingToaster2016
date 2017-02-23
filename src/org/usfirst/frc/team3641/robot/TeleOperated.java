@@ -2,26 +2,36 @@ package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class TeleOperated
 {
 	private static TeleOperated instance;
 	public static PS4Controller dualShock;
 	public static Extreme3DPro operator;
-	static public boolean driveMode = Constants.DRIVE_NORMAL;
-	static public int driveBack = Constants.UNPRESSED;
-	static public double leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
-	public static int shooterLeverState = Constants.RESTING_POSITION;
+	public static Harmonix guitar;
+	public static boolean driveMode = Constants.DRIVE_NORMAL;
+	public static int driveBack = Constants.UNPRESSED;
+	public static double leftError = 0, rightError = 0, leftOutput = 0, rightOutput = 0;
 	public static int intakeState = Constants.INTAKE_DOWN;
 	public static int cruiseState = Constants.CRUISE_OFF;
 	private static double errorRefresh = 0;
 	private static double error = 0;
 	private static double output = 0;
+	
+	private static boolean alreadyPressed = false;
+	private static Timer timer;
+	private static PowerDistributionPanel pdp;
+	
 
 	private TeleOperated()
 	{
 		dualShock = new PS4Controller(Constants.PS4_CONTROLLER);
 		operator = new Extreme3DPro(Constants.E3DPro);
+		guitar = new Harmonix(Constants.E3DPro + 1);
+		timer = new Timer();
+		pdp = new PowerDistributionPanel();
 	}
 	
 	public static TeleOperated getInstance()
@@ -33,12 +43,51 @@ public class TeleOperated
 		return instance;
 	}
 	
+	public static void runBoth()
+	{
+		if(operator.getButton(7)) runGuitar();
+		else runDriver();
+	}
+	
+	public static void runGuitar()
+	{
+		guitar.poll();
+		Shooter.setShooterLever(guitar.isDown(Harmonix.Button.LOWER) && guitar.isDown(Harmonix.Button.STRUM));
+		double speed = guitar.getAxis(Harmonix.Axis.WHAMMY_BAR) * guitar.getAxis(Harmonix.Axis.STRUM);
+		double rotation = -guitar.getAxis(Harmonix.Axis.BUTTONS);
+		DriveBase.driveNormal(speed, rotation);
+	}
+	
+	public static void runDataLogger()
+	{
+		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+		if(dualShock.getSquareButton())
+		{
+			if(!alreadyPressed)
+			{
+				timer.start();
+				DriveBase.resetEncoders();
+				alreadyPressed = true;
+				UDP.sendData("\nTime, Distance, Voltage, Total Current, Right Current 1, Right Current 2, Left Current 1, Left Current 2");
+			}
+			double time = timer.get();
+			double distance = DriveBase.getDriveDis();
+			double voltage = pdp.getVoltage();
+			double totalCurrent = pdp.getTotalCurrent();
+			double rc1 = pdp.getCurrent(0);
+			double rc2 = pdp.getCurrent(1);
+			double lc1 = pdp.getCurrent(14);
+			double lc2 = pdp.getCurrent(15);
+			
+			UDP.sendData(time + ", " + distance + ", " + voltage + ", " + totalCurrent + ", " + rc1 + ", " + rc2 + ", " + lc1 + ", " + lc2  );
+		}
+		else if(alreadyPressed) alreadyPressed = false;
+	}
+	
+	
 	public static void runDriver()
 	{
-		if ((operator.getButton(1) == true) || (dualShock.getXButton() == true))
-		{
-			shooterLeverState = Constants.FIRE;
-		}
+		Shooter.setShooterLever((operator.getButton(1) == true) || (dualShock.getXButton() == true));
 		if(dualShock.getRightBumper() == true)
 		{
 			cruiseState = Constants.CRUISE_ON;
@@ -239,7 +288,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if (operator.getButton(8))
+		else if (operator.getButton(5))
 		{
 			error = Constants.CASTLE_WALL_SHOT - Shooter.shooter.getEncPosition();
 			errorRefresh = errorRefresh + error;
@@ -282,9 +331,8 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if ((operator.getButton(7) == true) || (dualShock.getLeftAnalogStickButton() == true))
+		else if (operator.getButton(2) || (dualShock.getLeftAnalogStickButton() == true))
 		{
-			shooterLeverState = Constants.FIRE;
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
 			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
@@ -365,35 +413,6 @@ public class TeleOperated
 			}
 		}
 		
-		if (shooterLeverState == Constants.RESTING_POSITION)
-		{
-			Shooter.shooterLever.set(0.0);
-		}
-		else if (shooterLeverState == Constants.FIRE)
-		{
-			
-			if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
-			{
-				Shooter.fire();
-			}
-			else
-			{
-				Shooter.resetShooterArm();
-				shooterLeverState = Constants.RESET;
-			}
-		}
-		else if (shooterLeverState == Constants.RESET)
-		{
-			if (Shooter.shooterLeverLimitSwitch.get() == true)
-			{
-				shooterLeverState = Constants.RESTING_POSITION;
-				Shooter.zeroShooterLeverEnc();
-			}
-			else if (Shooter.shooterLever.getEncPosition() <= 25)
-			{
-				Shooter.resetShooterArm();
-			}
-		}
 		if(Shooter.shooterLimitSwitch.get())
 		{
 			Shooter.zeroShooterEnc();
@@ -416,10 +435,6 @@ public class TeleOperated
 		{
 			UDP.getData();
 		}
-		if(dualShock.getTriangleButton())
-		{
-			shooterLeverState = Constants.RESET;
-		}
 		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
 		Intake.sensorReadOut();
 		Tracking.printOut();
@@ -427,7 +442,6 @@ public class TeleOperated
 		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
 		SmartDashboard.putBoolean("Shooter Lever Lim", Shooter.shooterLeverLimitSwitch.get());
 		SmartDashboard.putNumber("Shooter Lever Encoder Tick", Shooter.shooterLever.getEncPosition());
-		SmartDashboard.putNumber("Shooter Lever State", shooterLeverState);
 	}
 	
 	

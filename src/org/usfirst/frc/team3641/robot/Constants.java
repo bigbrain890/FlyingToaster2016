@@ -25,7 +25,7 @@ public class Constants
 	//Ethan's Pi: "10.36.41.41"
 	//Team Pi: "10.36.41.121"
 	public static final String PI_IP_ADDR = "10.36.41.165";//"10.36.41.41"; Ethan's Pi
-	public static final String PI_COMP_ADDR = "10.36.41.5";
+	public static final String PI_COMP_ADDR = "10.36.41.81"; //5
 	
 	// Various Sensors 
 	public static final int ULTRASONIC = 0;
@@ -97,7 +97,7 @@ public class Constants
 	public static final int FLY_WHEEL_2 = 6;
 	public static final int SHOOTER = 5;
 	public static final int SHOOTER_LEVER = 8;
-	public static final int SHOOTER_LEVER_LIMIT_SWITCH = 5;
+	public static final int SHOOTER_LEVER_LIMIT_SWITCH = 6;
 	public static int FAR_SHOT_COMP = 2450;
 	public static int AUTON_SHOT = 2975;
 	public static final int AUTON_CAMERA_ANGLE = 2300;
