@@ -19,7 +19,9 @@ public class Shooter
 	public static double leftError, leftErrorRefresh, rightError, rightErrorRefresh, leftOutput, rightOutput;
 	static int targetAngle;
 	static int counter = 1;
-	static double [] ultraSonicVals ;
+	static double [] ultraSonicVals;
+	
+	private static PID aimPID;
 	
 	private static boolean done;
 	private static double shooterLeverInitalEncoderPosition = 0;
@@ -41,7 +43,9 @@ public class Shooter
 		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		
 		timer = new Timer();
-		
+		aimPID = new PID("Shooter Aim");
+		aimPID.setValues(Constants.SHOOTER_KP, Constants.SHOOTER_KI, 0.0, 0);
+		aimPID.setICap(25000);
 	}
 	
 	public static Shooter getInstance()
@@ -115,49 +119,18 @@ public class Shooter
 		
 	public static void farShot()
 	{
-		shooter.set(PILoop.shooter(shooter.getEncPosition(), Constants.FAR_SHOT_COMP, false));
-	}
-	
-	public static void mediumShot()
-	{
-		double pidOut=PILoop.shooter(shooter.getEncPosition(), Constants.MEDIUM_SHOT, false);
-		shooter.set(pidOut);
-		SmartDashboard.putNumber("PID Out", pidOut);
+		double error = Constants.CASTLE_WALL_SHOT - shooter.getEncPosition();
+		shooter.set(aimPID.run(error, Constants.CLOSE_SHOT));
+		if (Math.abs(error) > 200) spinUpWheels(.85);
+		else spinUpWheels(-1);
 	}
 	
 	public static void closeShot()
 	{
-		int shooterPos = Shooter.shooter.getEncPosition();
-		error = Constants.CLOSE_SHOT - shooterPos;
-		errorRefresh = error + errorRefresh;
-		if (errorRefresh > 25000)
-		{
-			errorRefresh = 25000;
-		}
-		else if (errorRefresh < -25000)
-		{
-			errorRefresh = -25000;
-		}
-	
-		output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI) );
-		if (output > .75)
-		{
-			output = .75;
-		}
-		else if (output < -.75)
-		{
-			output = -.75;
-		}
-		Shooter.shooter.set(output);
-		if (Shooter.shooter.getEncPosition() < 2000)
-		{
-			Shooter.flyWheel1.set(.85);
-			Shooter.flyWheel2.set(-.85);
-		}
-		else
-		{
-			Shooter.spinUpWheels(-.59);	
-		}
+		double error = Constants.FAR_SHOT_COMP - shooter.getEncPosition();
+		shooter.set(aimPID.run(error, Constants.FAR_SHOT_COMP));
+		if (Math.abs(error) > 200) spinUpWheels(.85);
+		else spinUpWheels(-1);
 	}
 	
 	public static void lowGoal()

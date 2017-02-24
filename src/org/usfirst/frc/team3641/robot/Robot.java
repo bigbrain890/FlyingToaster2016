@@ -19,7 +19,6 @@ public class Robot extends IterativeRobot
     	Autonomous.getInstance();
     	TeleOperated.getInstance();
     	Shooter.getInstance();
-    	PILoop.getInstance();
     	UDP.getInstance();
     	Intake.getInstance();
     	Climber.getInstance();
