@@ -176,12 +176,12 @@ public class Shooter
 			if(Math.abs(shooterLeverInitalEncoderPosition - shooterLever.getEncPosition()) > 900 || timer.get() > 0.5) done = true;
 			if(!done) shooterLever.set(-.35);
 			else if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
-			else shooterLever.set(.35);
+			else shooterLever.set(1);
 		}
 		else
 		{
 			if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
-			else shooterLever.set(.1);
+			else shooterLever.set(.15);
 		}
 		lastModeOn = on;
 	}

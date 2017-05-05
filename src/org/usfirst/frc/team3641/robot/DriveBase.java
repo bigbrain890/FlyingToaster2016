@@ -34,6 +34,29 @@ public class DriveBase
 		return instance;
 	}
 	
+	public static double squareInput(double input, double power)
+	{
+		return (input < 0) ? -Math.pow(Math.abs(input), power) : Math.pow(input, power); 
+	}
+
+	public static void driveGrilledCheese(double power, double rotation)
+	{
+
+		double gain = 1.5;
+		double limit = 0.1;
+				
+		double arcadePower = power;
+		double arcadeRotation = rotation;
+		double cheesyRotation = rotation * gain * Math.abs(arcadePower);
+		
+		power = Math.abs(power);
+		if(power == 0) rotation = arcadeRotation;
+		else if(power <= limit) rotation = (power/limit)*cheesyRotation + (1-power/limit) * arcadeRotation;
+		else rotation = cheesyRotation;
+		
+		driveNormal(arcadePower, rotation);
+	}
+	
 	public static void driveNormal(double throttle, double rotate)
 	{
 		chassis.arcadeDrive(throttle * -1, rotate);

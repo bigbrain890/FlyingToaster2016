@@ -66,13 +66,13 @@ public class TeleOperated
 			Shooter.setShooterLever(guitar.isDown(Harmonix.Button.LOWER) && guitar.isDown(Harmonix.Button.STRUM));
 			double speed = guitar.getAxis(Harmonix.Axis.WHAMMY_BAR) * guitar.getAxis(Harmonix.Axis.STRUM);
 			double rotation = guitar.getAxis(Harmonix.Axis.BUTTONS);
-			DriveBase.driveNormal(speed, rotation);
+			DriveBase.driveGrilledCheese(speed, rotation);
 		}
 	}
 	
 	public static void runDataLogger()
 	{
-		DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+		DriveBase.driveGrilledCheese(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 		if(dualShock.getSquareButton())
 		{
 			if(!alreadyPressed)
@@ -99,7 +99,7 @@ public class TeleOperated
 	
 	public static void runDriver()
 	{
-		Shooter.setShooterLever((operator.getButton(1) == true) || (dualShock.getXButton() == true));
+		Shooter.setShooterLever((operator.getButton(1) == true) || (dualShock.getRawButton(14) == true));
 		if(dualShock.getRightBumper() == true)
 		{
 			cruiseState = Constants.CRUISE_ON;
@@ -107,26 +107,14 @@ public class TeleOperated
 		if(dualShock.getLeftBumper() == true)
 		{
 			cruiseState = Constants.CRUISE_OFF;
-		}
-		
-		if (dualShock.getRightAnalogStickButton() == true)
-		{
-			intakeState = Constants.INTAKE_DOWN;
-		}
-		
-		else if (dualShock.getLeftAnalogStickButton() == true)
-		{
-			intakeState = Constants.INTAKE_UP;
-		}
-	
-		
+		}		
 				
 		// Actually driving and stuff
 		if (cruiseState == Constants.CRUISE_OFF){
 			
 			if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
 			{
-				DriveBase.driveNormal(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+				DriveBase.driveGrilledCheese(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
 				if(dualShock.getRightDPad() == true)
 				{
 					DriveBase.driveNormal(0.0, -.57);
@@ -248,7 +236,7 @@ public class TeleOperated
 			}
 		}		
 		
-		else if ((operator.getButton(6) == true) /*|| (dualShock.getRightAnalogStickButton() == true)*/)
+		else if (operator.getButton(6) == true || (dualShock.getRightAnalogStickButton() == true))
 		{
 			int shooterPos = Shooter.shooter.getEncPosition();
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
@@ -343,7 +331,7 @@ public class TeleOperated
 			Shooter.shooter.set(output);
 		}
 */		
-		else if (operator.getButton(2) /*|| (dualShock.getLeftAnalogStickButton() == true)*/)
+		else if (operator.getButton(2) || (dualShock.getLeftAnalogStickButton() == true ))
 		{
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
