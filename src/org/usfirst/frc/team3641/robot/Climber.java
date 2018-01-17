@@ -1,11 +1,12 @@
 package org.usfirst.frc.team3641.robot;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Climber
 {
 	private static Climber instance;
-	public static CANTalon winch1, winch2;
+	public static TalonSRX winch1, winch2;
 	public static int climbState;
 	public static int initialWinch1Pos, initialWinch2Pos;
 	public static int winch1Pos, winch2Pos;
@@ -17,8 +18,8 @@ public class Climber
 	
 	private Climber()
 	{
-		winch1 = new CANTalon(Constants.WINCH_ONE);
-		winch2 = new CANTalon(Constants.WINCH_TWO);
+		winch1 = new TalonSRX(Constants.WINCH_ONE);
+		winch2 = new TalonSRX(Constants.WINCH_TWO);
 		climbState = Constants.FIND_WINCH_OFFSET;
 		
 	}
@@ -36,18 +37,18 @@ public class Climber
 	{
 		if(climbState == Constants.FIND_WINCH_OFFSET)
 		{
-			initialWinch1Pos = winch1.getEncPosition();
-			initialWinch1Pos = winch2.getEncPosition();
+			initialWinch1Pos = winch1.getSelectedSensorPosition(0);
+			initialWinch1Pos = winch2.getSelectedSensorPosition(0);
 			
 			climbState = Constants.WINCH_UP;
 		}
 		if(climbState == Constants.WINCH_UP)
 		{
-			winch1Pos = winch1.getEncPosition();
-			winch2Pos = winch1.getEncPosition();
+			winch1Pos = winch1.getSelectedSensorPosition(0);
+			winch2Pos = winch1.getSelectedSensorPosition(0);
 			
-			winch1V = winch1.getEncVelocity();
-			winch2V = winch1.getEncVelocity();
+			winch1V = winch1.getSelectedSensorVelocity(0);
+			winch2V = winch1.getSelectedSensorVelocity(0);
 			
 			winch1Error = Constants.WINCH_VELOCITY - winch1V;
 			winch2Error = Constants.WINCH_VELOCITY + winch2V;
@@ -60,21 +61,21 @@ public class Climber
 			
 			if(winch1Pos < initialWinch1Pos+Constants.WINCH_DISTANCE)
 			{
-				winch1.set(winch1Output);
+				winch1.set(ControlMode.PercentOutput, winch1Output);
 			}
 			else
 			{
-				winch1.set(0.0);
+				winch1.set(ControlMode.PercentOutput, 0.0);
 				winch1Done = true;
 			}
 			
 			if(winch2Pos > initialWinch1Pos-Constants.WINCH_DISTANCE)
 			{
-				winch2.set(winch1Output);
+				winch2.set(ControlMode.PercentOutput, winch1Output);
 			}
 			else
 			{
-				winch2.set(0.0);
+				winch2.set(ControlMode.PercentOutput, 0.0);
 				winch2Done = true;
 			}
 			

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3641.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -96,12 +97,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				autonState++;
 			}
 		}
@@ -119,7 +120,7 @@ public class Autonomous
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 			}
 		}
@@ -142,30 +143,30 @@ public class Autonomous
 				{
 					rotate = .5;
 				}
-				DriveBase.driveNormal(0.0, -rotate);
+				DriveBase.driveArcade(0.0, -rotate);
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 6)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			if(error <= 50)
 				autonState++;
 
 		}
 		else if (autonState == 7)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			if (Tracking.autoTarget())
 			{
 				startTimers();
@@ -189,7 +190,7 @@ public class Autonomous
 				else if (shooterLeverState == Constants.FIRE)
 				{
 					
-					if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
+					if (Shooter.shooterLever.getSelectedSensorPosition(0) >= Constants.LEVER_MAX_SWING)
 					{
 						Shooter.fire();
 					}
@@ -201,7 +202,7 @@ public class Autonomous
 				}
 				else if (shooterLeverState == Constants.RESET)
 				{
-					if ((Shooter.shooterLever.getEncPosition() <= 25))
+					if ((Shooter.shooterLever.getSelectedSensorPosition(0) <= 25))
 					{
 						Shooter.resetShooterArm();
 					}
@@ -227,12 +228,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(intakeTimer.get() >= 7)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				autonState++;
 			}
 		}
@@ -250,7 +251,7 @@ public class Autonomous
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 			}
 		}
@@ -273,20 +274,20 @@ public class Autonomous
 				{
 					rotate = .5;
 				}
-				DriveBase.driveNormal(0.0, -rotate);
+				DriveBase.driveArcade(0.0, -rotate);
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 6)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			//if(error <= 50)
 				//autonState++;
 
@@ -341,12 +342,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(intakeTimer.get() >= 7)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				autonState++;
 			}
 		}
@@ -364,7 +365,7 @@ public class Autonomous
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 			}
 		}
@@ -387,20 +388,20 @@ public class Autonomous
 				{
 					rotate = .5;
 				}
-				DriveBase.driveNormal(0.0, -rotate);
+				DriveBase.driveArcade(0.0, -rotate);
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 6)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			//if(error <= 50)
 				//autonState++;
 
@@ -440,12 +441,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(intakeTimer.get() >= 7)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				autonState++;
 			}
 		}
@@ -463,7 +464,7 @@ public class Autonomous
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 			}
 		}
@@ -486,20 +487,20 @@ public class Autonomous
 				{
 					rotate = .5;
 				}
-				DriveBase.driveNormal(0.0, -rotate);
+				DriveBase.driveArcade(0.0, -rotate);
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 6)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			//if(error <= 50)
 				//autonState++;
 
@@ -544,12 +545,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(intakeTimer.get() >= 7)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				autonState++;
 			}
 		}
@@ -567,7 +568,7 @@ public class Autonomous
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 			}
 		}
@@ -590,20 +591,20 @@ public class Autonomous
 				{
 					rotate = .5;
 				}
-				DriveBase.driveNormal(0.0, -rotate);
+				DriveBase.driveArcade(0.0, -rotate);
 			}
 			else
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;
 			}
 		}
 		else if (autonState == 6)
 		{
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = error + errorRefresh;
 			output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
-			Shooter.shooter.set(output);
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
 			//if(error <= 50)
 				//autonState++;
 
@@ -646,12 +647,12 @@ public class Autonomous
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN || intakeTimer.get() > Constants.MAX_INTAKE_DOWN_TIME)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 				Tracking.flush();
 				autonState++;
 			}
@@ -671,7 +672,7 @@ public class Autonomous
 			}
 			if (DriveBase.getDriveDis() >= Constants.TARGET_DEFENSE_DRIVE_DIS)
 			{
-				DriveBase.driveNormal(0.0, 0.0);
+				DriveBase.driveArcade(0.0, 0.0);
 				autonState++;
 				DriveBase.gyro.reset();
 				turnTimer.start();
@@ -704,11 +705,11 @@ public class Autonomous
 						driveOutput = .8;
 					}
 				}
-				DriveBase.driveNormal(0.0, driveOutput);
+				DriveBase.driveArcade(0.0, driveOutput);
 			}
 			if (Math.abs(error) < 4)
 			{
-				DriveBase.driveNormal(0.0,0.0);
+				DriveBase.driveArcade(0.0,0.0);
 				autonState++;				
 			}
 		}
@@ -735,7 +736,7 @@ public class Autonomous
 		else if (autonState == 8)
 		{
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Auton Shot", 2700);
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			if(Math.abs(error) < 335)
 			{
 				errorRefresh = error + errorRefresh;
@@ -754,11 +755,11 @@ public class Autonomous
 			}
 
 			output = ((error * Constants.SHOOTER_LONG_KP) + (errorRefresh * Constants.SHOOTER_LONG_KI));
-			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 1900)
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
+			if (Shooter.shooter.getSelectedSensorPosition(0) < 1900)
 			{
-				Shooter.flyWheel1.set(.35);
-				Shooter.flyWheel2.set(-.35);
+				Shooter.flyWheel1.set(ControlMode.PercentOutput, .35);
+				Shooter.flyWheel2.set(ControlMode.PercentOutput, -.35);
 			}
 			else
 			{
@@ -775,7 +776,7 @@ public class Autonomous
 			else if (shooterLeverState == Constants.FIRE)
 			{
 				
-				if (Shooter.shooterLever.getEncPosition() >= Constants.LEVER_MAX_SWING)
+				if (Shooter.shooterLever.getSelectedSensorPosition(0) >= Constants.LEVER_MAX_SWING)
 				{
 					Shooter.fire();
 				}
@@ -787,7 +788,7 @@ public class Autonomous
 			}
 			else if (shooterLeverState == Constants.RESET)
 			{
-				if ((Shooter.shooterLever.getEncPosition() <= 25))
+				if ((Shooter.shooterLever.getSelectedSensorPosition(0) <= 25))
 				{
 					Shooter.resetShooterArm();
 				}

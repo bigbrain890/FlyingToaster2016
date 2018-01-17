@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Preferences;
@@ -23,7 +24,7 @@ public class Robot extends IterativeRobot
     	Intake.getInstance();
     	Climber.getInstance();
     	Test.getInstance();
-    	Shooter.shooter.enableBrakeMode(false);
+    	Shooter.shooter.setNeutralMode(NeutralMode.Coast);
     }
 
     public void autonomousInit()

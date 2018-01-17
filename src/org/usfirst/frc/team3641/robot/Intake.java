@@ -1,22 +1,23 @@
 package org.usfirst.frc.team3641.robot;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogInput;
 public class Intake {
 
 	private static Intake instance;
-	public static CANTalon rollers, rightIntake, leftIntake;
+	public static TalonSRX rollers, rightIntake, leftIntake;
 	public static DigitalInput limSwitch;
 	public static AnalogInput leftPot, rightPot;
 	public static DigitalInput ballSensor;
 	
 	public Intake()
 	{
-		rollers = new CANTalon(Constants.ROLLERS);
-		leftIntake = new CANTalon(Constants.LEFT_INTAKE_MOTOR);
-		rightIntake = new CANTalon(Constants.RIGHT_INTAKE_MOTOR);
+		rollers = new TalonSRX(Constants.ROLLERS);
+		leftIntake = new TalonSRX(Constants.LEFT_INTAKE_MOTOR);
+		rightIntake = new TalonSRX(Constants.RIGHT_INTAKE_MOTOR);
 		leftPot = new AnalogInput(Constants.LEFT_POT);
 		rightPot = new AnalogInput(Constants.RIGHT_POT);
 		ballSensor = new DigitalInput(Constants.BALL_SENSOR);
@@ -33,17 +34,17 @@ public class Intake {
 	
 	public static void intakeBall(double speed)
 	{
-			rollers.set(speed);
+			rollers.set(ControlMode.PercentOutput, speed);
 	}
 	
 	public static void stopIntake()
 	{
-		rollers.set(0.0);
+		rollers.set(ControlMode.PercentOutput, 0.0);
 	}
 	
 	public static void lowGoal()
 	{
-		rollers.set(-1);
+		rollers.set(ControlMode.PercentOutput, -1);
 	}
 	
 	public static boolean doesWeHasBall()

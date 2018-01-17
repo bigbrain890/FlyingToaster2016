@@ -3,6 +3,9 @@ package org.usfirst.frc.team3641.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class TeleOperated
@@ -54,7 +57,7 @@ public class TeleOperated
 		guitar.poll();
 		if(guitar.isDown(Harmonix.Button.LOWER))
 		{
-			DriveBase.driveNormal(0, 0);
+			DriveBase.driveArcade(0, 0);
 			if(guitar.isDown(Harmonix.Button.YELLOW)) Shooter.set(-.1);
 			else if(guitar.isDown(Harmonix.Button.GREEN)) Shooter.farShot();
 			else if(guitar.isDown(Harmonix.Button.RED)) Shooter.closeShot();
@@ -100,75 +103,40 @@ public class TeleOperated
 	public static void runDriver()
 	{
 		Shooter.setShooterLever((operator.getButton(1) == true) || (dualShock.getRawButton(14) == true));
-		if(dualShock.getRightBumper() == true)
-		{
-			cruiseState = Constants.CRUISE_ON;
-		}
-		if(dualShock.getLeftBumper() == true)
-		{
-			cruiseState = Constants.CRUISE_OFF;
-		}		
-				
 		// Actually driving and stuff
-		if (cruiseState == Constants.CRUISE_OFF){
-			
-			if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
-			{
-				DriveBase.driveGrilledCheese(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
-				if(dualShock.getRightDPad() == true)
-				{
-					DriveBase.driveNormal(0.0, -.57);
-				}
-				if (dualShock.getleftDPad() == true)
-				{
-					DriveBase.driveNormal(0.0, .57);
-				}
-				else if (dualShock.getTopDPad() == true)
-				{
-					intakeState = Constants.INTAKE_DOWN;
-				}
-				else if (dualShock.getBottomDPad() == true)
-				{
-					intakeState = Constants.INTAKE_UP;
-				}
-			}
-			
-		}
-		else if (cruiseState == Constants.CRUISE_ON)
-		{
 		if ((driveMode == Constants.DRIVE_NORMAL) && (dualShock.getSquareButton() != true))
+		{
+			DriveBase.driveGrilledCheese(dualShock.getLeftStickYAxis(), -1* dualShock.getRightStickXAxis());
+			if(dualShock.getRightDPad() == true)
 			{
-				DriveBase.driveNormal(-.5, -1* dualShock.getRightStickXAxis());
-				if(dualShock.getRightDPad() == true)
-				{
-					DriveBase.driveNormal(0.0, -.57);
-				}
-				if (dualShock.getleftDPad() == true)
-				{
-					DriveBase.driveNormal(0.0, .57);
-				}
-				else if (dualShock.getTopDPad() == true)
-				{
-					intakeState = Constants.INTAKE_DOWN;
-				}
-				else if (dualShock.getBottomDPad() == true)
-				{
-					intakeState = Constants.INTAKE_UP;
-				}
+				DriveBase.driveArcade(0.0, -.57);
+			}
+			if (dualShock.getleftDPad() == true)
+			{
+				DriveBase.driveArcade(0.0, .57);
+			}
+			else if (dualShock.getTopDPad() == true)
+			{
+				intakeState = Constants.INTAKE_DOWN;
+			}
+			else if (dualShock.getBottomDPad() == true)
+			{
+				intakeState = Constants.INTAKE_UP;
 			}
 		}
+				
 		if(intakeState == Constants.INTAKE_DOWN)
 		{
 			leftError = Constants.LEFT_INTAKE_DOWN - Intake.leftPot.getVoltage();
 			rightError = Constants.RIGHT_INTAKE_DOWN - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(Intake.leftPot.getVoltage() < Constants.LEFT_INTAKE_DOWN)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 			}
 		}
 		else if (intakeState == Constants.INTAKE_UP)
@@ -177,12 +145,12 @@ public class TeleOperated
 			rightError = Constants.RIGHT_INTAKE_UP - Intake.rightPot.getVoltage();
 			leftOutput = leftError * Constants.INTAKE_KP;
 			rightOutput = rightError * Constants.INTAKE_KP;
-			Intake.leftIntake.set(leftOutput);
-			Intake.rightIntake.set(-rightOutput);
+			Intake.leftIntake.set(ControlMode.PercentOutput, leftOutput);
+			Intake.rightIntake.set(ControlMode.PercentOutput, -rightOutput);
 			if(Intake.rightPot.getVoltage() > Constants.RIGHT_INTAKE_UP)
 			{
-				Intake.leftIntake.set(0.0);
-				Intake.rightIntake.set(0.0);
+				Intake.leftIntake.set(ControlMode.PercentOutput, 0.0);
+				Intake.rightIntake.set(ControlMode.PercentOutput, 0.0);
 			}
 		}
 		
@@ -190,18 +158,18 @@ public class TeleOperated
 		{
 			if(Shooter.shooterLimitSwitch.get() == true)
 			{
-				Shooter.shooter.set(0.0);
+				Shooter.shooter.set(ControlMode.PercentOutput, 0.0);
 			}
 			else
 			{
-				error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
+				error = Constants.SHOOTER_DOWN - Shooter.shooter.getSelectedSensorPosition(0);
 				errorRefresh = error + errorRefresh;
 				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 				if (output < -.5)
 				{
 					output = -.5;
 				}
-				Shooter.shooter.set(output);
+				Shooter.shooter.set(ControlMode.PercentOutput, output);
 			}
 			Shooter.pullBackShooterArm();
 			Shooter.intake();
@@ -214,22 +182,22 @@ public class TeleOperated
 			if(Shooter.shooterLimitSwitch.get() == true)
 			{
 			
-				Shooter.shooter.set(0.0);
+				Shooter.shooter.set(ControlMode.PercentOutput, 0.0);
 			}
 			else
 			{
-				error = Constants.SHOOTER_DOWN - Shooter.shooter.getEncPosition();
+				error = Constants.SHOOTER_DOWN - Shooter.shooter.getSelectedSensorPosition(0);
 				errorRefresh = error + errorRefresh;
 				output = ((error * Constants.SHOOTER_KP) + (errorRefresh * Constants.SHOOTER_KI));
 				if (output < -.5)
 				{
 					output = -.5;
 				}
-				Shooter.shooter.set(output);
+				Shooter.shooter.set(ControlMode.PercentOutput, output);
 				
 				
 			}
-			if(Shooter.shooter.getEncPosition() < 400)
+			if(Shooter.shooter.getSelectedSensorPosition(0) < 400)
 			{
 				Shooter.lowGoal();
 				Intake.lowGoal();
@@ -238,7 +206,7 @@ public class TeleOperated
 		
 		else if (operator.getButton(6) == true || (dualShock.getRightAnalogStickButton() == true))
 		{
-			int shooterPos = Shooter.shooter.getEncPosition();
+			int shooterPos = Shooter.shooter.getSelectedSensorPosition(0);
 			Constants.CLOSE_SHOT = Preferences.getInstance().getInt("Close Shot", Constants.CLOSE_SHOT);
 			error = Constants.CLOSE_SHOT - shooterPos;
 			errorRefresh = error + errorRefresh;
@@ -260,11 +228,11 @@ public class TeleOperated
 			{
 				output = -.75;
 			}
-			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 2000)
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
+			if (Shooter.shooter.getSelectedSensorPosition(0) < 2000)
 			{
-				Shooter.flyWheel1.set(.85);
-				Shooter.flyWheel2.set(-.85);
+				Shooter.flyWheel1.set(ControlMode.PercentOutput, .85);
+				Shooter.flyWheel2.set(ControlMode.PercentOutput, -.85);
 			}
 			else
 			{
@@ -290,7 +258,7 @@ public class TeleOperated
 */		
 		else if (operator.getButton(5))
 		{
-			error = Constants.CASTLE_WALL_SHOT - Shooter.shooter.getEncPosition();
+			error = Constants.CASTLE_WALL_SHOT - Shooter.shooter.getSelectedSensorPosition(0);
 			errorRefresh = errorRefresh + error;
 			if (errorRefresh > 25000)
 			{
@@ -310,8 +278,8 @@ public class TeleOperated
 			{
 				output = -.75;
 			}
-			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 3000)
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
+			if (Shooter.shooter.getSelectedSensorPosition(0) < 3000)
 			{
 				Shooter.intake();
 			}
@@ -335,7 +303,7 @@ public class TeleOperated
 		{
 			Tracking.lightOn();
 			Constants.FAR_SHOT_COMP = Preferences.getInstance().getInt("Far Shot", Constants.FAR_SHOT_COMP);
-			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getEncPosition();
+			error = Constants.FAR_SHOT_COMP - Shooter.shooter.getSelectedSensorPosition(0);
 			if(Math.abs(error)<335)
 			{
 				errorRefresh = error + errorRefresh;
@@ -354,11 +322,11 @@ public class TeleOperated
 			{
 				output = -.85;
 			}
-			Shooter.shooter.set(output);
-			if (Shooter.shooter.getEncPosition() < 1900) //Was 1900
+			Shooter.shooter.set(ControlMode.PercentOutput, output);
+			if (Shooter.shooter.getSelectedSensorPosition(0) < 1900) //Was 1900
 			{
-				Shooter.flyWheel1.set(.35);
-				Shooter.flyWheel2.set(-.35);
+				Shooter.flyWheel1.set(ControlMode.PercentOutput, .35);
+				Shooter.flyWheel2.set(ControlMode.PercentOutput, -.35);
 			}
 			else
 			{
@@ -368,8 +336,8 @@ public class TeleOperated
 		else
 		{
 			Tracking.lightOff();
-			Shooter.flyWheel1.set(0.0);
-			Shooter.flyWheel2.set(0.0);
+			Shooter.flyWheel1.set(ControlMode.PercentOutput, 0.0);
+			Shooter.flyWheel2.set(ControlMode.PercentOutput, 0.0);
 			error = 0;
 			output = 0;
 			errorRefresh = 0;
@@ -382,19 +350,19 @@ public class TeleOperated
 				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
-					Climber.winch1.set(-speed);
-					Climber.winch2.set(speed);
+					Climber.winch1.set(ControlMode.PercentOutput, -speed);
+					Climber.winch2.set(ControlMode.PercentOutput, speed);
 				}
 
 			}
-			else if (Shooter.shooter.getEncPosition() >= 4100 && operator.getYAxis() > 0)
+			else if (Shooter.shooter.getSelectedSensorPosition(0) >= 4100 && operator.getYAxis() > 0)
 			{
 				Shooter.manualControl(0.0);
 				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
-					Climber.winch1.set(-speed);
-					Climber.winch2.set(speed);
+					Climber.winch1.set(ControlMode.PercentOutput, -speed);
+					Climber.winch2.set(ControlMode.PercentOutput, speed);
 				}
 
 			}
@@ -403,8 +371,8 @@ public class TeleOperated
 				if(operator.getButton(11))
 				{
 					double speed = operator.getYAxis();
-					Climber.winch1.set(-speed);
-					Climber.winch2.set(speed);
+					Climber.winch1.set(ControlMode.PercentOutput, -speed);
+					Climber.winch2.set(ControlMode.PercentOutput, speed);
 				}
 				else
 				{
@@ -435,13 +403,13 @@ public class TeleOperated
 		{
 			UDP.getData();
 		}
-		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getEncPosition());
+		SmartDashboard.putNumber("Shooter Angle", Shooter.shooter.getSelectedSensorPosition(0));
 		Intake.sensorReadOut();
 		Tracking.printOut();
 		SmartDashboard.putNumber("Auton State Value", Autonomous.autonState);
-		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getEncPosition()); //Use if shooter lever acts up again.
+		SmartDashboard.putNumber("Shooter Lever", Shooter.shooterLever.getSelectedSensorPosition(0)); //Use if shooter lever acts up again.
 		SmartDashboard.putBoolean("Shooter Lever Lim", Shooter.shooterLeverLimitSwitch.get());
-		SmartDashboard.putNumber("Shooter Lever Encoder Tick", Shooter.shooterLever.getEncPosition());
+		SmartDashboard.putNumber("Shooter Lever Encoder Tick", Shooter.shooterLever.getSelectedSensorPosition(0));
 	}
 	
 	

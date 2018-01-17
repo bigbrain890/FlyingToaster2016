@@ -1,8 +1,10 @@
 package org.usfirst.frc.team3641.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.FeedbackDevice;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
@@ -13,7 +15,7 @@ public class Shooter
 {
 	private static AnalogInput ultrasonic;
 	private static Shooter instance;
-	public static CANTalon flyWheel1, flyWheel2, shooter, shooterLever;
+	public static TalonSRX flyWheel1, flyWheel2, shooter, shooterLever;
 	public static DigitalInput shooterLimitSwitch, shooterLeverLimitSwitch;
 	public static FeedbackDevice shooterEncoder, shooterLeverEncoder;
 	public static double leftError, leftErrorRefresh, rightError, rightErrorRefresh, leftOutput, rightOutput;
@@ -32,15 +34,15 @@ public class Shooter
 	public Shooter()
 	{
 		ultrasonic = new AnalogInput(Constants.ULTRASONIC);
-		flyWheel1 = new CANTalon(Constants.FLY_WHEEL_1);
-		flyWheel2 = new CANTalon(Constants.FLY_WHEEL_2);
-		shooter = new CANTalon(Constants.SHOOTER);
-		shooterLever = new CANTalon(Constants.SHOOTER_LEVER);
+		flyWheel1 = new TalonSRX(Constants.FLY_WHEEL_1);
+		flyWheel2 = new TalonSRX(Constants.FLY_WHEEL_2);
+		shooter = new TalonSRX(Constants.SHOOTER);
+		shooterLever = new TalonSRX(Constants.SHOOTER_LEVER);
 		shooterLimitSwitch = new DigitalInput(Constants.SHOOTER_LIM_SWITCH);
 		shooterLeverLimitSwitch = new DigitalInput(Constants.SHOOTER_LEVER_LIMIT_SWITCH);
 
-		shooter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
-		shooterLever.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		shooter.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
+		shooterLever.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 0);
 		
 		timer = new Timer();
 		aimPID = new PID("Shooter Aim");
@@ -82,82 +84,82 @@ public class Shooter
 		
 	public static void spinUpWheels(double speed)
 	{
-		flyWheel1.set(speed);
-		flyWheel2.set(-speed);
+		flyWheel1.set(ControlMode.PercentOutput, speed);
+		flyWheel2.set(ControlMode.PercentOutput, -speed);
 	}
 	
 	public static void intake()
 	{
-		flyWheel1.set(.75);
-		flyWheel2.set(-.75);
+		flyWheel1.set(ControlMode.PercentOutput, .75);
+		flyWheel2.set(ControlMode.PercentOutput, -.75);
 	}
 	
 	public static void manualControl(double joystick)
 	{
-		shooter.set(joystick);
+		shooter.set(ControlMode.PercentOutput, joystick);
 	}
 	
 	public static void fire ()
 	{
-		shooterLever.set(-.35);
+		shooterLever.set(ControlMode.PercentOutput, -.35);
 	}
 	
 	public static void resetShooterArm ()
 	{
-		shooterLever.set(.3);
+		shooterLever.set(ControlMode.PercentOutput, .3);
 	}
 	
 	public static void pullBackShooterArm()
 	{
-		shooterLever.set(.12);
+		shooterLever.set(ControlMode.PercentOutput, .12);
 	}
 	
 	public static void restShooterArm()
 	{
-		shooterLever.set(0.0);
+		shooterLever.set(ControlMode.PercentOutput, 0.0);
 	}
 		
 	public static void farShot()
 	{
-		double error = Constants.CASTLE_WALL_SHOT - shooter.getEncPosition();
-		shooter.set(aimPID.run(error, Constants.CLOSE_SHOT));
+		double error = Constants.CASTLE_WALL_SHOT - shooter.getSelectedSensorPosition(0);
+		shooter.set(ControlMode.PercentOutput, aimPID.run(error, Constants.CLOSE_SHOT));
 		if (Math.abs(error) > 200) spinUpWheels(.85);
 		else spinUpWheels(-1);
 	}
 	
 	public static void closeShot()
 	{
-		double error = Constants.FAR_SHOT_COMP - shooter.getEncPosition();
-		shooter.set(aimPID.run(error, Constants.FAR_SHOT_COMP));
+		double error = Constants.FAR_SHOT_COMP - shooter.getSelectedSensorPosition(0);
+		shooter.set(ControlMode.PercentOutput, aimPID.run(error, Constants.FAR_SHOT_COMP));
 		if (Math.abs(error) > 200) spinUpWheels(.85);
 		else spinUpWheels(-1);
 	}
 	
 	public static void lowGoal()
 	{
-		flyWheel1.set(-1);
-		flyWheel2.set(1);
+		flyWheel1.set(ControlMode.PercentOutput, -1);
+		flyWheel2.set(ControlMode.PercentOutput, 1);
 	}
 	
 	public static void sensorReadout()
 	{
-		SmartDashboard.putNumber("Shooter Angle", shooter.getEncPosition());
+		SmartDashboard.putNumber("Shooter Angle", shooter.getSelectedSensorPosition(0));
 	}
 	
 	public static void zeroShooterLeverEnc()
 	{
-		shooterLever.setEncPosition(0);
+		shooterLever.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	public static void zeroShooterEnc()
 	{
-		shooter.setEncPosition(0);
+		shooter.setSelectedSensorPosition(0, 0, 0);
 	}
 	
 	public static void set(double power)
 	{
-		flyWheel1.set(-power);
-		flyWheel2.set(power);
+		flyWheel1.set(ControlMode.PercentOutput, -power);
+		flyWheel2.set(ControlMode.PercentOutput, power);
 	}
 	
 	public static void setShooterLever(boolean on)
@@ -168,20 +170,20 @@ public class Shooter
 			{
 				timer.reset();
 				timer.start();
-				shooterLeverInitalEncoderPosition = shooterLever.getEncPosition();
+				shooterLeverInitalEncoderPosition = shooterLever.getSelectedSensorPosition(0);
 				System.out.println("Starting to go");
 				done = false;
 			}
-			shooterLever.set(-.1);
-			if(Math.abs(shooterLeverInitalEncoderPosition - shooterLever.getEncPosition()) > 900 || timer.get() > 0.5) done = true;
-			if(!done) shooterLever.set(-.35);
-			else if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
-			else shooterLever.set(1);
+			shooterLever.set(ControlMode.PercentOutput, -.1);
+			if(Math.abs(shooterLeverInitalEncoderPosition - shooterLever.getSelectedSensorPosition(0)) > 900 || timer.get() > 0.5) done = true;
+			if(!done) shooterLever.set(ControlMode.PercentOutput, -.35);
+			else if(shooterLeverLimitSwitch.get()) shooterLever.set(ControlMode.PercentOutput, 0);
+			else shooterLever.set(ControlMode.PercentOutput, 1);
 		}
 		else
 		{
-			if(shooterLeverLimitSwitch.get()) shooterLever.set(0);
-			else shooterLever.set(.15);
+			if(shooterLeverLimitSwitch.get()) shooterLever.set(ControlMode.PercentOutput, 0);
+			else shooterLever.set(ControlMode.PercentOutput, .15);
 		}
 		lastModeOn = on;
 	}
